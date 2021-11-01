@@ -26,6 +26,7 @@ class LoginScreen extends StatelessWidget{
   }
 }
 
+
 void setLogin() async{
   SharedPreferences prefs =  await SharedPreferences.getInstance();
   prefs.setBool('isLoggedIn', true );

@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+
 void setLogout() async{
   SharedPreferences prefs =  await SharedPreferences.getInstance();
   prefs.setBool('isLoggedIn', false );

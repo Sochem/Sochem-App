@@ -26,6 +26,7 @@ class OnboardingScreen extends StatelessWidget {
 }
 
 
+
 void setOnBoarding() async{
   SharedPreferences prefs =  await SharedPreferences.getInstance();
   prefs.setBool('isOnBoarded', true );
