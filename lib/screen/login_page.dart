@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sochem/utils/authentication.dart';
 
 import '../utils/constants.dart';
 
@@ -12,6 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: CustomPaint(
         painter: Bluepainter(),
@@ -22,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               // Sochem icon
               Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.6,
+                width: width * 0.5,
+                height: height * 0.6,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -35,36 +39,83 @@ class _LoginPageState extends State<LoginPage> {
 
               //Buttons for login options
               Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 0.1),
+                padding: EdgeInsets.symmetric(vertical: height * 0.1),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 25),
-                      child:
+                    // Login button
+                    FutureBuilder(
+                      future:
+                          Authentication.initializeFirebase(context: context),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          print(snapshot.hasError);
+                          return Text('Error initializing Firebase');
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return ElevatedButton.icon(
+                            icon: Image.asset(
+                              "assets/google_logo.png",
+                              height: 35,
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                isLoggedIn = true;
+                              });
+                              User? user =
+                                  await Authentication.signInWithGoogle(
+                                      context: context);
 
-                          // Login button
-                          ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "LOGIN",
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.blue,
+                              setState(() {
+                                isLoggedIn = false;
+                              });
+
+                              if (user != null) {
+                                //TODO: Add logic to direct to homescreen
+                                print("logged in");
+                              }
+                            },
+                            label: Text(
+                              " LOGIN",
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              textStyle: TextStyle(
+                                fontSize: 24,
+                                color: Colors.blue,
+                              ),
+                              fixedSize: Size(width * 0.78, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          );
+                        }
+                        return CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.lightBlue,
                           ),
-                          fixedSize: Size(
-                              MediaQuery.of(context).size.width * 0.78, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                        );
+                      },
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        "--OR--",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white.withOpacity(0.8),
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ),
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     // Guest Buttton
                     TextButton(
                       onPressed: () {},
@@ -73,10 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                         primary: Colors.white,
                         elevation: 0,
                         textStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 24,
                         ),
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.78, 50),
+                        fixedSize: Size(width * 0.78, 50),
                         side: BorderSide(color: Colors.white, width: 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -110,7 +160,7 @@ class Bluepainter extends CustomPainter {
     triangle1.lineTo(midx, midy);
     triangle1.lineTo(0, height);
     triangle1.close();
-    paint.color = Color.fromARGB(255, 58, 110, 196);
+    paint.color = tri1;
     paint.style = PaintingStyle.fill;
     canvas.drawPath(triangle1, paint);
 
@@ -120,7 +170,7 @@ class Bluepainter extends CustomPainter {
     triangle2.lineTo(midx, midy);
     triangle2.lineTo(width, 0);
     triangle2.close();
-    paint.color = Color.fromARGB(255, 86, 134, 182);
+    paint.color = tri2;
     paint.style = PaintingStyle.fill;
     canvas.drawPath(triangle2, paint);
 
@@ -130,7 +180,7 @@ class Bluepainter extends CustomPainter {
     triangle3.lineTo(midx, midy);
     triangle3.lineTo(width, height);
     triangle3.close();
-    paint.color = Color.fromARGB(255, 64, 99, 141);
+    paint.color = tri3;
     paint.style = PaintingStyle.fill;
     canvas.drawPath(triangle3, paint);
 
@@ -140,7 +190,7 @@ class Bluepainter extends CustomPainter {
     triangle4.lineTo(midx, midy);
     triangle4.lineTo(width, height);
     triangle4.close();
-    paint.color = Color.fromARGB(255, 58, 95, 176);
+    paint.color = tri4;
     paint.style = PaintingStyle.fill;
     canvas.drawPath(triangle4, paint);
   }

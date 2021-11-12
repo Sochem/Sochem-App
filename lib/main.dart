@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sochem/screen/SplashScreen.dart';
+import 'package:sochem/screen/login_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,7 @@ class _AppState extends State<App> {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            return SplashScreen();
+            return LoginPage();
           }
 
           // Otherwise, show something whilst waiting for initialization to complete
