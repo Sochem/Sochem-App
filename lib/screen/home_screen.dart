@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(right: 7.0),
                           child: ClipOval(
                             child: Image.asset(
-                              'assets/profile.jpeg',
+                              'assets/sampleprofile.jpeg',
                               height: 50,
                               width: 50,
                               fit: BoxFit.cover,
@@ -139,9 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.52,
-              child: GridCards(),
+              child: HomeScreenGrid(),
             ),
-            ComplicatedImageDemo(),
+            HomeScreenCarousel(),
           ],
         ),
       ),

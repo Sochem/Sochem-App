@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/utils/constants.dart';
 
-class GridCards extends StatelessWidget {
+class HomeScreenGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +36,7 @@ class GridCards extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Center(
                         child: Image.asset(
-                          'assets/picture.png',
+                          'assets/feed.png',
                           width: 60.0,
                           height: 60.0,
                         ),
@@ -87,7 +87,7 @@ class GridCards extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Center(
                         child: Image.asset(
-                          'assets/cloud-service.png',
+                          'assets/cloud.png',
                           width: 60.0,
                           height: 60.0,
                         ),
@@ -143,7 +143,7 @@ class GridCards extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Center(
                         child: Image.asset(
-                          'assets/chat.png',
+                          'assets/forum.png',
                           width: 60.0,
                           height: 60.0,
                         ),
@@ -250,7 +250,7 @@ class GridCards extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Center(
                         child: Image.asset(
-                          'assets/user.png',
+                          'assets/profile.png',
                           width: 60.0,
                           height: 60.0,
                         ),
@@ -301,7 +301,7 @@ class GridCards extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Center(
                         child: Image.asset(
-                          'assets/about.png',
+                          'assets/people.png',
                           width: 60.0,
                           height: 60.0,
                         ),

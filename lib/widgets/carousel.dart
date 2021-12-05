@@ -9,7 +9,7 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
   'https://images.unsplash.com/photo-1565354785692-9e7523e5a87b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80',
 ];
-final List<Widget> imageSliders = imgList
+final List<Widget> slidingImages = imgList
     .map((item) => Container(
           child: Container(
             decoration: BoxDecoration(
@@ -68,7 +68,7 @@ final List<Widget> imageSliders = imgList
         ))
     .toList();
 
-class ComplicatedImageDemo extends StatelessWidget {
+class HomeScreenCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,7 +81,7 @@ class ComplicatedImageDemo extends StatelessWidget {
               aspectRatio: 16 / 9,
               enlargeCenterPage: true,
             ),
-            items: imageSliders,
+            items: slidingImages,
           ),
         ],
       ),
