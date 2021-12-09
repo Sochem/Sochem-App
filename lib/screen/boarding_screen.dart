@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sochem/screen/slide.dart';
+import 'package:sochem/screen/ModalClasses/slide.dart';
+import 'package:sochem/utils/constants.dart';
 
 class BoardingPage extends StatefulWidget {
   @override
@@ -16,11 +17,11 @@ class _BoardingScreenState extends State<BoardingPage> {
     _currentPage = 0;
     //put slide content here
     _slides = [
-      Slide("assets/img1.png", "Replace this text with heading of first slide",
+      Slide(Slideimg1, "Replace this text with heading of first slide",
           "Replace this text with content of first slide"),
-      Slide("assets/img2.png", "Replace this text with heading of second slide",
+      Slide(Slideimg2, "Replace this text with heading of second slide",
           "Replace this text with content of second slide"),
-      Slide("assets/img3.png", "Replace this text with heading of third slide",
+      Slide(Slideimg3, "Replace this text with heading of third slide",
           "Replace this text with content of third slide"),
     ];
     _pageController = PageController(initialPage: _currentPage);
@@ -97,8 +98,8 @@ class _BoardingScreenState extends State<BoardingPage> {
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: index == _currentPage
-              ? Color.fromRGBO(136, 144, 178, 1)
-              : Color.fromRGBO(206, 209, 223, 1)),
+              ? ColorConstant.highlighted
+              : ColorConstant.unhighlighted),
     );
   }
 
