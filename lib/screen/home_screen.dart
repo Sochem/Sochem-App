@@ -12,138 +12,135 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30.0),
-                  bottomRight: Radius.circular(30.0),
+    Size screensize = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: kBackgroundColor,
+      body: Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0),
+              ),
+              color: kPrimaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  offset: const Offset(
+                    1.0,
+                    1.0,
+                  ), //Offset
+                  blurRadius: 30.0,
+                  spreadRadius: 1.0,
                 ),
-                color: kPrimaryColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    offset: const Offset(
-                      1.0,
-                      1.0,
-                    ), //Offset
-                    blurRadius: 30.0,
-                    spreadRadius: 1.0,
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.only(top: 25.0),
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, bottom: 16.0, left: 20.0, right: 10.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7.0),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/sampleprofile.jpeg',
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.cover,
+              ],
+            ),
+            padding: EdgeInsets.only(top: 25.0),
+            height: screensize.height * 0.30,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 10.0, 16.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 7.0),
+                        child: ClipOval(
+                          child: Image.asset(
+                            ExampleProfile,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: screensize.width * 0.25,
+                        child: Text(
+                          "USERNAME",
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w200,
+                              color: Colors.white,
+                              // letterSpacing: 1.2,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          child: Text(
-                            "USERNAME",
-                            style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w200,
-                                color: Colors.white,
-                                // letterSpacing: 1.2,
-                              ),
-                            ),
-                          ),
+                      ),
+                      SizedBox(
+                        width: screensize.width * 0.25,
+                      ),
+                      IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: null,
+                        icon: ImageIcon(
+                          AssetImage(BellIcon),
+                          size: 30.0,
+                          color: Colors.white,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                      ),
+                      SizedBox(
+                        width: screensize.width * 0.026,
+                      ),
+                      IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: null,
+                        icon: ImageIcon(
+                          AssetImage(MenuIcon),
+                          size: 40.0,
+                          color: Colors.white,
                         ),
-                        IconButton(
-                          alignment: Alignment.centerRight,
-                          onPressed: null,
-                          icon: ImageIcon(
-                            AssetImage('assets/bell.png'),
-                            size: 30.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.026,
-                        ),
-                        IconButton(
-                          alignment: Alignment.centerRight,
-                          onPressed: null,
-                          icon: ImageIcon(
-                            AssetImage('assets/menu.png'),
-                            size: 40.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        "Society Of",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            // letterSpacing: 1.2,
-                          ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Society Of",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          // letterSpacing: 1.2,
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        "Chemical Engineers",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            // letterSpacing: 1.2,
-                          ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Chemical Engineers",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          // letterSpacing: 1.2,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.52,
-              child: HomeScreenGrid(),
-            ),
-            HomeScreenCarousel(),
-          ],
-        ),
+          ),
+          Container(
+            height: screensize.height * 0.52,
+            child: HomeScreenGrid(),
+          ),
+          HomeScreenCarousel(),
+        ],
       ),
     );
   }
