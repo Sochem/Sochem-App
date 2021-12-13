@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sochem/screen/SplashScreen.dart';
-import 'package:sochem/screen/boarding_screen.dart';
+import 'package:sochem/screen/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

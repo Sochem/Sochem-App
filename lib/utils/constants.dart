@@ -19,12 +19,5 @@ const String Slideimg3 = "assets/slider/img3.png";
 const kPrimaryColor = Color(0xFF3449c0);
 const kBackgroundColor = Color(0xFFd6e0f9);
 const cardImageColor = Color(0xFF6282d3);
-class ColorConstant {
-  static Color highlighted = Colors.white;
-  static Color unhighlighted = Colors.white;
-
-  static colorAssign() {
-    ColorConstant.highlighted = Color.fromRGBO(136, 144, 178, 1);
-    ColorConstant.unhighlighted = Color.fromRGBO(206, 209, 223, 1);
-  }
-}
+const highlighted = Color.fromRGBO(136, 144, 178, 1);
+const unhighlighted = Color.fromRGBO(206, 209, 223, 1);
