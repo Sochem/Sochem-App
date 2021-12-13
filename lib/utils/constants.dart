@@ -14,6 +14,8 @@ const String PeopleIcon = "assets/people.png";
 const String Slideimg1 = "assets/slider/img1.png";
 const String Slideimg2 = "assets/slider/img2.png";
 const String Slideimg3 = "assets/slider/img3.png";
+const String CheckOnBoarded = 'isOnBoarded';
+const String CheckLogIn = 'isLoggedIn';
 
 // Colors Used ->
 const kPrimaryColor = Color(0xFF3449c0);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/screen/LoginScreen.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/gridcards.dart';
@@ -47,11 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 7.0),
                         child: ClipOval(
-                          child: Image.asset(
-                            ExampleProfile,
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
+                          child: InkWell(
+                            onLongPress: () {
+                              setLogout();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: Image.asset(
+                              ExampleProfile,
+                              height: 50,
+                              width: 50,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -144,4 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+void setLogout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool(CheckLogIn, false);
 }
