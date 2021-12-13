@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sochem/screen/home_screen.dart';
+import 'package:sochem/screen/onboarding_screen.dart';
 import 'package:sochem/utils/constants.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import "LoginScreen.dart";
-import "HomeScreen.dart";
-import 'OnBoardingScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return LoginScreen();
       }
     } else {
-      return OnboardingScreen();
+      return BoardingPage();
     }
   }
 
@@ -43,9 +43,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget build(BuildContext context) {
-    var  blue1 = new Color.fromRGBO(22, 71, 119, 1);
-    var  blue2 = new Color.fromRGBO(24, 134, 191, 1);
-    var  blue3 = new Color.fromRGBO(39, 88, 124, 1);
+    var blue1 = new Color.fromRGBO(22, 71, 119, 1);
+    var blue2 = new Color.fromRGBO(24, 134, 191, 1);
+    var blue3 = new Color.fromRGBO(39, 88, 124, 1);
     return Scaffold(
         body: Stack(children: [
       Container(
@@ -72,7 +72,8 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.maybeOf(context)!.size.height/15),
+          margin: EdgeInsets.fromLTRB(
+              0, 0, 0, MediaQuery.maybeOf(context)!.size.height / 15),
           child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
