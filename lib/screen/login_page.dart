@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sochem/utils/authentication.dart';
 
 import '../utils/constants.dart';
@@ -16,6 +17,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    //function
+    Future signIn() async {
+      final user = await GoogleSignInApi.login();
+      print(user);
+    }
+
     return Scaffold(
       body: CustomPaint(
         painter: Bluepainter(),
@@ -43,62 +50,83 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     // Login button
-                    FutureBuilder(
-                      future:
-                          Authentication.initializeFirebase(context: context),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          print(snapshot.hasError);
-                          return Text('Error initializing Firebase');
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          return ElevatedButton.icon(
-                            icon: Image.asset(
-                              "assets/google_logo.png",
-                              height: 35,
-                            ),
-                            onPressed: () async {
-                              setState(() {
-                                isLoggedIn = true;
-                              });
-                              User? user =
-                                  await Authentication.signInWithGoogle(
-                                      context: context);
+                    // FutureBuilder(
+                    //   future:
+                    //       Authentication.initializeFirebase(context: context),
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.hasError) {
+                    //       print(snapshot.hasError);
+                    //       return Text('Error initializing Firebase');
+                    //     } else if (snapshot.connectionState ==
+                    //         ConnectionState.done) {
+                    //       return ElevatedButton.icon(
+                    //         icon: Image.asset(
+                    //           "assets/google_logo.png",
+                    //           height: 35,
+                    //         ),
+                    //         onPressed: () async {
+                    //           setState(() {
+                    //             isLoggedIn = true;
+                    //           });
+                    //           User? user =
+                    //               await Authentication.signInWithGoogle(
+                    //                   context: context);
 
-                              setState(() {
-                                isLoggedIn = false;
-                              });
+                    //           setState(() {
+                    //             isLoggedIn = false;
+                    //           });
 
-                              if (user != null) {
-                                //TODO: Add logic to direct to homescreen
-                                print("logged in");
-                              }
-                            },
-                            label: Text(
-                              " LOGIN",
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              textStyle: TextStyle(
-                                fontSize: 24,
-                                color: Colors.blue,
-                              ),
-                              fixedSize: Size(width * 0.78, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          );
-                        }
-                        return CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.lightBlue,
-                          ),
-                        );
-                      },
+                    //           if (user != null) {
+                    //             //TODO: Add logic to direct to homescreen
+                    //             print("logged in");
+                    //           }
+                    //         },
+                    //         label: Text(
+                    //           " LOGIN",
+                    //           style: TextStyle(color: Colors.blue),
+                    //         ),
+                    //         style: ElevatedButton.styleFrom(
+                    //           primary: Colors.white,
+                    //           textStyle: TextStyle(
+                    //             fontSize: 24,
+                    //             color: Colors.blue,
+                    //           ),
+                    //           fixedSize: Size(width * 0.78, 50),
+                    //           shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.circular(10),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }
+                    //     return CircularProgressIndicator(
+                    //       valueColor: AlwaysStoppedAnimation<Color>(
+                    //         Colors.lightBlue,
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    ElevatedButton.icon(
+                      icon: Image.asset(
+                        "assets/google_logo.png",
+                        height: 35,
+                      ),
+                      onPressed: signIn,
+                      label: Text(
+                        " LOGIN",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        textStyle: TextStyle(
+                          fontSize: 24,
+                          color: Colors.blue,
+                        ),
+                        fixedSize: Size(width * 0.78, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
