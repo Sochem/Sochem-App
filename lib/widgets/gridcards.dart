@@ -67,12 +67,13 @@ class SingleCard extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 15.0),
               child: Center(
                 child: Image.asset(
                   image,
-                  width: 60.0,
-                  height: 60.0,
+                  width: 45.0,
+                  height: 45.0,
+                  color: Colors.white70,
                 ),
               ),
             ),
@@ -82,10 +83,10 @@ class SingleCard extends StatelessWidget {
                 title,
                 style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
-                    fontSize: 20,
+                    fontSize: 21,
 
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
                     // letterSpacing: 1.2,
                   ),
                 ),
