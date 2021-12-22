@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sochem/screen/SplashScreen.dart';
+import 'package:sochem/screen/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +38,7 @@ class _AppState extends State<App> {
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
             return SplashScreen();
+            //return BoardingPage();
           }
 
           // Otherwise, show something whilst waiting for initialization to complete
@@ -49,8 +50,6 @@ class _AppState extends State<App> {
 }
 
 class SomethingWentWrong extends StatelessWidget {
-  const SomethingWentWrong({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,8 +59,6 @@ class SomethingWentWrong extends StatelessWidget {
 }
 
 class Loading extends StatelessWidget {
-  const Loading({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
