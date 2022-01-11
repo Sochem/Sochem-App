@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             padding: EdgeInsets.only(top: 25.0),
-            height: screensize.height * 0.30,
+            height: screensize.height * 0.3,
             child: Column(
               children: [
                 Padding(
@@ -111,13 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 25.0),
+                    padding: EdgeInsets.only(
+                        left: 25.0, top: screensize.height * 0.015),
                     child: Text(
                       "Society Of",
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 33,
+                          fontSize: 37,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
@@ -135,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 33,
+                          fontSize: 36,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,

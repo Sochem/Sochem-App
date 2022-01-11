@@ -46,7 +46,7 @@ class SingleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(15.0, 11.0, 15.0, 0.0),
       child: Container(
         height: size.height * 0.15,
         width: size.width * 0.40,
@@ -67,7 +67,7 @@ class SingleCard extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Center(
                 child: Image.asset(
                   image,
@@ -83,7 +83,7 @@ class SingleCard extends StatelessWidget {
                 title,
                 style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
-                    fontSize: 21,
+                    fontSize: 25,
 
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
