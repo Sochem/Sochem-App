@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imgList = [
-  'https://sochem.in/static/media/slide-home-3.d001fcc5.jpg',
+  'https://sochem.org/static/media/slide-home-3.d001fcc5.jpg',
   'https://osmoze.in/assets/images/gallery/2.png',
   'https://iitbhu.ac.in/sites/default/files/styles/iitbhu_slides/public/slides/che/slide_che_02.jpg?itok=R1Cmzwfi',
   'https://osmoze.in/assets/images/gallery/4.JPG',

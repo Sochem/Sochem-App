@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sochem/screen/LoginScreen.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/gridcards.dart';
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreen()),
+                                    builder: (context) => LoginPage()),
                               );
                             },
                             child: Image.asset(
@@ -160,5 +160,5 @@ class _HomeScreenState extends State<HomeScreen> {
 
 void setLogout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool(CheckLogIn, false);
+  prefs.setBool(isLoggedIn, false);
 }

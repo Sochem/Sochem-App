@@ -15,8 +15,6 @@ const String PeopleIcon = "assets/people.png";
 const String Slideimg1 = "assets/slider/img1.png";
 const String Slideimg2 = "assets/slider/img2.png";
 const String Slideimg3 = "assets/slider/img3.png";
-const String CheckOnBoarded = 'isOnBoarded';
-const String CheckLogIn = 'isLoggedIn';
 
 // Colors Used ->
 const kPrimaryColor = Color(0xFF3449c0);
@@ -29,5 +27,7 @@ const Color tri2 = Color.fromARGB(255, 86, 134, 182);
 const Color tri3 = Color.fromARGB(255, 64, 99, 141);
 const Color tri4 = Color.fromARGB(255, 58, 95, 176);
 
-bool isGuest = false;
-bool isLoggedIn = false;
+final String isGuest = "guestLogIn";
+final String isLoggedIn = "logIn";
+final String hasOnboarded = "Notyet";
+String? djangoToken;
