@@ -48,5 +48,3 @@ app.*.map.json
 
 # Credentials
 android/app/*.jks
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
