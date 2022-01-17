@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sochem/screen/splash_screen.dart';
 
@@ -21,14 +20,24 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  // final Future<int> _initialization = Future.delayed(Duration(seconds: 2));
+
+  Future<int> _demoInitializationFunction() async {
+    await Future.delayed(Duration(seconds: 2));
+    return 1;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
         // Initialize FlutterFire:
-        future: _initialization,
+        future: _demoInitializationFunction(),
         builder: (context, snapshot) {
           // Check for errors
           if (snapshot.hasError) {
