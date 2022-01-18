@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sochem/screen/splash_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  await dotenv.load(fileName: '.env');
   runApp(MaterialApp(home: App()));
 }
 
@@ -34,6 +35,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    // return LoginPage();
     return Scaffold(
       body: FutureBuilder(
         // Initialize FlutterFire:

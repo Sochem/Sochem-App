@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sochem/screen/home_screen.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/onboarding_screen.dart';
 import 'package:sochem/utils/constants.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-import "LoginScreen.dart";
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,13 +14,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   decideScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var onboarded = prefs.getBool(CheckOnBoarded);
-    var login = prefs.getBool(CheckLogIn);
+    var onboarded = prefs.getBool(hasOnboarded);
+    var login = prefs.getBool(isLoggedIn);
     if (onboarded == true) {
       if (login == true) {
         return HomeScreen();
       } else {
-        return LoginScreen();
+        return LoginPage();
       }
     } else {
       return BoardingPage();

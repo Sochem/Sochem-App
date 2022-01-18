@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sochem/screen/LoginScreen.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/models/slide.dart';
 import 'package:sochem/utils/constants.dart';
 
@@ -80,7 +80,7 @@ class _BoardingScreenState extends State<BoardingPage> {
                 setOnBoarding();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               child: Text("LET'S GO"),
@@ -96,7 +96,7 @@ class _BoardingScreenState extends State<BoardingPage> {
 
   void setOnBoarding() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(CheckOnBoarded, true);
+    prefs.setBool(hasOnboarded, true);
   }
 
   void _changePage(int page) {
