@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:sochem/screen/splash_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
   runApp(MaterialApp(home: App()));
