@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/screen/home_screen.dart';
 import 'package:google_one_tap_sign_in/google_one_tap_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../utils/constants.dart';
 
@@ -21,10 +21,12 @@ class _LoginPageState extends State<LoginPage> {
     double height = MediaQuery.of(context).size.height;
     // function
     Future<void> _signIn() async {
-      final String _webClientId = FlutterConfig.get("WEB_CLIENT_ID");
+      final String _webClientId = dotenv.env['WEB_CLIENT_ID']!;
 
       final user =
           await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
+      print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
+      print(user);
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isLoggedIn', true);
