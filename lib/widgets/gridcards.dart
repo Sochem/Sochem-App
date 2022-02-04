@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sochem/screen/cloud.dart';
 import 'package:sochem/utils/constants.dart';
 // import 'package:sochem/view/people.dart';
 
@@ -19,11 +20,15 @@ class HomeScreenGrid extends StatelessWidget {
                 title: "Feed",
                 // route: PeoplePage(),
               ),
-              SingleCard(
-                image: CloudIcon,
-                title: "Cloud",
-                // route: PeoplePage(),
-              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CloudPage()),
+                    );
+                  },
+                  child: SingleCard(image: CloudIcon, title: "Cloud")),
             ],
           ),
           Row(
