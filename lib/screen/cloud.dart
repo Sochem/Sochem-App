@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sochem/entities/books.dart';
+import 'package:sochem/models/books.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
 import 'package:http/http.dart' as http;
@@ -110,31 +110,38 @@ class _CloudPageState extends State<CloudPage> {
                 GenreTitle(
                   title: 'Books/Novels',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'Code',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'Core',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'GATE',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'GRE',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'HULM',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
                 GenreTitle(
                   title: 'Online Courses',
                 ),
-                BooksHorizontal(),
+                BooksHorizontal(
+                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
               ],
             ),
           ),
@@ -145,20 +152,18 @@ class _CloudPageState extends State<CloudPage> {
 }
 
 class BooksHorizontal extends StatefulWidget {
-  const BooksHorizontal({
-    Key? key,
-  }) : super(key: key);
+  const BooksHorizontal({required this.genreURL});
+  final String genreURL;
 
   @override
   State<BooksHorizontal> createState() => _BooksHorizontalState();
 }
 
 class _BooksHorizontalState extends State<BooksHorizontal> {
-  List<Book> _books = [];
-
+  //Books viewmodel
+  List<Book> _books = []; 
   Future<List<Book>> fetchBooks() async {
-    var url = '';
-    var response = await http.get(Uri.parse(url));
+    var response = await http.get(Uri.parse(widget.genreURL));
 
     List<Book> books = [];
     if (response.statusCode == 200) {
@@ -170,6 +175,7 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
     return books;
   }
 
+  //Books View
   @override
   void initState() {
     fetchBooks().then((value) {
