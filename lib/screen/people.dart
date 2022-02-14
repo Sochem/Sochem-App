@@ -35,6 +35,21 @@ class _PeoplePageState extends State<PeoplePage> {
     );
   }
 
+  List<String> _yearList = [];
+  List<String> _yearGen() {
+    _yearList = [];
+    DateTime x = DateTime.now();
+    var y = x.year;
+    if (x.month <= 7) y--;
+    while (y >= 2018) {
+      _yearList.add("CHE " + y.toString().substring(2));
+      y--;
+    }
+    var z = _yearList.reversed;
+
+    return z.toList();
+  }
+
   @override
   void initState() {
     fetchPeople().then((value) {
@@ -142,13 +157,7 @@ class _PeoplePageState extends State<PeoplePage> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
                 itemHeight: 50,
-                items: <String>[
-                  "CHE 18",
-                  "CHE 19",
-                  "CHE 20",
-                  "CHE 21",
-                  "CHE 22"
-                ].map<DropdownMenuItem<String>>((String value) {
+                items: _yearGen().map<DropdownMenuItem<String>>((String value) {
                   return _getDropdown(value, value);
                 }).toList(),
                 isExpanded: true,
