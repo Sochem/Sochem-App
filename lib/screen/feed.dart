@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sochem/main.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
@@ -111,7 +112,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black26,
+                          color: Colors.black12,
                           offset: Offset(0, 2),
                           blurRadius: 8.0,
                         ),
@@ -258,10 +259,10 @@ class _FeedScreenState extends State<FeedScreen> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+              padding: EdgeInsets.symmetric(vertical: 15.0),
               child: Center(
                 child: Text(
-                  'Feed',
+                  'Your Feed',
                   style: GoogleFonts.raleway(
                     textStyle: TextStyle(
                       fontSize: 37,
@@ -277,7 +278,7 @@ class _FeedScreenState extends State<FeedScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.92,
+              height: MediaQuery.of(context).size.height * 0.85,
               child: ListView.builder(
                 itemCount: _posts.length,
                 itemBuilder: (BuildContext context, int index) {
