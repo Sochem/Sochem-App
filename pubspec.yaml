@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  cached_network_image: ^3.2.0
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   flutter:
@@ -31,6 +32,7 @@ dependencies:
   google_fonts: ^2.3.1
   google_one_tap_sign_in: null
   http: ^0.13.4
+  intl: ^0.17.0
   shared_preferences: ^2.0.13
 
 dev_dependencies:
