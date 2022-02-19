@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sochem/screen/feed.dart';
 import 'package:sochem/utils/constants.dart';
 // import 'package:sochem/view/people.dart';
 
@@ -14,10 +15,17 @@ class HomeScreenGrid extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SingleCard(
-                image: FeedIcon,
-                title: "Feed",
-                // route: PeoplePage(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FeedScreen()),
+                  );
+                },
+                child: SingleCard(
+                  image: FeedIcon,
+                  title: "Feed",
+                ),
               ),
               SingleCard(
                 image: CloudIcon,

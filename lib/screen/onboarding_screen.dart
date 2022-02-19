@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/screen/login_page.dart';
-import 'package:sochem/screen/models/slide.dart';
+import 'package:sochem/models/slide.dart';
 import 'package:sochem/utils/constants.dart';
 
 class BoardingPage extends StatefulWidget {
