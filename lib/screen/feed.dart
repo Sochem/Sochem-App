@@ -21,14 +21,14 @@ class _FeedScreenState extends State<FeedScreen> {
     var response =
         await http.get(Uri.parse('https://api.npoint.io/bf243fd49e6b8783f02b'));
 
-    List<Post> books = [];
+    List<Post> posts = [];
     if (response.statusCode == 200) {
-      var booksJson = json.decode(response.body);
-      for (var bookJson in booksJson) {
-        books.add(Post.fromJson(bookJson));
+      var postsJson = json.decode(response.body);
+      for (var postJson in postsJson) {
+        posts.add(Post.fromJson(postJson));
       }
     }
-    return books;
+    return posts;
   }
 
   //Posts View
