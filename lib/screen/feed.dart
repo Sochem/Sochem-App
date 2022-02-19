@@ -16,6 +16,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  //Posts ViewModel
   List<Post> _posts = [];
   Future<List<Post>> fetchPosts() async {
     var response =
@@ -31,7 +32,7 @@ class _FeedScreenState extends State<FeedScreen> {
     return books;
   }
 
-  //Books View
+  //Posts View
   @override
   void initState() {
     fetchPosts().then((value) {
