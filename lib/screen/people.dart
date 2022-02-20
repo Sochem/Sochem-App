@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sochem/models/people_model.dart';
@@ -223,15 +224,19 @@ class _PeoplePageState extends State<PeoplePage> {
                               ),
                               child: ListTile(
                                 leading: CircleAvatar(
+                                  backgroundColor: Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)],
                                   radius: 30,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.network(
-                                      _people[index].img!,
-                                      fit: BoxFit.cover,
-                                      colorBlendMode: BlendMode.color,
-                                    ),
-                                  ),
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        _people[index].name!.substring(0, 1),
+                                        style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      )),
                                 ),
                                 title: Text(
                                   _people[index].name!,
