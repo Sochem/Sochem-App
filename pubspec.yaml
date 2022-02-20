@@ -21,21 +21,21 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  carousel_slider: ^4.0.0
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-
-  font_awesome_flutter: ^9.1.0
-  flutter_svg: ^0.23.0+1
-  google_fonts: ^2.1.0
-  carousel_slider: ^4.0.0
-  shared_preferences: ^2.0.7
-  google_one_tap_sign_in:
-  http: ^0.13.4
   flutter_dotenv: ^5.0.2
+  flutter_svg: ^0.23.0+1
+  font_awesome_flutter: ^9.2.0
+  google_fonts: ^2.3.1
+  google_one_tap_sign_in: null
+  http: ^0.13.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
@@ -43,7 +43,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -57,13 +56,10 @@ flutter:
     - assets/slider/
     - .env
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
