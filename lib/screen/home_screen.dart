@@ -39,11 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             padding: EdgeInsets.only(top: 25.0),
-            height: screensize.height * 0.3,
+            height: screensize.height * 0.28,
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25.0, 20.0, 10.0, 14.0),
+                  padding: const EdgeInsets.fromLTRB(25.0, 25.0, 10.0, 14.0),
                   child: Row(
                     children: [
                       Padding(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "USERNAME",
                           style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              fontSize: 16,
+                              fontSize: 15,
                               fontWeight: FontWeight.w200,
                               color: Colors.white,
                               // letterSpacing: 1.2,
@@ -112,13 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: 25.0, top: screensize.height * 0.015),
+                        left: 25.0, top: screensize.height * 0.01),
                     child: Text(
                       "Society Of",
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 37,
+                          fontSize: 36,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 36,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
