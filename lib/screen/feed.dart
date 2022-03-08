@@ -162,11 +162,12 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEDF0F6),
-      body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
+      backgroundColor: kBackgroundColor,
+      body: Column(
+        // physics: AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Container(
+            height: MediaQuery.of(context).size.height * 0.13,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(10.0),
@@ -186,13 +187,13 @@ class _FeedScreenState extends State<FeedScreen> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: Center(
                 child: Text(
                   'Your Feed',
                   style: GoogleFonts.raleway(
                     textStyle: TextStyle(
-                      fontSize: 37,
+                      fontSize: 35,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                       // letterSpacing: 1.2,
@@ -202,19 +203,16 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.85,
-              child: ListView.builder(
-                itemCount: _posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (_posts.length == 0) {
-                    return SizedBox(width: 10.0);
-                  }
-                  return _buildPost(index);
-                },
-              ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.86,
+            child: ListView.builder(
+              itemCount: _posts.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (_posts.length == 0) {
+                  return SizedBox(width: 10.0);
+                }
+                return _buildPost(index);
+              },
             ),
           ),
         ],
