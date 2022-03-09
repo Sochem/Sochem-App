@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(25.0, 25.0, 10.0, 14.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 7.0),
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "USERNAME",
                           style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.w200,
                               color: Colors.white,
                               // letterSpacing: 1.2,
@@ -89,19 +90,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: null,
                         icon: ImageIcon(
                           AssetImage(BellIcon),
-                          size: 30.0,
+                          size: 25.0,
                           color: Colors.white,
                         ),
-                      ),
-                      SizedBox(
-                        width: screensize.width * 0.026,
                       ),
                       IconButton(
                         alignment: Alignment.centerRight,
                         onPressed: null,
                         icon: ImageIcon(
                           AssetImage(MenuIcon),
-                          size: 40.0,
+                          size: 25.0,
                           color: Colors.white,
                         ),
                       ),
@@ -118,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 36,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
@@ -136,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 35,
+                          fontSize: 33,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
