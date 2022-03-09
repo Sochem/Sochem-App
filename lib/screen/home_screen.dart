@@ -43,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25.0, 25.0, 10.0, 14.0),
+                  padding: EdgeInsets.fromLTRB(25.0, screensize.height * 0.03,
+                      10.0, screensize.height * 0.005),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 35,
+                          fontSize: screensize.width * 0.087,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
@@ -134,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 33,
+                          fontSize: screensize.width * 0.082,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
