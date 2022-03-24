@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
-  runApp(MaterialApp(home: App()));
+  runApp(MaterialApp(
+    title: "Sochem App",
+    initialRoute: '/app',
+    routes: <String, WidgetBuilder>{
+      '/app': (context) => App(),
+      '/feed': (context) => FeedScreen(),
+    },
+  ));
 }
 
 /// We are using a StatefulWidget such that we only create the [Future] once,
