@@ -7,6 +7,16 @@ import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
 import 'package:http/http.dart' as http;
 
+final List<String> bookTypesList = [
+  'Books/Novels',
+  'Code',
+  'Core',
+  'GATE',
+  'GRE',
+  'HULM',
+  'Online Courses',
+];
+
 class CloudPage extends StatefulWidget {
   const CloudPage({Key? key}) : super(key: key);
 
@@ -103,47 +113,20 @@ class _CloudPageState extends State<CloudPage> {
           Container(
             margin: const EdgeInsets.only(top: 10.0),
             height: screensize.height * 0.635,
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: [
-                GenreTitle(
-                  title: 'Books/Novels',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'Code',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'Core',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'GATE',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'GRE',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'HULM',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-                GenreTitle(
-                  title: 'Online Courses',
-                ),
-                BooksHorizontal(
-                    genreURL: 'https://api.npoint.io/ce067c8d01658dad23b7'),
-              ],
-            ),
+            child: ListView.builder(
+                itemCount: bookTypesList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      GenreTitle(
+                        title: bookTypesList[index],
+                      ),
+                      BooksHorizontal(
+                          genreURL:
+                              'https://api.npoint.io/ce067c8d01658dad23b7'),
+                    ],
+                  );
+                }),
           ),
         ],
       ),
