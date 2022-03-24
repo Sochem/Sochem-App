@@ -78,18 +78,14 @@ class CloudCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.21,
-              autoPlay: true,
-              aspectRatio: 16 / 9,
-              enlargeCenterPage: true,
-            ),
-            items: slidingImages,
-          ),
-        ],
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: MediaQuery.of(context).size.height * 0.21,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          enlargeCenterPage: true,
+        ),
+        items: slidingImages,
       ),
     );
   }
