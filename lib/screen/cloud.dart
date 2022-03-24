@@ -53,7 +53,7 @@ class _CloudPageState extends State<CloudPage> {
                         IconButton(
                           onPressed: null,
                           icon: ImageIcon(
-                            AssetImage(Back),
+                            AssetImage(BackIcon),
                             size: 50.0,
                             color: Colors.white,
                           ),
@@ -81,7 +81,7 @@ class _CloudPageState extends State<CloudPage> {
                           child: IconButton(
                             onPressed: null,
                             icon: ImageIcon(
-                              AssetImage(Back),
+                              AssetImage(BackIcon),
                               size: 50.0,
                               color: Colors.white,
                             ),
@@ -161,7 +161,7 @@ class BooksHorizontal extends StatefulWidget {
 
 class _BooksHorizontalState extends State<BooksHorizontal> {
   //Books viewmodel
-  List<Book> _books = []; 
+  List<Book> _books = [];
   Future<List<Book>> fetchBooks() async {
     var response = await http.get(Uri.parse(widget.genreURL));
 
