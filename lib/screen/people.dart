@@ -53,13 +53,12 @@ class _PeoplePageState extends State<PeoplePage> {
 
   @override
   void initState() {
+    super.initState();
     fetchPeople().then((value) {
       setState(() {
         _people.addAll(value);
       });
     });
-
-    super.initState();
   }
 
   @override
