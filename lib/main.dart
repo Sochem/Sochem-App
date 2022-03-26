@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sochem/screen/cloud.dart';
+import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
@@ -12,6 +13,7 @@ void main() async {
     routes: <String, WidgetBuilder>{
       '/app': (context) => App(),
       '/cloud': (context) => CloudPage(),
+      '/people': (context) => PeoplePage(),
     },
   ));
 }

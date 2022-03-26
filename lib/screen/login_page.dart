@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   //Buttons for login options
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: height * 0.1),
+                    padding: EdgeInsets.only(bottom: height * 0.1),
                     child: Column(
                       children: [
                         ElevatedButton.icon(
@@ -110,16 +110,32 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                          child: Text(
-                            "--OR--",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 1.0,
+                              width: 50.0,
                               color: Colors.white.withOpacity(0.8),
-                              fontStyle: FontStyle.italic,
                             ),
-                          ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                "OR",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white.withOpacity(0.6),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 1.0,
+                              width: 50.0,
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 10,
