@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/utils/constants.dart';
-// import 'package:sochem/view/people.dart';
 
 // for linking pages uncoment route and pass your pages in the section
 class HomeScreenGrid extends StatelessWidget {
@@ -17,12 +16,12 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: FeedIcon,
                 title: "Feed",
-                // route: PeoplePage(),
+                route: '/people',
               ),
               SingleCard(
                 image: CloudIcon,
                 title: "Cloud",
-                // route: PeoplePage(),
+                route: '/people',
               ),
             ],
           ),
@@ -32,12 +31,12 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: ForumIcon,
                 title: "Forum",
-                // route: PeoplePage(),
+                route: '/people',
               ),
               SingleCard(
                 image: GroupIcon,
                 title: "Groups",
-                // route: PeoplePage(),
+                route: '/people',
               ),
             ],
           ),
@@ -47,12 +46,12 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: ProfileIcon,
                 title: "Profile",
-                // route: PeoplePage(),
+                route: '/people',
               ),
               SingleCard(
                 image: PeopleIcon,
                 title: "People",
-                // route: PeoplePage(),
+                route: '/people',
               ),
             ],
           ),
@@ -63,21 +62,20 @@ class HomeScreenGrid extends StatelessWidget {
 }
 
 class SingleCard extends StatelessWidget {
-  const SingleCard({required this.image, required this.title});
-// const SingleCard({required this.image, required this.title, required this.route});
+  // const SingleCard({required this.image, required this.title});
+  const SingleCard(
+      {required this.image, required this.title, required this.route});
   final String image;
   final String title;
-  // final Widget route;
+  final String route;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => route,
-      //   ),
-      // ),
+      onTap: () => Navigator.pushNamed(
+        context,
+        route,
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15.0, 11.0, 15.0, 0.0),
         child: Container(
