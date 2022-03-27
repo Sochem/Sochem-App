@@ -9,6 +9,7 @@ final List<String> imgList = [
   'assets/cloud-gre.png',
   'assets/cloud-hulm.png',
   'assets/cloud-online.png',
+  'assets/cloud_open_electives.png'
 ];
 
 final List<String> imgTitle = [
@@ -19,6 +20,7 @@ final List<String> imgTitle = [
   'GRE',
   'HULM',
   'Online Courses',
+  'Open Electives'
 ];
 
 final List<Widget> slidingImages = imgList

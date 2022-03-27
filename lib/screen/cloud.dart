@@ -8,6 +8,7 @@ import 'package:sochem/models/books.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 final List<String> bookTypesList = [
   'Books/Novels',
@@ -17,6 +18,18 @@ final List<String> bookTypesList = [
   'GRE',
   'HULM',
   'Online Courses',
+  'Open Electives'
+];
+
+final List<String> categoryLinks = [
+  "https://drive.google.com/drive/folders/1TOxyPEmb8l9VvNAa1IycT7rBHIp2x_Wd?usp=sharing", //novels
+  "https://drive.google.com/drive/folders/1VYASsgV_Ods_EyHiKd_Sm7qjE1gyNpnU?usp=sharing", //Programming
+  "https://drive.google.com/drive/folders/15pTBbGVUdA0dTGFQI7QpfQWaXDQsr6cy?usp=sharing", //Core
+  "https://drive.google.com/drive/folders/1R34YagE19rLI31yMRQo4G-UnvHRRBmgn?usp=sharing", //GATE
+  "https://drive.google.com/drive/folders/1mZSAyhN7BNX51g9V4if-6P1NWyFqtCmm?usp=sharing", //GRE
+  "https://drive.google.com/drive/folders/18u9EqfPqZ7t9z9RL49WL1ebeW51t_eF-?usp=sharing", //HULM
+  "https://drive.google.com/drive/folders/1ZGKENtgtA8UTCHcWIlSveJxg9_uX44vt?usp=sharing", //Online Courses
+  "https://drive.google.com/drive/folders/1-FPXGNsfx7jcpLksfqqyo_7KA0KeOBi9?usp=sharing", //Open Electives
 ];
 
 class CloudPage extends StatefulWidget {
@@ -57,7 +70,7 @@ class _CloudPageState extends State<CloudPage> {
                     ),
                   ],
                 ),
-                padding: EdgeInsets.only(top: 30.0),
+                padding: EdgeInsets.only(top: 45.0),
                 height: screensize.height * 0.35,
                 child: Column(
                   children: [
@@ -125,6 +138,7 @@ class _CloudPageState extends State<CloudPage> {
                     children: [
                       GenreTitle(
                         title: bookTypesList[index],
+                        link: categoryLinks[index],
                       ),
                       BooksHorizontal(
                           genreURL:
@@ -221,21 +235,34 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
 }
 
 class GenreTitle extends StatelessWidget {
-  const GenreTitle({required this.title});
+  const GenreTitle({required this.title, required this.link});
   final String title;
+  final String link;
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0),
-        child: Text(
-          '$title',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25.0,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '$title',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                print("Clicked");
+                launch(link);
+              },
+              child: Text("View More"),
+            ),
+          ],
         ),
       ),
     );

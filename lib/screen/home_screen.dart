@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            padding: EdgeInsets.only(top: 25.0),
+            padding: EdgeInsets.only(top: 30.0),
             height: screensize.height * 0.3,
             child: Column(
               children: [
