@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imgList = [
-  'assets/cloud-novels.png',
+  'assets/cloud_novels.png',
   'assets/cloud-coding.png',
   'assets/cloud-core.png',
   'assets/cloud-gate.png',

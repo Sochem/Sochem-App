@@ -61,13 +61,8 @@ class _CloudPageState extends State<CloudPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                          onPressed: null,
-                          icon: ImageIcon(
-                            AssetImage(BackIcon),
-                            size: 50.0,
-                            color: Colors.white,
-                          ),
-                        ),
+                            icon: Icon(Icons.arrow_back_ios_new_rounded),
+                            onPressed: () {}),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Padding(
