@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/models/books.dart';
@@ -23,6 +25,8 @@ class CloudPage extends StatefulWidget {
   @override
   State<CloudPage> createState() => _CloudPageState();
 }
+
+CarouselController buttonCarouselController = CarouselController();
 
 class _CloudPageState extends State<CloudPage> {
   @override
@@ -61,8 +65,14 @@ class _CloudPageState extends State<CloudPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                            icon: Icon(Icons.arrow_back_ios_new_rounded),
-                            onPressed: () {}),
+                          icon: Icon(Icons.arrow_back_ios_new_rounded),
+                          color: Colors.white,
+                          iconSize: 30.0,
+                          onPressed: () =>
+                              buttonCarouselController.previousPage(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.linear),
+                        ),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Padding(
@@ -84,12 +94,12 @@ class _CloudPageState extends State<CloudPage> {
                         RotatedBox(
                           quarterTurns: 2,
                           child: IconButton(
-                            onPressed: null,
-                            icon: ImageIcon(
-                              AssetImage(BackIcon),
-                              size: 50.0,
-                              color: Colors.white,
-                            ),
+                            icon: Icon(Icons.arrow_back_ios_new_rounded),
+                            color: Colors.white,
+                            iconSize: 30.0,
+                            onPressed: () => buttonCarouselController.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.linear),
                           ),
                         ),
                       ],
@@ -227,6 +237,24 @@ class GenreTitle extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CloudCarousel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: CarouselSlider(
+        carouselController: buttonCarouselController,
+        options: CarouselOptions(
+          height: MediaQuery.of(context).size.height * 0.21,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          enlargeCenterPage: true,
+        ),
+        items: slidingImages,
       ),
     );
   }
