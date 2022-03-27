@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.25,
+                        width: screensize.width * 0.35,
                         child: Text(
                           "USERNAME",
                           style: GoogleFonts.montserrat(
@@ -91,15 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: null,
                         icon: ImageIcon(
                           AssetImage(BellIcon),
-                          size: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: null,
-                        icon: ImageIcon(
-                          AssetImage(MenuIcon),
                           size: 25.0,
                           color: Colors.white,
                         ),
