@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sochem/screen/home_screen.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screensize = MediaQuery.of(context).size;
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -53,25 +55,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
+            padding: EdgeInsets.symmetric(vertical: screensize.height * 0.04),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () => print('Skip'),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
+                    onPressed: () => {
+                      _pageController.jumpToPage(
+                        2,
                       ),
-                    ),
+                      setState(() {
+                        _currentPage = 2;
+                      })
+                    },
+                    child: _currentPage != 2
+                        ? Text(
+                            'Skip',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                          )
+                        : Text(''),
                   ),
                 ),
                 Container(
-                  height: 650.0,
+                  height: screensize.height * 0.8,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -82,17 +93,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(40.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding0.png',
+                                  'assets/varanasi.jpg',
                                 ),
-                                height: 300.0,
-                                width: 300.0,
+                                height: 400.0,
+                                width: 400.0,
                               ),
                             ),
                             SizedBox(height: 30.0),
@@ -116,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding1.png',
+                                  'assets/chemical_iit_bhu.jpg',
                                 ),
                                 height: 300.0,
                                 width: 300.0,
@@ -143,7 +154,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding2.png',
+                                  'assets/sochem.jpeg',
                                 ),
                                 height: 300.0,
                                 width: 300.0,
@@ -173,7 +184,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ? Expanded(
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
+                          child: TextButton(
                             onPressed: () {
                               _pageController.nextPage(
                                 duration: Duration(milliseconds: 500),
@@ -214,7 +225,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               color: Colors.white,
               child: GestureDetector(
-                onTap: () => print('Get started'),
+                onTap: () => HomeScreen(),
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
