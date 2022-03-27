@@ -4,6 +4,7 @@ import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -25,6 +26,7 @@ void main() async {
 /// which is undesired.
 class App extends StatefulWidget {
   // Create the initialization Future outside of `build`:
+
   @override
   _AppState createState() => _AppState();
 }
@@ -46,6 +48,10 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     // return LoginPage();
     return Scaffold(
       body: FutureBuilder(
