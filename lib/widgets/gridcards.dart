@@ -36,7 +36,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: GroupIcon,
                 title: "Groups",
-                route: '/people',
+                route: '/group',
               ),
             ],
           ),
