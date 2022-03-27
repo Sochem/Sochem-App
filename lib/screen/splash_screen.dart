@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return LoginPage();
       }
     } else {
-      return BoardingPage();
+      return OnboardingScreen();
     }
   }
 

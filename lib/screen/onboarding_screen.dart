@@ -1,135 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sochem/screen/login_page.dart';
-import 'package:sochem/models/slide.dart';
-import 'package:sochem/utils/constants.dart';
+import 'package:flutter/services.dart';
+import 'package:sochem/utils/onboarding_styles.dart';
 
-class BoardingPage extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   @override
-  _BoardingScreenState createState() => _BoardingScreenState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _BoardingScreenState extends State<BoardingPage> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final int _numPages = 3;
+  final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
-  List<Slide> _slides = [];
-  PageController _pageController = PageController();
 
-  @override
-  void initState() {
-    _currentPage = 0;
-    _pageController = PageController(initialPage: _currentPage);
-    super.initState();
-  }
-
-  List<Widget> _buildSlides() {
-    _slides = [
-      Slide(Slideimg1, "Replace this text with heading of first slide",
-          "Replace this text with content of first slide"),
-      Slide(Slideimg2, "Replace this text with heading of second slide",
-          "Replace this text with content of second slide"),
-      Slide(Slideimg3, "Replace this text with heading of third slide",
-          "Replace this text with content of third slide"),
-      Slide(SochemIcon, "Have Fun", "We hope you will find the App Useful"),
-    ];
-    return _slides.map(_buildSlide).toList();
-  }
-
-  Widget _buildSlide(Slide slide) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.all(10),
-            child: Image.asset(
-              slide.image,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.symmetric(horizontal: 70),
-          child: Text(
-            slide.heading,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.symmetric(horizontal: 70),
-          child: Text(
-            slide.content,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        Visibility(
-          visible: _currentPage == (_slides.length - 1),
-          child: Container(
-            margin: EdgeInsets.only(top: 10),
-            child: ElevatedButton(
-              onPressed: () {
-                setOnBoarding();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              child: Text("LET'S GO"),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 200,
-        )
-      ],
-    );
-  }
-
-  void setOnBoarding() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(hasOnboarded, true);
-  }
-
-  void _changePage(int page) {
-    _pageController.animateToPage(
-      page,
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeIn,
-    );
-  }
-
-  void _handlingOnPageChanged(int page) {
-    setState(() => _currentPage = page);
-  }
-
-  Widget _buildPageIndicator() {
-    Row row = Row(mainAxisAlignment: MainAxisAlignment.center, children: []);
-    for (int i = 0; i < _slides.length; i++) {
-      row.children.add(_buildPageIndicatorItem(i));
-      if (i != _slides.length - 1) {
-        row.children.add(SizedBox(width: 12));
-      }
+  List<Widget> _buildPageIndicator() {
+    List<Widget> list = [];
+    for (int i = 0; i < _numPages; i++) {
+      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
     }
-    return row;
+    return list;
   }
 
-  //page indicator circles
-  Widget _buildPageIndicatorItem(int index) {
-    return Container(
-      width: index == _currentPage ? 8 : 5,
-      height: index == _currentPage ? 8 : 5,
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      height: 8.0,
+      width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: index == _currentPage ? highlighted : unhighlighted,
+        color: isActive ? Colors.white : Color(0xFF7B51D3),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
   }
@@ -137,46 +36,201 @@ class _BoardingScreenState extends State<BoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            PageView(
-              controller: _pageController,
-              onPageChanged: _handlingOnPageChanged,
-              physics: BouncingScrollPhysics(),
-              children: _buildSlides(),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.1, 0.4, 0.7, 0.9],
+              colors: [
+                Color(0xFF3594DD),
+                Color(0xFF4563DB),
+                Color(0xFF5036D5),
+                Color(0xFF5B16D0),
+              ],
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Visibility(
-                visible: _currentPage != (_slides.length - 1),
-                child: TextButton(
-                  onPressed: () => _changePage(_slides.length - 1),
-                  child: Text("Skip"),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => print('Skip'),
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: _buildPageIndicator(),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Visibility(
-                visible: _currentPage != (_slides.length - 1),
-                child: IconButton(
-                  onPressed: () => _changePage(_currentPage + 1),
-                  icon: Icon(Icons.arrow_forward_ios),
+                Container(
+                  height: 650.0,
+                  child: PageView(
+                    physics: ClampingScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/onboarding0.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 30.0),
+                            Text(
+                              'Connect people\naround the world',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/onboarding1.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 30.0),
+                            Text(
+                              'Live your life smarter\nwith us!',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/onboarding2.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 30.0),
+                            Text(
+                              'Get a new experience\nof imagination',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildPageIndicator(),
+                ),
+                _currentPage != _numPages - 1
+                    ? Expanded(
+                        child: Align(
+                          alignment: FractionalOffset.bottomRight,
+                          child: FlatButton(
+                            onPressed: () {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease,
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22.0,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Text(''),
+              ],
             ),
-          ],
+          ),
         ),
       ),
+      bottomSheet: _currentPage == _numPages - 1
+          ? Container(
+              height: 60.0,
+              width: double.infinity,
+              color: Colors.white,
+              child: GestureDetector(
+                onTap: () => print('Get started'),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(
+                      'Get started',
+                      style: TextStyle(
+                        color: Color(0xFF5B16D0),
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : Text(''),
     );
   }
 }
