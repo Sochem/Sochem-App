@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Images ->
+const String BackIcon = "assets/back.png";
 const String SochemIcon = "assets/sochem.jpeg";
 const String ExampleProfile = "assets/sampleprofile.jpeg";
 const String BellIcon = "assets/bell.png";
