@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 final List<String> imgList = [
   'https://sochem.org/static/media/slide-home-3.d001fcc5.jpg',
-  'https://osmoze.in/assets/images/gallery/2.png',
+  'https://old.iitbhu.ac.in/che/images/logo.png',
   'https://iitbhu.ac.in/sites/default/files/styles/iitbhu_slides/public/slides/che/slide_che_02.jpg?itok=R1Cmzwfi',
-  'https://osmoze.in/assets/images/gallery/4.JPG',
+  'https://iitbhu.ac.in/sites/default/files/styles/iitbhu_slides/public/slides/che/slide_che_01.jpg?itok=qkXmgl2T',
   'https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
   'https://images.unsplash.com/photo-1565354785692-9e7523e5a87b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80',
 ];

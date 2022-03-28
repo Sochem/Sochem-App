@@ -39,12 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             padding: EdgeInsets.only(top: 25.0),
-            height: screensize.height * 0.3,
+            height: screensize.height * 0.28,
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25.0, 20.0, 10.0, 14.0),
+                  padding: EdgeInsets.fromLTRB(25.0, screensize.height * 0.03,
+                      10.0, screensize.height * 0.005),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 7.0),
@@ -68,12 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.25,
+                        width: screensize.width * 0.35,
                         child: Text(
                           "USERNAME",
                           style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w200,
                               color: Colors.white,
                               // letterSpacing: 1.2,
@@ -89,19 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: null,
                         icon: ImageIcon(
                           AssetImage(BellIcon),
-                          size: 30.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        width: screensize.width * 0.026,
-                      ),
-                      IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: null,
-                        icon: ImageIcon(
-                          AssetImage(MenuIcon),
-                          size: 40.0,
+                          size: 25.0,
                           color: Colors.white,
                         ),
                       ),
@@ -112,13 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: 25.0, top: screensize.height * 0.015),
+                        left: 25.0, top: screensize.height * 0.01),
                     child: Text(
                       "Society Of",
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 37,
+                          fontSize: screensize.width * 0.087,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
@@ -136,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: 36,
+                          fontSize: screensize.width * 0.082,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,
