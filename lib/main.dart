@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/groups.dart';
 import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/cloud.dart';
@@ -20,6 +21,7 @@ void main() async {
       '/people': (context) => PeoplePage(),
       '/group': (context) => GroupPage(),
       '/notif': (context) => Notif(),
+      '/login': (context) => LoginPage(),
     },
   ));
 }
