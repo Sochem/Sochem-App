@@ -16,12 +16,12 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: FeedIcon,
                 title: "Feed",
-                route: '/people',
+                route: '/feed',
               ),
               SingleCard(
                 image: CloudIcon,
                 title: "Cloud",
-                route: '/people',
+                route: '/cloud',
               ),
             ],
           ),
@@ -31,7 +31,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: ForumIcon,
                 title: "Forum",
-                route: '/people',
+                route: '/cloud',
               ),
               SingleCard(
                 image: GroupIcon,
@@ -46,12 +46,12 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: ProfileIcon,
                 title: "Profile",
-                route: '/people',
+                route: '/cloud',
               ),
               SingleCard(
                 image: PeopleIcon,
                 title: "People",
-                route: '/people',
+                route: '/cloud',
               ),
             ],
           ),
@@ -115,7 +115,6 @@ class SingleCard extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                     textStyle: TextStyle(
                       fontSize: 25,
-
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       // letterSpacing: 1.2,
