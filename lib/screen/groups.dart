@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,8 +18,11 @@ class _GroupPageState extends State<GroupPage> {
   String? _year;
   List<People> _people = [];
   Future<List<People>> fetchPeople() async {
-    var response =
-        await http.get(Uri.parse("https://api.npoint.io/7494a573352b5407e1fa"));
+    var response = await http
+        .get(Uri.parse("https://api.sochem.org/api/family-list/"), headers: {
+      HttpHeaders.authorizationHeader:
+          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
+    });
     List<People> people = [];
     if (response.statusCode == 200) {
       var peopleJson = json.decode(response.body);
@@ -59,9 +63,10 @@ class _GroupPageState extends State<GroupPage> {
       // "asdk");
       // print(val);
       // print(x.email!.contains(val.substring(4)));
-      if (x.email!.contains(val.substring(4)) && !_grps.contains(x.house)) {
+      if (x.email!.contains(val.substring(4)) &&
+          !_grps.contains(x.house?.toUpperCase())) {
         print(x.house);
-        _grps.add(x.house!);
+        _grps.add(x.house!.toUpperCase());
       }
     }
     // _grps!.forEach((key, value) { })
@@ -273,8 +278,9 @@ class _GroupPageState extends State<GroupPage> {
                                                     const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   _people[index]
-                                                      .name!
-                                                      .substring(0, 1),
+                                                      .email!
+                                                      .substring(0, 1)
+                                                      .toUpperCase(),
                                                   style: TextStyle(
                                                     fontStyle: FontStyle.italic,
                                                     fontWeight: FontWeight.bold,
@@ -289,13 +295,12 @@ class _GroupPageState extends State<GroupPage> {
                                                 .headline6,
                                           ),
                                           subtitle: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Text(
                                                 _people[index].email!,
                                               ),
-                                              Text(_people[index].house!),
                                             ],
                                           ),
                                         ),
@@ -303,6 +308,9 @@ class _GroupPageState extends State<GroupPage> {
                                     : Container();
                               },
                               itemCount: _people.length,
+                            ),
+                            SizedBox(
+                              height: 15,
                             ),
                           ],
                         ),

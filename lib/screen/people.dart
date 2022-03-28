@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,8 +18,11 @@ class _PeoplePageState extends State<PeoplePage> {
   String? _year;
   List<People> _people = [];
   Future<List<People>> fetchPeople() async {
-    var response =
-        await http.get(Uri.parse("https://api.npoint.io/dc501eb40ef25d91b35f"));
+    var response = await http
+        .get(Uri.parse("https://api.sochem.org/api/family-list/"), headers: {
+      HttpHeaders.authorizationHeader:
+          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
+    });
     List<People> people = [];
     if (response.statusCode == 200) {
       var peopleJson = json.decode(response.body);
@@ -229,7 +233,10 @@ class _PeoplePageState extends State<PeoplePage> {
                                   child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        _people[index].name!.substring(0, 1),
+                                        _people[index]
+                                            .email!
+                                            .substring(0, 1)
+                                            .toUpperCase(),
                                         style: TextStyle(
                                           fontStyle: FontStyle.italic,
                                           fontWeight: FontWeight.bold,
