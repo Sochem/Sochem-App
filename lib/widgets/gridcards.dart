@@ -16,7 +16,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: FeedIcon,
                 title: "Feed",
-                route: '/cloud',
+                route: '/feed',
               ),
               SingleCard(
                 image: CloudIcon,
@@ -36,7 +36,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: GroupIcon,
                 title: "Groups",
-                route: '/people',
+                route: '/cloud',
               ),
             ],
           ),
@@ -51,7 +51,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: PeopleIcon,
                 title: "People",
-                route: '/people',
+                route: '/cloud',
               ),
             ],
           ),

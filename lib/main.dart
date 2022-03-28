@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/cloud.dart';
 import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/splash_screen.dart';
@@ -13,6 +14,7 @@ void main() async {
     initialRoute: '/app',
     routes: <String, WidgetBuilder>{
       '/app': (context) => App(),
+      '/feed': (context) => FeedScreen(),
       '/cloud': (context) => CloudPage(),
       '/people': (context) => PeoplePage(),
     },
