@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sochem/screen/home_screen.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -225,7 +226,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               color: Colors.white,
               child: GestureDetector(
-                onTap: () => HomeScreen(),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  '/login',
+                ),
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
