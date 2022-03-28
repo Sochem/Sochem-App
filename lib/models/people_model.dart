@@ -1,12 +1,18 @@
 class People {
-  String? img;
+  String? id;
   String? name;
   String? email;
+  String? roll_no;
+  String? batch;
+  String? house;
 
-  People(this.img, this.name, this.email);
+  People(this.id, this.name, this.email, this.roll_no, this.batch, this.house);
   People.fromJson(Map<String, dynamic> info) {
-    img = info['img'];
+    id = info['id'].toString();
     name = info['name'];
     email = info['email'];
+    roll_no = info['roll_no'].toString();
+    batch = info['batch'].toString();
+    house = info['house'];
   }
 }
