@@ -3,6 +3,8 @@ import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
 
 import '../utils/constants.dart';
 
+String year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -101,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                   child: Text(
-                                    "somerandomlongnamewala.student.che20@itbhu.ac.in",
+                                    userEmail,
                                     style: TextStyle(fontSize: 14),
                                   ),
                                 ),
@@ -142,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                     child: Text(
-                                      "Batch 2020",
+                                      "Batch 20" + year,
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w400),

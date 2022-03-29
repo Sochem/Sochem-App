@@ -89,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       IconButton(
                           alignment: Alignment.centerRight,
-                          onPressed: null,
+                          onPressed: () => Navigator.pushNamed(
+                                context,
+                                '/notif',
+                              ),
                           icon: Icon(
                             CupertinoIcons.bell,
                             color: Colors.white,

@@ -35,3 +35,4 @@ final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";
 final String hasOnboarded = "Notyet";
 String? djangoToken;
+String userEmail = '';

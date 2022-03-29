@@ -27,10 +27,11 @@ class _LoginPageState extends State<LoginPage> {
           await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
       print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
       print(user);
+
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isLoggedIn', true);
-
+        userEmail = user.username.toString();
         print('IdToken:  ${user.idToken}');
         print(user.username.toString() + " 3asdk");
         print(user.credential.toString() + " 4asdk");
