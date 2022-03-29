@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,14 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: screensize.width * 0.25,
                       ),
                       IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: null,
-                        icon: ImageIcon(
-                          AssetImage(BellIcon),
-                          size: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
+                          alignment: Alignment.centerRight,
+                          onPressed: null,
+                          icon: Icon(
+                            CupertinoIcons.bell,
+                            color: Colors.white,
+                            size: 30.0,
+                          )),
                     ],
                   ),
                 ),

@@ -27,6 +27,9 @@ const Color tri1 = Color.fromARGB(255, 58, 110, 196);
 const Color tri2 = Color.fromARGB(255, 86, 134, 182);
 const Color tri3 = Color.fromARGB(255, 64, 99, 141);
 const Color tri4 = Color.fromARGB(255, 58, 95, 176);
+var blue1 = new Color.fromRGBO(22, 71, 119, 1);
+var blue2 = new Color.fromRGBO(24, 134, 191, 1);
+var blue3 = new Color.fromRGBO(39, 88, 124, 1);
 
 final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";

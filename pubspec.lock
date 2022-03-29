@@ -338,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+  shape_of_view_null_safe:
+    dependency: "direct main"
+    description:
+      name: shape_of_view_null_safe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -469,13 +476,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.5"
   url_launcher:
     dependency: "direct main"
     description:
@@ -532,6 +532,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.5"
   vector_math:
     dependency: transitive
     description:
@@ -562,4 +569,4 @@ packages:
     version: "5.3.1"
 sdks:
   dart: ">=2.15.0 <3.0.0"
-  flutter: ">=2.10.0-0"
+  flutter: ">=2.10.0"

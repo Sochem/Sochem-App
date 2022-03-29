@@ -46,7 +46,7 @@ class HomeScreenGrid extends StatelessWidget {
               SingleCard(
                 image: ProfileIcon,
                 title: "Profile",
-                route: '/cloud',
+                route: '/profile',
               ),
               SingleCard(
                 image: PeopleIcon,
