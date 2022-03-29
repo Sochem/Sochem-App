@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +70,7 @@ class _CloudPageState extends State<CloudPage> {
                   ],
                 ),
                 padding: EdgeInsets.only(top: 45.0),
-                height: screensize.height * 0.35,
+                height: screensize.height * 0.4,
                 child: Column(
                   children: [
                     Row(
@@ -118,11 +117,8 @@ class _CloudPageState extends State<CloudPage> {
                       ],
                     ),
                     Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: CloudCarousel(),
-                      ),
-                    ),
+                        child:
+                            Container(height: 200.0, child: CloudCarousel())),
                   ],
                 ),
               ),
@@ -130,7 +126,7 @@ class _CloudPageState extends State<CloudPage> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 10.0),
-            height: screensize.height * 0.635,
+            height: screensize.height * 0.585,
             child: ListView.builder(
                 itemCount: bookTypesList.length,
                 itemBuilder: (BuildContext context, int index) {
