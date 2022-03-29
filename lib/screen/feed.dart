@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-
-import '../utils/constants.dart';
+import 'package:sochem/utils/constants.dart';
 
 class FeedScreen extends StatefulWidget {
   @override
@@ -18,8 +16,9 @@ class _FeedScreenState extends State<FeedScreen> {
   //Posts ViewModel
   List<Post> _posts = [];
   Future<List<Post>> fetchPosts() async {
-    var response =
-        await http.get(Uri.parse('https://api.npoint.io/bf243fd49e6b8783f02b'));
+    var response = await http.get(
+      Uri.parse('https://api.npoint.io/bf243fd49e6b8783f02b'),
+    );
 
     List<Post> posts = [];
     if (response.statusCode == 200) {

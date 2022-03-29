@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
             color: Colors.white,
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage('assets/sochem.png'),
+              image: AssetImage(SochemIcon),
             ),
           ),
         ),

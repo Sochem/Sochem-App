@@ -28,6 +28,20 @@ const Color tri2 = Color.fromARGB(255, 86, 134, 182);
 const Color tri3 = Color.fromARGB(255, 64, 99, 141);
 const Color tri4 = Color.fromARGB(255, 58, 95, 176);
 
+// Route names ->
+const String AppRoute = '/app';
+const String FeedRoute = '/feed';
+const String CloudRoute = '/cloud';
+const String PeopleRoute = '/people';
+const String GroupRoute = '/group';
+const String NotifRoute = '/notif';
+const String LoginRoute = '/login';
+
+// Shared Prefs & Environment variables ->
+const String AppVersion = 'app_version';
+const String ConfigVersion = 'config_version';
+const String WebClientId = 'WEB_CLIENT_ID';
+
 final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";
 final String hasOnboarded = "Notyet";
