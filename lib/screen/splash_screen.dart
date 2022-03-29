@@ -13,18 +13,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   decideScreen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var onboarded = prefs.getBool(hasOnboarded);
-    var login = prefs.getBool(isLoggedIn);
-    if (onboarded == true) {
-      if (login == true) {
-        return HomeScreen();
-      } else {
-        return LoginPage();
-      }
-    } else {
-      return BoardingPage();
-    }
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var onboarded = prefs.getBool(hasOnboarded);
+    // var login = prefs.getBool(isLoggedIn);
+    // if (onboarded == true) {
+    //   if (login == true) {
+    //     return HomeScreen();
+    //   } else {
+    //     return LoginPage();
+    //   }
+    // } else {
+    //   return OnboardingScreen();
+    // }
+    return OnboardingScreen();
   }
 
   void initState() {
@@ -64,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
             color: Colors.white,
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage('assets/sochem.jpeg'),
+              image: AssetImage('assets/sochem.png'),
             ),
           ),
         ),
