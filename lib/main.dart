@@ -20,7 +20,7 @@ void main() async {
       '/feed': (context) => FeedScreen(),
       '/cloud': (context) => CloudPage(),
       '/people': (context) => PeoplePage(),
-      '/profile': (context) => ProfilePage()
+      '/profile': (context) => ProfilePage(),
       '/group': (context) => GroupPage(),
       '/notif': (context) => Notif(),
       '/login': (context) => LoginPage(),
