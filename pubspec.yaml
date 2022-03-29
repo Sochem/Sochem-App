@@ -36,10 +36,17 @@ dependencies:
   shared_preferences: ^2.0.13
   url_launcher: ^6.0.20
   shape_of_view_null_safe: ^2.0.0
+  flutter_html: ^2.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.2
+
+flutter_icons:
+  image_path: "assets/sochem.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

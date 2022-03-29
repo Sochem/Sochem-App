@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imgList = [
@@ -26,7 +25,8 @@ final List<String> imgTitle = [
 final List<Widget> slidingImages = imgList
     .map(
       (item) => Container(
-        width: 250.0,
+        width: 250,
+        height: 500,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
           color: Colors.white,
@@ -42,35 +42,32 @@ final List<Widget> slidingImages = imgList
           ],
         ),
         padding: EdgeInsets.only(top: 10.0),
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              child: Image.asset(
+                item,
+                height: 125.0,
+                alignment: Alignment.center,
+              ),
+            ),
+            Container(
+              width: 250,
+              decoration: BoxDecoration(
                 color: Colors.white,
-                child: Image.asset(
-                  item,
-                  height: 125.0,
-                  alignment: Alignment.center,
+              ),
+              padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
+              child: Text(
+                '${imgTitle[imgList.indexOf(item)]}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-                  child: Text(
-                    '${imgTitle[imgList.indexOf(item)]}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 23.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     )

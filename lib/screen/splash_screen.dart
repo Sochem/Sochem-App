@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/screen/home_screen.dart';
 import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/onboarding_screen.dart';
-import 'package:sochem/utils/constants.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return LoginPage();
       }
     } else {
-      return BoardingPage();
+      return OnboardingScreen();
     }
   }
 
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             color: Colors.white,
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage('assets/sochem.jpeg'),
+              image: AssetImage('assets/sochem.png'),
             ),
           ),
         ),

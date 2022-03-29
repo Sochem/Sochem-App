@@ -7,14 +7,14 @@ import 'package:sochem/models/people_model.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-class PeoplePage extends StatefulWidget {
-  const PeoplePage({Key? key}) : super(key: key);
+class GroupPage extends StatefulWidget {
+  const GroupPage({Key? key}) : super(key: key);
 
   @override
-  _PeoplePageState createState() => _PeoplePageState();
+  _GroupPageState createState() => _GroupPageState();
 }
 
-class _PeoplePageState extends State<PeoplePage> {
+class _GroupPageState extends State<GroupPage> {
   String? _year;
   List<People> _people = [];
   Future<List<People>> fetchPeople() async {
@@ -55,6 +55,25 @@ class _PeoplePageState extends State<PeoplePage> {
     return z.toList();
   }
 
+  List<String> _grps = [];
+  void grpList(String val) {
+    _grps.clear();
+    for (var x in _people) {
+      // print(x.email!.substring(x.email!.length - 17, x.email!.length - 12) +
+      // "asdk");
+      // print(val);
+      // print(x.email!.contains(val.substring(4)));
+      if (x.email!.contains(val.substring(4)) &&
+          !_grps.contains(x.house?.toUpperCase())) {
+        print(x.house);
+        _grps.add(x.house!.toUpperCase());
+      }
+    }
+    // _grps!.forEach((key, value) { })
+
+    print(_grps);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +100,7 @@ class _PeoplePageState extends State<PeoplePage> {
         ),
         backgroundColor: kPrimaryColor,
         title: Text(
-          'People',
+          'Groups',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -173,6 +192,7 @@ class _PeoplePageState extends State<PeoplePage> {
                 },
                 value: _year,
                 onChanged: (nv) {
+                  grpList(nv!);
                   setState(
                     () {
                       _year = nv;
@@ -216,46 +236,87 @@ class _PeoplePageState extends State<PeoplePage> {
                 : ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    // scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      return _people[index].email!.contains(_year!.substring(4))
-                          ? Card(
-                              elevation: 5,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                                vertical: 8,
+                    itemBuilder: (context, index1) {
+                      return Container(
+                        // height: MediaQuery.of(context).size.height * 0.67,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              _grps[index1],
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                                // backgroundColor: kBackgroundColor,
                               ),
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.primaries[Random()
-                                      .nextInt(Colors.primaries.length)],
-                                  radius: 30,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        _people[index]
-                                            .email!
-                                            .substring(0, 1)
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              // scrollDirection: Axis.vertical,
+
+                              itemBuilder: (context, index) {
+                                return _people[index].house == _grps[index1]
+                                    ? Card(
+                                        // elevation: 5,
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 5,
+                                          vertical: 8,
                                         ),
-                                      )),
-                                ),
-                                title: Text(
-                                  _people[index].name!,
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                                subtitle: Text(
-                                  _people[index].email!,
-                                ),
-                              ),
-                            )
-                          : Container();
+                                        child: ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Colors.primaries[
+                                                Random().nextInt(
+                                                    Colors.primaries.length)],
+                                            radius: 30,
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  _people[index]
+                                                      .email!
+                                                      .substring(0, 1)
+                                                      .toUpperCase(),
+                                                  style: TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                )),
+                                          ),
+                                          title: Text(
+                                            _people[index].name!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
+                                          ),
+                                          subtitle: Row(
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text(
+                                                _people[index].email!,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : Container();
+                              },
+                              itemCount: _people.length,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                      );
                     },
-                    itemCount: _people.length,
+                    itemCount: _grps.length,
                   ),
           ],
         ),
