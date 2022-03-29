@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sochem/screen/home_screen.dart';
-import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
 class OnboardingScreen extends StatefulWidget {

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sochem/screen/home_screen.dart';
-import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/onboarding_screen.dart';
-import 'package:sochem/utils/constants.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
