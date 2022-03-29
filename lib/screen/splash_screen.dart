@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/screen/home_screen.dart';
+import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/onboarding_screen.dart';
 import 'dart:async';
+
+import '../utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -9,19 +14,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   decideScreen() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // var onboarded = prefs.getBool(hasOnboarded);
-    // var login = prefs.getBool(isLoggedIn);
-    // if (onboarded == true) {
-    //   if (login == true) {
-    //     return HomeScreen();
-    //   } else {
-    //     return LoginPage();
-    //   }
-    // } else {
-    //   return OnboardingScreen();
-    // }
-    return OnboardingScreen();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var onboarded = prefs.getBool(hasOnboarded);
+    var login = prefs.getBool(isLoggedIn);
+    if (onboarded == true) {
+      if (login == true) {
+        return HomeScreen();
+      } else {
+        return LoginPage();
+      }
+    } else {
+      return OnboardingScreen();
+    }
   }
 
   void initState() {
