@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isLoggedIn', true);
-
         print('IdToken:  ${user.idToken}');
         print(user.username.toString() + " 3asdk");
         print(user.credential.toString() + " 4asdk");
