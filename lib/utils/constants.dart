@@ -28,9 +28,9 @@ const Color tri2 = Color.fromARGB(255, 86, 134, 182);
 const Color tri3 = Color.fromARGB(255, 64, 99, 141);
 const Color tri4 = Color.fromARGB(255, 58, 95, 176);
 
-final String isGuest = "guestLogIn";
-final String isLoggedIn = "logIn";
-final String hasOnboarded = "Notyet";
+final String isGuest = "isGuest";
+final String isLoggedIn = "isLoggedIn";
+final String hasOnboarded = "hasOnboarded";
 late String id;
 late int nayiId;
 int x = 0;
