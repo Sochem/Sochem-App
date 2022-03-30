@@ -1,11 +1,13 @@
 class Book {
-  late String title;
+  late String category;
   late String imageAddress;
+  late String link;
 
-  Book(this.title, this.imageAddress);
+  Book(this.category, this.imageAddress, this.link);
 
   Book.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    category = json['category'];
     imageAddress = json['imageAddress'];
+    link = json['link'];
   }
 }
