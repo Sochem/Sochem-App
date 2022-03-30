@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
 import 'package:sochem/utils/constants.dart';
 
@@ -15,13 +15,24 @@ class Notif extends StatefulWidget {
 }
 
 class _NotifState extends State<Notif> {
-  List<Notificationss> _allNotif = [];
+  List<Notificationss> _alNotif = [], _allNotif = [];
+  Map<String, String> notifenums = {
+    '1': FeedIcon,
+    '2': CloudIcon,
+    '3': ForumIcon,
+  };
 
+  int vis = 0;
+
+  bool highlight = false;
   Future<List<Notificationss>> fetchNotifs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(djangoToken);
+    print(token.toString() + 'asdk');
     var response = await http
         .get(Uri.parse("https://api.sochem.org/api/notifi/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
+      HttpHeaders.authorizationHeader: 'Token ' + token!
+      // 'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
     });
     List<Notificationss> notifs = [];
     if (response.statusCode == 200) {
@@ -33,14 +44,28 @@ class _NotifState extends State<Notif> {
     return notifs;
   }
 
+  void puraniId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = "";
+    prefs.setInt(id, int.parse(_allNotif[0].id!));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    puraniId();
+  }
+
   @override
   void initState() {
     super.initState();
     fetchNotifs().then((value) {
       setState(() {
-        _allNotif.addAll(value);
+        _alNotif.addAll(value);
+        _allNotif = new List.from(_alNotif.reversed);
       });
     });
+    // print(_allNotif.toString());
   }
 
   @override
@@ -91,26 +116,21 @@ class _NotifState extends State<Notif> {
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 5,
+                  shadowColor: index <= x - 1 ? Colors.red : Colors.white,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 5,
                     vertical: 8,
                   ),
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Colors
-                          .primaries[Random().nextInt(Colors.primaries.length)],
-                      radius: 30,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            (index + 1).toString(),
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          )),
-                    ),
+                        backgroundColor: Colors.white,
+                        radius: 30,
+                        child: FittedBox(
+                          child: Image(
+                            image:
+                                AssetImage(notifenums[_allNotif[index].type]!),
+                          ),
+                        )),
                     title: Text(
                       _allNotif[index].title!,
                       style: Theme.of(context).textTheme.headline6,
