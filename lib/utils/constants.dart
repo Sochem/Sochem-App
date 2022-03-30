@@ -45,7 +45,5 @@ const String GuestToken = 'guest_token';
 final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";
 final String hasOnboarded = "Notyet";
-late String id;
-late int nayiId;
-int x = 0;
+final String lastNotifId = "last_notif_id";
 late String djangoToken;
