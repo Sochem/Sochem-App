@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,11 +19,10 @@ class _FeedScreenState extends State<FeedScreen> {
   //Posts ViewModel
   List<Post> _posts = [];
   Future<List<Post>> fetchPosts() async {
-    var response = await http
-        .get(Uri.parse("https://api.sochem.org/api/events/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
-    });
+    var response = await http.get(
+      Uri.parse("https://api.sochem.org/api/events/"),
+      headers: {HttpHeaders.authorizationHeader: dotenv.get(GuestToken)},
+    );
     List<Post> posts = [];
     if (response.statusCode == 200) {
       var postsJson = json.decode(response.body);

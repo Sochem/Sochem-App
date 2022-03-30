@@ -39,8 +39,8 @@ const String LoginRoute = '/login';
 
 // Shared Prefs & Environment variables ->
 const String AppVersion = 'app_version';
-const String ConfigVersion = 'config_version';
-const String WebClientId = 'WEB_CLIENT_ID';
+const String WebClientId = 'web_client_id';
+const String GuestToken = 'guest_token';
 
 final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";
