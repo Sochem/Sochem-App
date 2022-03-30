@@ -227,6 +227,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget viewPost(int index) {
+    print(_posts[index].description);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -258,9 +259,10 @@ class _FeedScreenState extends State<FeedScreen> {
                 height: 5.0,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 15.0),
-                child: Html(data: _posts[index].description),
+                padding: const EdgeInsets.all(15.0),
+                child: Html(
+                  data: _posts[index].description.replaceAll("â¢", "•"),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
