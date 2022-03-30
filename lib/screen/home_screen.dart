@@ -1,10 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/models/notification_model.dart';
 import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/gridcards.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,6 +17,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<List<Notificationss>> fetchNotifs() async {
+    var response = await http
+        .get(Uri.parse("https://api.sochem.org/api/notifi/"), headers: {
+      HttpHeaders.authorizationHeader:
+          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
+    });
+    List<Notificationss> notifs = [];
+    if (response.statusCode == 200) {
+      var peopleJson = json.decode(response.body);
+      for (var peoplesJson in peopleJson) {
+        notifs.add(Notificationss.fromJson(peoplesJson));
+      }
+    }
+    return notifs;
+  }
+
+  void notifss() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt(id) != null)
+      x = nayiId - prefs.getInt(id)!;
+    else
+      x = 0;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNotifs().then((value) {
+      nayiId = value.length;
+    });
+    notifss();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screensize = MediaQuery.of(context).size;
@@ -86,18 +124,33 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: screensize.width * 0.25,
                       ),
-                      IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          '/notif',
+                      Stack(children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: IconButton(
+                            alignment: Alignment.centerRight,
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              '/notif',
+                            ),
+                            icon: ImageIcon(
+                              AssetImage(BellIcon),
+                              size: 25.0,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                        icon: ImageIcon(
-                          AssetImage(BellIcon),
-                          size: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
+                        if (x > 0)
+                          Positioned(
+                            right: 9,
+                            top: 7,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.red,
+                              maxRadius: 6,
+                              minRadius: 6,
+                            ),
+                          )
+                      ]),
                     ],
                   ),
                 ),

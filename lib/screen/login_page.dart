@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       final user =
           await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
       print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       print(user);
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -45,7 +46,13 @@ class _LoginPageState extends State<LoginPage> {
           },
         );
         print(response.body.toString() + " 8asdk");
-        djangoToken = response.body;
+        djangoToken = "";
+        await prefs.setString(
+            djangoToken,
+            response.body
+                .toString()
+                .substring(10, response.body.toString().length - 2));
+        print(prefs.getString(djangoToken)! + " asdk");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
