@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -138,7 +139,8 @@ class _CloudPageState extends State<CloudPage> {
                       ),
                       BooksHorizontal(
                           genreURL:
-                              'https://api.npoint.io/ce067c8d01658dad23b7'),
+                              'https://api.npoint.io/46e15ce2ed98a569637a',
+                          category: bookTypesList[index]),
                     ],
                   );
                 }),
@@ -150,8 +152,9 @@ class _CloudPageState extends State<CloudPage> {
 }
 
 class BooksHorizontal extends StatefulWidget {
-  const BooksHorizontal({required this.genreURL});
+  const BooksHorizontal({required this.genreURL, required this.category});
   final String genreURL;
+  final String category;
 
   @override
   State<BooksHorizontal> createState() => _BooksHorizontalState();
@@ -193,32 +196,38 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
           height: 200.0,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Container(
-                  margin: EdgeInsets.only(
-                    left: 10,
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    image: new DecorationImage(
-                        image: NetworkImage(_books[index].imageAddress),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: Colors.red,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 5.0,
-                        spreadRadius: 0.0,
-                        offset: Offset(0.5, 0.5),
+              return _books[index].category == widget.category
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () => launch(_books[index].link),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: 10,
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            image: new DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                    _books[index].imageAddress),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.red,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 5.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(0.5, 0.5),
+                              ),
+                            ],
+                          ),
+                          width: screensize.width * 0.36,
+                        ),
                       ),
-                    ],
-                  ),
-                  width: screensize.width * 0.36,
-                ),
-              );
+                    )
+                  : Text('');
             },
             itemCount: _books.length,
             scrollDirection: Axis.horizontal,
