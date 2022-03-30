@@ -8,6 +8,7 @@ import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/cloud.dart';
 import 'package:sochem/screen/notif.dart';
 import 'package:sochem/screen/people.dart';
+import 'package:sochem/screen/profile.dart';
 import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sochem/utils/constants.dart';
@@ -27,6 +28,7 @@ void main() async {
       GroupRoute: (context) => GroupPage(),
       NotifRoute: (context) => Notif(),
       LoginRoute: (context) => LoginPage(),
+      ProfileRoute: (context) => ProfilePage(),
     },
   ));
 }

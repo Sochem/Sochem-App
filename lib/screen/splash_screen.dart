@@ -43,9 +43,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget build(BuildContext context) {
-    var blue1 = new Color.fromRGBO(22, 71, 119, 1);
-    var blue2 = new Color.fromRGBO(24, 134, 191, 1);
-    var blue3 = new Color.fromRGBO(39, 88, 124, 1);
     return Scaffold(
         body: Stack(children: [
       Container(

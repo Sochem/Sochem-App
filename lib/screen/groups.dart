@@ -200,7 +200,7 @@ class _GroupPageState extends State<GroupPage> {
                   );
                 },
                 icon: Icon(
-                  Icons.keyboard_arrow_down_sharp,
+                  Icons.keyboard_arrow_down_outlined,
                   size: 35,
                   color: highlighted,
                 ),
@@ -238,7 +238,6 @@ class _GroupPageState extends State<GroupPage> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index1) {
                       return Container(
-                        // height: MediaQuery.of(context).size.height * 0.67,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -282,9 +281,9 @@ class _GroupPageState extends State<GroupPage> {
                                                       .substring(0, 1)
                                                       .toUpperCase(),
                                                   style: TextStyle(
-                                                    fontStyle: FontStyle.italic,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white,
+                                                    fontSize: 25,
                                                   ),
                                                 )),
                                           ),
@@ -298,8 +297,10 @@ class _GroupPageState extends State<GroupPage> {
                                             // mainAxisAlignment:
                                             //     MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(
-                                                _people[index].email!,
+                                              Flexible(
+                                                child: Text(
+                                                  _people[index].email!,
+                                                ),
                                               ),
                                             ],
                                           ),

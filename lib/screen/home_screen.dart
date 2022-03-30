@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
-import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/gridcards.dart';
@@ -18,6 +18,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool newNotifExist = false;
+  String userName = '';
+  String initials = '';
+  bool guest = true;
 
   Future<void> fetchNotifs() async {
     var response = await http.get(
@@ -47,8 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    fetchNotifs().then((value) {
-      setState(() {});
+    _initialising();
+  }
+
+  void _initialising() async {
+    final prefs = await SharedPreferences.getInstance();
+    await fetchNotifs();
+    setState(() {
+      userName = prefs.getString('name')!;
+      initials = userName.substring(0, 1).toUpperCase();
+      guest = !prefs.getBool('isLoggedIn')!;
+      print(userName + "dev");
     });
   }
 
@@ -87,51 +99,114 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 7.0),
-                        child: ClipOval(
-                          child: InkWell(
-                            onLongPress: () {
-                              setLogout();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
-                              );
-                            },
-                            child: Image.asset(
-                              ExampleProfile,
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                        child: GestureDetector(
+                          onTap: () => guest
+                              ? ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "You need to be signed in with your institute ID",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    backgroundColor:
+                                        Color(0xFFE8F1F8).withOpacity(0.8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    elevation: 5,
+                                  ),
+                                )
+                              : Navigator.pushNamed(
+                                  context,
+                                  '/profile',
+                                ),
+                          child: guest
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)],
+                                  radius: 30,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.account_circle_outlined,
+                                        size: 40,
+                                      )),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)],
+                                  radius: 30,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      initials,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.35,
-                        child: Text(
-                          "USERNAME",
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                              // letterSpacing: 1.2,
-                            ),
-                          ),
-                        ),
+                        width: screensize.width * 0.4,
+                        child: guest
+                            ? Text(
+                                "Guest",
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.white,
+                                    // letterSpacing: 1.2,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                userName,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.white,
+                                    // letterSpacing: 1.2,
+                                  ),
+                                ),
+                              ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.25,
+                        width: screensize.width * 0.15,
                       ),
                       Stack(children: [
                         Align(
                           alignment: Alignment.center,
                           child: IconButton(
                             alignment: Alignment.centerRight,
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              '/notif',
-                            ),
+                            onPressed: () => guest
+                                ? ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(seconds: 2),
+                                      content: Text(
+                                        "You need to be signed in with your institute ID",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      backgroundColor:
+                                          Color(0xFFE8F1F8).withOpacity(0.8),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                      behavior: SnackBarBehavior.floating,
+                                      elevation: 5,
+                                    ),
+                                  )
+                                : Navigator.pushNamed(context, NotifRoute),
                             icon: ImageIcon(
                               AssetImage(BellIcon),
                               size: 25.0,
@@ -148,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               maxRadius: 6,
                               minRadius: 6,
                             ),
-                          )
+                          ),
                       ]),
                     ],
                   ),
