@@ -10,27 +10,7 @@ import 'package:sochem/widgets/cloud_carousel.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-final List<String> bookTypesList = [
-  'Books/Novels',
-  'Code',
-  'Core',
-  'GATE',
-  'GRE',
-  'HULM',
-  'Online Courses',
-  'Open Electives'
-];
-
-final List<String> categoryLinks = [
-  "https://drive.google.com/drive/folders/1TOxyPEmb8l9VvNAa1IycT7rBHIp2x_Wd?usp=sharing", //novels
-  "https://drive.google.com/drive/folders/1VYASsgV_Ods_EyHiKd_Sm7qjE1gyNpnU?usp=sharing", //Programming
-  "https://drive.google.com/drive/folders/15pTBbGVUdA0dTGFQI7QpfQWaXDQsr6cy?usp=sharing", //Core
-  "https://drive.google.com/drive/folders/1R34YagE19rLI31yMRQo4G-UnvHRRBmgn?usp=sharing", //GATE
-  "https://drive.google.com/drive/folders/1mZSAyhN7BNX51g9V4if-6P1NWyFqtCmm?usp=sharing", //GRE
-  "https://drive.google.com/drive/folders/18u9EqfPqZ7t9z9RL49WL1ebeW51t_eF-?usp=sharing", //HULM
-  "https://drive.google.com/drive/folders/1ZGKENtgtA8UTCHcWIlSveJxg9_uX44vt?usp=sharing", //Online Courses
-  "https://drive.google.com/drive/folders/1-FPXGNsfx7jcpLksfqqyo_7KA0KeOBi9?usp=sharing", //Open Electives
-];
+List<Book> books = [];
 
 class CloudPage extends StatefulWidget {
   const CloudPage({Key? key}) : super(key: key);
@@ -61,10 +41,7 @@ class _CloudPageState extends State<CloudPage> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black,
-                      offset: const Offset(
-                        1.0,
-                        1.0,
-                      ), //Offset
+                      offset: const Offset(1.0, 1.0), //Offset
                       blurRadius: 30.0,
                       spreadRadius: 1.0,
                     ),
@@ -83,8 +60,9 @@ class _CloudPageState extends State<CloudPage> {
                           iconSize: 30.0,
                           onPressed: () =>
                               buttonCarouselController.previousPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.linear),
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.linear,
+                          ),
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
@@ -111,15 +89,19 @@ class _CloudPageState extends State<CloudPage> {
                             color: Colors.white,
                             iconSize: 30.0,
                             onPressed: () => buttonCarouselController.nextPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.linear),
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.linear,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     Flexible(
-                        child:
-                            Container(height: 200.0, child: CloudCarousel())),
+                      child: Container(
+                        height: screensize.height * 0.25,
+                        child: CloudCarousel(),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -138,9 +120,9 @@ class _CloudPageState extends State<CloudPage> {
                         link: categoryLinks[index],
                       ),
                       BooksHorizontal(
-                          genreURL:
-                              'https://api.npoint.io/46e15ce2ed98a569637a',
-                          category: bookTypesList[index]),
+                        genreURL: 'https://api.npoint.io/46e15ce2ed98a569637a',
+                        category: bookTypesList[index],
+                      ),
                     ],
                   );
                 }),
@@ -164,9 +146,8 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
   //Books viewmodel
   List<Book> _books = [];
   Future<List<Book>> fetchBooks() async {
+    if (books.isNotEmpty) return books;
     var response = await http.get(Uri.parse(widget.genreURL));
-
-    List<Book> books = [];
     if (response.statusCode == 200) {
       var booksJson = json.decode(response.body);
       for (var bookJson in booksJson) {
@@ -191,7 +172,7 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
   Widget build(BuildContext context) {
     Size screensize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
           height: 200.0,
           child: ListView.builder(
@@ -209,9 +190,11 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
                           ),
                           decoration: BoxDecoration(
                             image: new DecorationImage(
-                                image: CachedNetworkImageProvider(
-                                    _books[index].imageAddress),
-                                fit: BoxFit.cover),
+                              image: CachedNetworkImageProvider(
+                                _books[index].imageAddress,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                             borderRadius: BorderRadius.circular(5.0),
                             color: Colors.red,
                             boxShadow: [
@@ -281,12 +264,11 @@ class CloudCarousel extends StatelessWidget {
       child: CarouselSlider(
         carouselController: buttonCarouselController,
         options: CarouselOptions(
-          height: MediaQuery.of(context).size.height * 0.21,
+          height: MediaQuery.of(context).size.height * 0.23,
           autoPlay: true,
           aspectRatio: 16 / 9,
-          enlargeCenterPage: true,
         ),
-        items: slidingImages,
+        items: slidingImages(MediaQuery.of(context).size.height),
       ),
     );
   }

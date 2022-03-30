@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/models/config.dart';
 import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/groups.dart';
 import 'package:sochem/screen/feed.dart';
@@ -7,45 +10,54 @@ import 'package:sochem/screen/notif.dart';
 import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sochem/utils/constants.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   await dotenv.load(fileName: '.env');
   runApp(MaterialApp(
     title: "Sochem App",
-    initialRoute: '/app',
+    initialRoute: AppRoute,
     routes: <String, WidgetBuilder>{
-      '/app': (context) => App(),
-      '/feed': (context) => FeedScreen(),
-      '/cloud': (context) => CloudPage(),
-      '/people': (context) => PeoplePage(),
-      '/group': (context) => GroupPage(),
-      '/notif': (context) => Notif(),
-      '/login': (context) => LoginPage(),
+      AppRoute: (context) => App(),
+      FeedRoute: (context) => FeedScreen(),
+      CloudRoute: (context) => CloudPage(),
+      PeopleRoute: (context) => PeoplePage(),
+      GroupRoute: (context) => GroupPage(),
+      NotifRoute: (context) => Notif(),
+      LoginRoute: (context) => LoginPage(),
     },
   ));
 }
 
-/// We are using a StatefulWidget such that we only create the [Future] once,
-/// no matter how many times our widget rebuild.
-/// If we used a [StatelessWidget], in the event where [App] is rebuilt, that
-/// would re-initialize FlutterFire and make our application re-enter loading state,
-/// which is undesired.
 class App extends StatefulWidget {
-  // Create the initialization Future outside of `build`:
-
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  /// The future is part of the state of our widget. We should not call `initializeApp`
-  /// directly inside [build].
-  // final Future<int> _initialization = Future.delayed(Duration(seconds: 2));
+  late SharedPreferences pref;
 
-  Future<int> _demoInitializationFunction() async {
-    await Future.delayed(Duration(seconds: 2));
-    return 1;
+  Future<Config> fetchConfig() async {
+    var appVersion = dotenv.env[AppVersion]!;
+    pref = await SharedPreferences.getInstance();
+
+    if (pref.containsKey(AppVersion)) {
+      appVersion = pref.getString(AppVersion)!;
+    } else {
+      pref.setString(AppVersion, appVersion);
+    }
+
+    Config config = Config(appVersion, false, false);
+    var response = await http.get(
+      Uri.parse('https://api.npoint.io/4357d57e9aebec0d8046'),
+    );
+    print(response.body.toString());
+    if (response.statusCode == 200) {
+      config = Config.fromJson(json.decode(response.body));
+    }
+    return config;
   }
 
   @override
@@ -59,24 +71,31 @@ class _AppState extends State<App> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    // return LoginPage();
+
     return Scaffold(
       body: FutureBuilder(
-        // Initialize FlutterFire:
-        future: _demoInitializationFunction(),
+        future: fetchConfig(),
         builder: (context, snapshot) {
-          // Check for errors
           if (snapshot.hasError) {
             return SomethingWentWrong();
           }
 
-          // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
+            var config = snapshot.data as Config;
+            var myAppVersion = pref.getString(AppVersion)!;
+
+            if (config.maintenance) {
+              return AppUnderMaintenance();
+            }
+
+            if (config.update &&
+                myAppVersion.compareTo(config.appVersion) < 0) {
+              return UpdateYourApp();
+            }
+
             return SplashScreen();
-            //return BoardingPage();
           }
 
-          // Otherwise, show something whilst waiting for initialization to complete
           return Loading();
         },
       ),
@@ -89,6 +108,86 @@ class SomethingWentWrong extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(child: Text("Something Went Wrong")),
+    );
+  }
+}
+
+class UpdateYourApp extends StatelessWidget {
+  const UpdateYourApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kBackgroundColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: 180,
+            height: 180,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(SochemIcon),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              "We have lauched a new version of our app. Please update!",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: tri1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AppUnderMaintenance extends StatelessWidget {
+  const AppUnderMaintenance({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kBackgroundColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: 180,
+            height: 180,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(SochemIcon),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              "Sorry for the inconvinience! The app is under maintenance",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: tri1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

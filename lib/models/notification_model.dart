@@ -1,12 +1,12 @@
-class Notificationss {
-  String? id;
-  String? title;
-  String? description;
-  String? type;
+class Notifications {
+  late String id;
+  late String title;
+  late String description;
+  late String type;
 
-  Notificationss(this.id, this.title, this.description, this.type);
+  Notifications(this.id, this.title, this.description, this.type);
 
-  Notificationss.fromJson(Map<String, dynamic> info) {
+  Notifications.fromJson(Map<String, dynamic> info) {
     id = info['id'].toString();
     title = info['title'];
     description = info['description'];

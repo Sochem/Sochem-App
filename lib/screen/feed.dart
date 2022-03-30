@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
+import 'package:sochem/utils/constants.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../utils/constants.dart';
 
 class FeedScreen extends StatefulWidget {
   @override
@@ -20,11 +19,10 @@ class _FeedScreenState extends State<FeedScreen> {
   //Posts ViewModel
   List<Post> _posts = [];
   Future<List<Post>> fetchPosts() async {
-    var response = await http
-        .get(Uri.parse("https://api.sochem.org/api/events/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
-    });
+    var response = await http.get(
+      Uri.parse("https://api.sochem.org/api/events/"),
+      headers: {HttpHeaders.authorizationHeader: dotenv.get(GuestToken)},
+    );
     List<Post> posts = [];
     if (response.statusCode == 200) {
       var postsJson = json.decode(response.body);
@@ -229,6 +227,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget viewPost(int index) {
+    print(_posts[index].description);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -260,9 +259,10 @@ class _FeedScreenState extends State<FeedScreen> {
                 height: 5.0,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 15.0),
-                child: Html(data: _posts[index].description),
+                padding: const EdgeInsets.all(15.0),
+                child: Html(
+                  data: _posts[index].description.replaceAll("â¢", "•"),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

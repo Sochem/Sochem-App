@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
@@ -17,37 +17,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Notificationss>> fetchNotifs() async {
-    var response = await http
-        .get(Uri.parse("https://api.sochem.org/api/notifi/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
-    });
-    List<Notificationss> notifs = [];
+  bool newNotifExist = false;
+
+  Future<void> fetchNotifs() async {
+    var response = await http.get(
+      Uri.parse("https://api.sochem.org/api/notifi/"),
+      headers: {HttpHeaders.authorizationHeader: dotenv.get(GuestToken)},
+    );
+    List<Notifications> notifs = [];
     if (response.statusCode == 200) {
       var peopleJson = json.decode(response.body);
       for (var peoplesJson in peopleJson) {
-        notifs.add(Notificationss.fromJson(peoplesJson));
+        notifs.add(Notifications.fromJson(peoplesJson));
       }
     }
-    return notifs;
-  }
-
-  void notifss() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt(id) != null)
-      x = nayiId - prefs.getInt(id)!;
-    else
-      x = 0;
+    if (notifs.isNotEmpty) {
+      int newId = int.parse(notifs.last.id);
+      int oldId = 0;
+      var prefs = await SharedPreferences.getInstance();
+      if (prefs.containsKey(lastNotifId)) {
+        oldId = prefs.getInt(lastNotifId)!;
+      } else {
+        prefs.setInt(lastNotifId, 0);
+      }
+      newNotifExist = oldId < newId;
+    }
   }
 
   @override
   void initState() {
     super.initState();
     fetchNotifs().then((value) {
-      nayiId = value.length;
+      setState(() {});
     });
-    notifss();
   }
 
   @override
@@ -67,10 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black54,
-                  offset: const Offset(
-                    1.0,
-                    1.0,
-                  ), //Offset
+                  offset: const Offset(1.0, 1.0), //Offset
                   blurRadius: 30.0,
                   spreadRadius: 1.0,
                 ),
@@ -140,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        if (x > 0)
+                        if (newNotifExist)
                           Positioned(
                             right: 9,
                             top: 7,
