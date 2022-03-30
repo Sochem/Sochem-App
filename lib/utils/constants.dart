@@ -31,4 +31,7 @@ const Color tri4 = Color.fromARGB(255, 58, 95, 176);
 final String isGuest = "guestLogIn";
 final String isLoggedIn = "logIn";
 final String hasOnboarded = "Notyet";
-String? djangoToken;
+late String id;
+late int nayiId;
+int x = 0;
+late String djangoToken;
