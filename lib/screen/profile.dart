@@ -1,9 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
-
-String year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -11,6 +11,28 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String userEmail = '';
+  String userName = '';
+  String year = '';
+  String initials = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initialising();
+  }
+
+  void _initialising() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userEmail = prefs.getString('email')!;
+      userName = prefs.getString('name')!;
+      print(userName + "dev");
+      initials = userName.substring(0, 1).toUpperCase();
+      year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -49,8 +71,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: height * 0.2,
                     width: width * 0.3,
                     child: CircleAvatar(
-                      backgroundColor: Colors.blueAccent,
-                      backgroundImage: AssetImage('assets/sampleprofile.jpeg'),
+                      backgroundColor: Colors
+                          .primaries[Random().nextInt(Colors.primaries.length)],
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          initials,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 80,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -62,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Center(
                     child: Text(
-                      'Tupper Debdip Student',
+                      userName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 30,
@@ -112,8 +146,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 15,
+                      SizedBox(
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -156,8 +190,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 25,
+                      SizedBox(
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -196,8 +230,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 25,
+                      SizedBox(
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -245,109 +279,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   )
                 ],
               )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ItemCard extends StatefulWidget {
-  final double height;
-  final double width;
-
-  const ItemCard({required this.height, required this.width});
-
-  @override
-  _ItemCardState createState() => _ItemCardState();
-}
-
-class _ItemCardState extends State<ItemCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(15),
-        elevation: 8,
-        child: Container(
-          width: widget.width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: widget.height * 0.2,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    image: AssetImage('assets/img/bg.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Flutter Development Services',
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: 19,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 1,
-                    ),
-                    Divider(),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Start Date : 2020-08-01',
-                              style: TextStyle(fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 1.5,
-                            ),
-                            Text(
-                              'End Date : 2020-10-01',
-                              style: TextStyle(fontSize: 13),
-                            )
-                          ],
-                        ),
-                        RaisedButton(
-                          onPressed: () {},
-                          color: Colors.blueAccent,
-                          child: Text(
-                            'APPLY',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
             ],
           ),
         ),

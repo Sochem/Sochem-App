@@ -238,9 +238,9 @@ class _PeoplePageState extends State<PeoplePage> {
                                             .substring(0, 1)
                                             .toUpperCase(),
                                         style: TextStyle(
-                                          fontStyle: FontStyle.italic,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
+                                          fontSize: 25,
                                         ),
                                       )),
                                 ),

@@ -27,12 +27,13 @@ class _LoginPageState extends State<LoginPage> {
           await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
       print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
       print(user);
-
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isLoggedIn', true);
-        userEmail = user.username.toString();
+        prefs.setString('email', user.username.toString());
+        prefs.setString('name', user.displayName.toString());
         print('IdToken:  ${user.idToken}');
+        print(user.displayName.toString() + "asdk");
         print(user.username.toString() + " 3asdk");
         print(user.credential.toString() + " 4asdk");
         print(user.googleIdToken.toString() + " 5asdk");
@@ -52,6 +53,9 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
         );
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', false);
       }
     }
 
