@@ -80,7 +80,7 @@ class _FeedScreenState extends State<FeedScreen> {
                           child: Image(
                             height: 50.0,
                             width: 50.0,
-                            image: AssetImage('assets/sochem.jpeg'),
+                            image: AssetImage('assets/sochem.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -129,7 +129,7 @@ class _FeedScreenState extends State<FeedScreen> {
                                           _posts[index].cover1 != null
                                               ? _posts[index].cover1
                                               : _posts[index].cover2)
-                                      : AssetImage('assets/sochem.jpeg')
+                                      : AssetImage('assets/sochem.png')
                                           as ImageProvider,
                                   fit: BoxFit.cover),
                             ),
@@ -240,7 +240,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   ? CachedNetworkImage(
                       imageUrl: _posts[index].cover2,
                     )
-                  : Image.asset('assets/sochem.jpeg'),
+                  : Image.asset('assets/sochem.png'),
               SizedBox(
                 height: 10.0,
               ),
