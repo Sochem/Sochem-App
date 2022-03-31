@@ -19,8 +19,8 @@ Future<bool> showLogOutPopup(context) async {
                       child: ElevatedButton(
                         onPressed: () {
                           print('yes selected');
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/login', (Route<dynamic> route) => false);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed('/login');
                         },
                         child: Text("Yes"),
                         style: ElevatedButton.styleFrom(primary: kPrimaryColor),

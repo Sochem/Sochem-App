@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/screen/home_screen.dart';
@@ -66,126 +68,129 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
-    return Scaffold(
-      body: FutureBuilder(
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasError) {
-            return SomethingWentWrong();
-          }
-          return CustomPaint(
-            painter: Bluepainter(),
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Sochem icon
-                  Container(
-                    width: width * 0.5,
-                    height: height * 0.6,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(SochemIcon),
-                        fit: BoxFit.scaleDown,
+    return WillPopScope(
+      onWillPop: () => exit(0),
+      child: Scaffold(
+        body: FutureBuilder(
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasError) {
+              return SomethingWentWrong();
+            }
+            return CustomPaint(
+              painter: Bluepainter(),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Sochem icon
+                    Container(
+                      width: width * 0.5,
+                      height: height * 0.6,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(SochemIcon),
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
-                  ),
 
-                  //Buttons for login options
-                  Container(
-                    padding: EdgeInsets.only(bottom: height * 0.1),
-                    child: Column(
-                      children: [
-                        ElevatedButton.icon(
-                          icon: Image.asset(
-                            "assets/google_logo.png",
-                            height: 35,
-                          ),
-                          onPressed: _signIn,
-                          label: Text(
-                            " LOGIN",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            textStyle: TextStyle(
-                              fontSize: 24,
-                              color: Colors.blue,
+                    //Buttons for login options
+                    Container(
+                      padding: EdgeInsets.only(bottom: height * 0.1),
+                      child: Column(
+                        children: [
+                          ElevatedButton.icon(
+                            icon: Image.asset(
+                              "assets/google_logo.png",
+                              height: 35,
                             ),
-                            fixedSize: Size(width * 0.78, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                            onPressed: _signIn,
+                            label: Text(
+                              " LOGIN",
+                              style: TextStyle(color: Colors.blue),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 1.0,
-                              width: 50.0,
-                              color: Colors.white.withOpacity(0.8),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white.withOpacity(0.6),
-                                ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              textStyle: TextStyle(
+                                fontSize: 24,
+                                color: Colors.blue,
+                              ),
+                              fixedSize: Size(width * 0.78, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            Container(
-                              height: 1.0,
-                              width: 50.0,
-                              color: Colors.white.withOpacity(0.8),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // Guest Buttton
-                        TextButton(
-                          onPressed: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setBool(isGuest, true);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          },
-                          child: Text('Guest'),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            elevation: 0,
-                            textStyle: TextStyle(
-                              fontSize: 24,
-                            ),
-                            fixedSize: Size(width * 0.78, 50),
-                            side: BorderSide(color: Colors.white, width: 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 1.0,
+                                width: 50.0,
+                                color: Colors.white.withOpacity(0.8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  "OR",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white.withOpacity(0.6),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 1.0,
+                                width: 50.0,
+                                color: Colors.white.withOpacity(0.8),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // Guest Buttton
+                          TextButton(
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setBool(isGuest, true);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                              );
+                            },
+                            child: Text('Guest'),
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              elevation: 0,
+                              textStyle: TextStyle(
+                                fontSize: 24,
+                              ),
+                              fixedSize: Size(width * 0.78, 50),
+                              side: BorderSide(color: Colors.white, width: 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

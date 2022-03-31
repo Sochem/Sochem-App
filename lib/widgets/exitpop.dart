@@ -20,6 +20,7 @@ Future<bool> showExitPopup(context) async {
                       child: ElevatedButton(
                         onPressed: () {
                           print('yes selected');
+
                           exit(0);
                         },
                         child: Text("Yes"),
