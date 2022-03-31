@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
 import 'package:sochem/utils/constants.dart';
+import 'package:sochem/utils/endpoints.dart';
 
 class Notif extends StatefulWidget {
   Notif({Key? key}) : super(key: key);
@@ -25,12 +26,12 @@ class _NotifState extends State<Notif> {
 
   Future<List<Notifications>> fetchNotifs() async {
     prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(djangoToken);
+    String token = prefs.getString(DjangoToken)!;
     oldId = prefs.getInt(lastNotifId)!;
 
     var response = await http.get(
-      Uri.parse("https://api.sochem.org/api/notifi/"),
-      headers: {HttpHeaders.authorizationHeader: 'Token ' + token!},
+      Uri.parse(Endpoints.notif),
+      headers: {HttpHeaders.authorizationHeader: token},
     );
 
     List<Notifications> notifs = [];

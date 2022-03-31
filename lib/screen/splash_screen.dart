@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sochem/screen/home_screen.dart';
-import 'package:sochem/screen/login_page.dart';
-import 'package:sochem/screen/onboarding_screen.dart';
 import 'dart:async';
-
-import '../utils/constants.dart';
+import 'package:sochem/utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,79 +9,90 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  decideScreen() async {
+  Future<String> decideScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var onboarded = prefs.getBool(hasOnboarded);
-    var login = prefs.getBool(isLoggedIn);
+    var onboarded = prefs.get(isOnboarded);
+    var login = prefs.get(isLoggedIn);
     if (onboarded == true) {
       if (login == true) {
-        return HomeScreen();
+        return HomeRoute;
       } else {
-        return LoginPage();
+        return LoginRoute;
       }
     } else {
-      return OnboardingScreen();
+      return OnboardingRoute;
     }
   }
 
   void initState() {
     super.initState();
-    var screen;
-    decideScreen().then((scr) {
-      screen = scr;
+    decideScreen().then((route) {
       Timer(
-          Duration(seconds: 6),
-          () => Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return screen;
-              })));
+        Duration(seconds: 2),
+        () => Navigator.pushReplacementNamed(context, route),
+      );
     });
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(children: [
-      Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [blue1, blue2]),
+    var screenSize = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [blue1, blue2],
         ),
       ),
-      Center(
-        child: Container(
-          width: 180,
-          height: 180,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(SochemIcon),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: screenSize.width * 0.55,
+              height: screenSize.width * 0.55,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kBackgroundColor,
+                image: DecorationImage(
+                  image: AssetImage(SochemIcon),
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.1,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'SO',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: blue3,
+                    ),
+                  ),
+                  Text(
+                    'CHEM',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      Container(
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.fromLTRB(
-              0, 0, 0, MediaQuery.maybeOf(context)!.size.height / 15),
-          child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('SO',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: blue3)),
-                Text('CHEM',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white))
-              ]))
-    ]));
+    );
   }
 }

@@ -16,6 +16,7 @@ const String PeopleIcon = "assets/people.png";
 const String Slideimg1 = "assets/slider/img1.png";
 const String Slideimg2 = "assets/slider/img2.png";
 const String Slideimg3 = "assets/slider/img3.png";
+const String GoogleIcon = "assets/google_logo.png";
 
 // Colors Used ->
 const kPrimaryColor = Color(0xFF3449c0);
@@ -40,15 +41,19 @@ const String GroupRoute = '/group';
 const String NotifRoute = '/notif';
 const String LoginRoute = '/login';
 const String ProfileRoute = '/profile';
+const String HomeRoute = '/home';
+const String OnboardingRoute = '/onboarding';
+const String ForumRoute = '/forum';
 
 // Shared Prefs & Environment variables ->
 const String AppVersion = 'app_version';
 const String WebClientId = 'web_client_id';
 const String GuestToken = 'guest_token';
 
-final String isGuest = "guestLogIn";
-final String isLoggedIn = "logIn";
-final String hasOnboarded = "Notyet";
-final String lastNotifId = "last_notif_id";
-late String djangoToken;
+const String UserName = "user_name";
+const String UserEmail = "user_email";
+const String isLoggedIn = "is_logged_in";
+const String isOnboarded = "is_onboarded";
+const String lastNotifId = "last_notif_id";
+const String DjangoToken = "django_token";
 String userEmail = '';

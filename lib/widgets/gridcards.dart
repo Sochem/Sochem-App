@@ -9,7 +9,7 @@ class HomeScreenGrid extends StatefulWidget {
 }
 
 class _HomeScreenGridState extends State<HomeScreenGrid> {
-  bool guest = true;
+  bool loggedIn = false;
 
   @override
   void initState() {
@@ -20,92 +20,87 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
   void _initialising() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      guest = !prefs.getBool('isLoggedIn')!;
+      loggedIn = prefs.getBool(isLoggedIn)!;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleCard(
-                image: FeedIcon,
-                title: "Feed",
-                route: '/feed',
-                login: true,
-              ),
-              SingleCard(
-                image: CloudIcon,
-                title: "Cloud",
-                route: '/cloud',
-                login: !guest,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleCard(
-                image: ForumIcon,
-                title: "Forum",
-                route: '/cloud',
-                login: !guest,
-              ),
-              SingleCard(
-                image: GroupIcon,
-                title: "Groups",
-                route: '/group',
-                login: !guest,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleCard(
-                image: ProfileIcon,
-                title: "Profile",
-                route: '/profile',
-                login: !guest,
-              ),
-              SingleCard(
-                image: PeopleIcon,
-                title: "People",
-                route: '/people',
-                login: true,
-              ),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SingleCard(
+              image: FeedIcon,
+              title: "Feed",
+              route: FeedRoute,
+              allowed: true,
+            ),
+            SingleCard(
+              image: CloudIcon,
+              title: "Cloud",
+              route: CloudRoute,
+              allowed: loggedIn,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SingleCard(
+              image: ForumIcon,
+              title: "Forum",
+              route: ForumRoute,
+              allowed: loggedIn,
+            ),
+            SingleCard(
+              image: GroupIcon,
+              title: "Groups",
+              route: GroupRoute,
+              allowed: true,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SingleCard(
+              image: ProfileIcon,
+              title: "Profile",
+              route: ProfileRoute,
+              allowed: loggedIn,
+            ),
+            SingleCard(
+              image: PeopleIcon,
+              title: "People",
+              route: PeopleRoute,
+              allowed: true,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
 
 class SingleCard extends StatelessWidget {
-  const SingleCard(
-      {required this.image,
-      required this.title,
-      required this.route,
-      required this.login});
+  const SingleCard({
+    required this.image,
+    required this.title,
+    required this.route,
+    required this.allowed,
+  });
   final String image;
   final String title;
   final String route;
-  final bool login;
+  final bool allowed;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => login
-          ? Navigator.pushNamed(
-              context,
-              route,
-            )
+      onTap: () => allowed
+          ? Navigator.pushNamed(context, route)
           : ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: Duration(seconds: 2),
@@ -123,54 +118,42 @@ class SingleCard extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(15.0, 11.0, 15.0, 0.0),
-        child: Container(
-          height: size.height * 0.15,
-          width: size.width * 0.40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: cardImageColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black45,
-                offset: const Offset(
-                  1.0,
-                  1.0,
-                ), //Offset
-                blurRadius: 5.0,
+      child: Container(
+        height: size.height * 0.15,
+        width: size.width * 0.40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: cardImageColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45,
+              offset: const Offset(1.0, 1.0), //Offset
+              blurRadius: 5.0,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Center(
+              child: Image.asset(
+                image,
+                width: 45.0,
+                height: 45.0,
+                color: Colors.white70,
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Center(
-                  child: Image.asset(
-                    image,
-                    width: 45.0,
-                    height: 45.0,
-                    color: Colors.white70,
-                  ),
+            ),
+            Text(
+              title,
+              style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Text(
-                  title,
-                  style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      // letterSpacing: 1.2,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
