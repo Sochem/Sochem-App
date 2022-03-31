@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/people_model.dart';
@@ -135,9 +136,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text(
                       userName,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Nunito',
+                      style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -149,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
-                          height: 80,
+                          height: 70,
                           width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -175,7 +176,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                   child: Text(
                                     userEmail,
-                                    style: TextStyle(fontSize: 14),
+                                    style: GoogleFonts.raleway(
+                                      textStyle: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -184,12 +190,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
-                          height: 80,
+                          height: 70,
                           width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -216,9 +222,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                     child: Text(
                                       "Batch 20" + year,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400),
+                                      style: GoogleFonts.raleway(
+                                        textStyle: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -228,12 +237,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
-                          height: 80,
+                          height: 70,
                           width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -259,7 +268,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                   child: Text(
                                     "Roll Number: " + rollNo,
-                                    style: TextStyle(fontSize: 16),
+                                    style: GoogleFonts.raleway(
+                                      textStyle: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -268,12 +282,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
-                          height: 80,
+                          height: 70,
                           width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -290,7 +304,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 15.0),
                                 child: Icon(
-                                  Icons.speaker_group_outlined,
+                                  Icons.group_outlined,
                                   size: 35,
                                 ),
                               ),
@@ -298,8 +312,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                   child: Text(
-                                    "You belong to " + house,
-                                    style: TextStyle(fontSize: 16),
+                                    "You belong to \"" + house + "\"",
+                                    style: GoogleFonts.raleway(
+                                      textStyle: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -308,12 +327,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
-                          height: 80,
+                          height: 70,
                           width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -341,9 +360,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     onTap: null,
                                     child: Text(
                                       "Log Out",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
+                                      style: GoogleFonts.raleway(
+                                        textStyle: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -355,7 +377,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),
