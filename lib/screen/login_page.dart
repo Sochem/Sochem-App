@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sochem/screen/home_screen.dart';
 import 'package:google_one_tap_sign_in/google_one_tap_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import '../utils/constants.dart';
+import 'package:sochem/utils/constants.dart';
+import 'package:sochem/utils/endpoints.dart';
+import 'package:sochem/widgets/error_messages.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,183 +15,137 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<void> _signIn() async {
+    var _webClientId = dotenv.env[WebClientId]!;
+    var user = await GoogleOneTapSignIn.startSignIn(
+      webClientId: _webClientId,
+    );
+    var prefs = await SharedPreferences.getInstance();
+    if (user != null) {
+      var response = await http.post(
+        Uri.parse(Endpoints.login),
+        body: {'token': user.idToken.toString()},
+      );
+      if (response.statusCode != 200) {
+        showLoginFailed(context);
+        prefs.setBool(isLoggedIn, false);
+        return;
+      }
+      var token =
+          'Token ${response.body.substring(10, response.body.length - 2)}';
+      prefs.setBool(isLoggedIn, true);
+      prefs.setString(DjangoToken, token);
+      prefs.setString(UserEmail, user.username.toString());
+      prefs.setString(UserName, user.displayName.toString());
+      Navigator.pushReplacementNamed(context, HomeRoute);
+    } else {
+      showLoginFailed(context);
+      prefs.setBool(isLoggedIn, false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    // function
-    Future<void> _signIn() async {
-      final String _webClientId = dotenv.env[WebClientId]!;
-
-      final user =
-          await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
-      print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      print(user);
-      if (user != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isLoggedIn', true);
-        prefs.setString('email', user.username.toString());
-        prefs.setString('name', user.displayName.toString());
-        print('IdToken:  ${user.idToken}');
-        print(user.displayName.toString() + "asdk");
-        print(user.username.toString() + " 3asdk");
-        print(user.credential.toString() + " 4asdk");
-        print(user.googleIdToken.toString() + " 5asdk");
-        print(user.password + " 5asdk");
-        print(user.id + " 6asdk");
-        print(user.toString() + "asdk");
-        var url = Uri.parse("https://api.sochem.org/api/logup");
-        var response = await http.post(
-          url,
-          body: {
-            'token': user.idToken.toString(),
-          },
-        );
-        print(response.body.toString() + " 8asdk");
-        djangoToken = "";
-        await prefs.setString(
-            djangoToken,
-            response.body
-                .toString()
-                .substring(10, response.body.toString().length - 2));
-        print(prefs.getString(djangoToken)! + " asdk");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
-      } else {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isLoggedIn', false);
-      }
-    }
-
     return Scaffold(
-      body: FutureBuilder(
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasError) {
-            return SomethingWentWrong();
-          }
-          return CustomPaint(
-            painter: Bluepainter(),
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Sochem icon
-                  Container(
-                    width: width * 0.5,
-                    height: height * 0.6,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(SochemIcon),
-                        fit: BoxFit.scaleDown,
+      body: CustomPaint(
+        painter: Bluepainter(),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                width: width * 0.5,
+                height: width * 0.5,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: kBackgroundColor,
+                  image: DecorationImage(
+                    image: AssetImage(SochemIcon),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Container(
+                child: Column(
+                  children: [
+                    ElevatedButton.icon(
+                      icon: Image.asset(GoogleIcon, height: 35),
+                      onPressed: _signIn,
+                      label: Text(
+                        " LOGIN",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 24,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(width * 0.75, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
-                  ),
-
-                  //Buttons for login options
-                  Container(
-                    padding: EdgeInsets.only(bottom: height * 0.1),
-                    child: Column(
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton.icon(
-                          icon: Image.asset(
-                            "assets/google_logo.png",
-                            height: 35,
-                          ),
-                          onPressed: _signIn,
-                          label: Text(
-                            " LOGIN",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            textStyle: TextStyle(
-                              fontSize: 24,
-                              color: Colors.blue,
-                            ),
-                            fixedSize: Size(width * 0.78, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        Container(
+                          height: 1.0,
+                          width: 50.0,
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            "OR",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white.withOpacity(0.6),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 1.0,
-                              width: 50.0,
-                              color: Colors.white.withOpacity(0.8),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white.withOpacity(0.6),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 1.0,
-                              width: 50.0,
-                              color: Colors.white.withOpacity(0.8),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // Guest Buttton
-                        TextButton(
-                          onPressed: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setBool(isGuest, true);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          },
-                          child: Text('Guest'),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            elevation: 0,
-                            textStyle: TextStyle(
-                              fontSize: 24,
-                            ),
-                            fixedSize: Size(width * 0.78, 50),
-                            side: BorderSide(color: Colors.white, width: 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                        Container(
+                          height: 1.0,
+                          width: 50.0,
+                          color: Colors.white.withOpacity(0.8),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () async {
+                        var prefs = await SharedPreferences.getInstance();
+                        prefs.setBool(isLoggedIn, false);
+                        Navigator.pushReplacementNamed(context, HomeRoute);
+                      },
+                      child: Text('Guest'),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 0,
+                        textStyle: TextStyle(
+                          fontSize: 24,
+                        ),
+                        fixedSize: Size(width * 0.75, 50),
+                        side: BorderSide(color: Colors.white, width: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-// classes
 class Bluepainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -245,14 +199,5 @@ class Bluepainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
-  }
-}
-
-class SomethingWentWrong extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("Something Went Wrong")),
-    );
   }
 }

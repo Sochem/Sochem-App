@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/config.dart';
+import 'package:sochem/screen/forum_page.dart';
+import 'package:sochem/screen/home_screen.dart';
 import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/groups.dart';
 import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/cloud.dart';
 import 'package:sochem/screen/notif.dart';
+import 'package:sochem/screen/onboarding_screen.dart';
 import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/profile.dart';
 import 'package:sochem/screen/splash_screen.dart';
@@ -14,6 +17,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:sochem/utils/endpoints.dart';
+import 'package:sochem/widgets/error_messages.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -22,6 +27,8 @@ void main() async {
     initialRoute: AppRoute,
     routes: <String, WidgetBuilder>{
       AppRoute: (context) => App(),
+      HomeRoute: (context) => HomeScreen(),
+      OnboardingRoute: (context) => OnboardingScreen(),
       FeedRoute: (context) => FeedScreen(),
       CloudRoute: (context) => CloudPage(),
       PeopleRoute: (context) => PeoplePage(),
@@ -29,6 +36,7 @@ void main() async {
       NotifRoute: (context) => Notif(),
       LoginRoute: (context) => LoginPage(),
       ProfileRoute: (context) => ProfilePage(),
+      ForumRoute:(context) => ForumPage()
     },
   ));
 }
@@ -52,10 +60,7 @@ class _AppState extends State<App> {
     }
 
     Config config = Config(appVersion, false, false);
-    var response = await http.get(
-      Uri.parse('https://api.npoint.io/4357d57e9aebec0d8046'),
-    );
-    print(response.body.toString());
+    var response = await http.get(Uri.parse(Endpoints.config));
     if (response.statusCode == 200) {
       config = Config.fromJson(json.decode(response.body));
     }
@@ -101,15 +106,6 @@ class _AppState extends State<App> {
           return Loading();
         },
       ),
-    );
-  }
-}
-
-class SomethingWentWrong extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("Something Went Wrong")),
     );
   }
 }

@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
 import 'package:sochem/utils/constants.dart';
+import 'package:sochem/utils/endpoints.dart';
 import 'package:sochem/widgets/carousel.dart';
+import 'package:sochem/widgets/error_messages.dart';
 import 'package:sochem/widgets/gridcards.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,12 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool newNotifExist = false;
   String userName = '';
   String initials = '';
-  bool guest = true;
+  bool loggedIn = false;
+  String token = "";
+  late SharedPreferences prefs;
 
   Future<void> fetchNotifs() async {
     var response = await http.get(
-      Uri.parse("https://api.sochem.org/api/notifi/"),
-      headers: {HttpHeaders.authorizationHeader: dotenv.get(GuestToken)},
+      Uri.parse(Endpoints.notif),
+      headers: {HttpHeaders.authorizationHeader: token},
     );
     List<Notifications> notifs = [];
     if (response.statusCode == 200) {
@@ -37,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (notifs.isNotEmpty) {
       int newId = int.parse(notifs.last.id);
       int oldId = 0;
-      var prefs = await SharedPreferences.getInstance();
       if (prefs.containsKey(lastNotifId)) {
         oldId = prefs.getInt(lastNotifId)!;
       } else {
@@ -54,13 +57,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _initialising() async {
-    final prefs = await SharedPreferences.getInstance();
-    await fetchNotifs();
+    prefs = await SharedPreferences.getInstance();
+    loggedIn = prefs.getBool(isLoggedIn)!;
+    if (loggedIn) {
+      token = prefs.getString(DjangoToken)!;
+      userName = prefs.getString(UserName)!;
+      await fetchNotifs();
+    } else {
+      token = dotenv.get(GuestToken);
+      userName = "Guest";
+    }
     setState(() {
-      userName = prefs.getString('name')!;
       initials = userName.substring(0, 1).toUpperCase();
-      guest = !prefs.getBool('isLoggedIn')!;
-      print(userName + "dev");
     });
   }
 
@@ -92,121 +100,66 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(25.0, screensize.height * 0.03,
-                      10.0, screensize.height * 0.005),
+                  padding: EdgeInsets.fromLTRB(
+                    25.0,
+                    screensize.height * 0.03,
+                    10.0,
+                    screensize.height * 0.005,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 7.0),
                         child: GestureDetector(
-                          onTap: () => guest
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    duration: Duration(seconds: 2),
-                                    content: Text(
-                                      "You need to be signed in with your institute ID",
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    backgroundColor:
-                                        Color(0xFFE8F1F8).withOpacity(0.8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                    ),
-                                    behavior: SnackBarBehavior.floating,
-                                    elevation: 5,
-                                  ),
-                                )
-                              : Navigator.pushNamed(
-                                  context,
-                                  '/profile',
-                                ),
-                          child: guest
-                              ? CircleAvatar(
-                                  backgroundColor: Colors.primaries[Random()
-                                      .nextInt(Colors.primaries.length)],
-                                  radius: 30,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.account_circle_outlined,
-                                        size: 40,
-                                      )),
-                                )
-                              : CircleAvatar(
-                                  backgroundColor: Colors.primaries[Random()
-                                      .nextInt(Colors.primaries.length)],
-                                  radius: 30,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
+                          onTap: () => loggedIn
+                              ? Navigator.pushNamed(context, ProfileRoute)
+                              : showRequireLogin(context),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.primaries[
+                                Random().nextInt(Colors.primaries.length)],
+                            radius: 30,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: loggedIn
+                                  ? Text(
                                       initials,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                         fontSize: 25,
                                       ),
+                                    )
+                                  : Icon(
+                                      Icons.account_circle_outlined,
+                                      size: 40,
                                     ),
-                                  ),
-                                ),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
                         width: screensize.width * 0.4,
-                        child: guest
-                            ? Text(
-                                "Guest",
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.white,
-                                    // letterSpacing: 1.2,
-                                  ),
-                                ),
-                              )
-                            : Text(
-                                userName,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.white,
-                                    // letterSpacing: 1.2,
-                                  ),
-                                ),
-                              ),
+                        child: Text(
+                          userName,
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        width: screensize.width * 0.15,
-                      ),
+                      SizedBox(width: screensize.width * 0.15),
                       Stack(children: [
                         Align(
                           alignment: Alignment.center,
                           child: IconButton(
                             alignment: Alignment.centerRight,
-                            onPressed: () => guest
-                                ? ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      duration: Duration(seconds: 2),
-                                      content: Text(
-                                        "You need to be signed in with your institute ID",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      backgroundColor:
-                                          Color(0xFFE8F1F8).withOpacity(0.8),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      elevation: 5,
-                                    ),
-                                  )
-                                : Navigator.pushNamed(context, NotifRoute),
+                            onPressed: () => loggedIn
+                                ? Navigator.pushNamed(context, NotifRoute)
+                                : showRequireLogin(context),
                             icon: ImageIcon(
                               AssetImage(BellIcon),
                               size: 25.0,
@@ -232,7 +185,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: 25.0, top: screensize.height * 0.01),
+                      left: 25.0,
+                      top: screensize.height * 0.01,
+                    ),
                     child: Text(
                       "Society Of",
                       textAlign: TextAlign.left,
@@ -277,9 +232,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-void setLogout() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool(isLoggedIn, false);
 }
