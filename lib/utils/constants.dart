@@ -27,11 +27,28 @@ const Color tri1 = Color.fromARGB(255, 58, 110, 196);
 const Color tri2 = Color.fromARGB(255, 86, 134, 182);
 const Color tri3 = Color.fromARGB(255, 64, 99, 141);
 const Color tri4 = Color.fromARGB(255, 58, 95, 176);
+var blue1 = new Color.fromRGBO(22, 71, 119, 1);
+var blue2 = new Color.fromRGBO(24, 134, 191, 1);
+var blue3 = new Color.fromRGBO(39, 88, 124, 1);
+
+// Route names ->
+const String AppRoute = '/app';
+const String FeedRoute = '/feed';
+const String CloudRoute = '/cloud';
+const String PeopleRoute = '/people';
+const String GroupRoute = '/group';
+const String NotifRoute = '/notif';
+const String LoginRoute = '/login';
+const String ProfileRoute = '/profile';
+
+// Shared Prefs & Environment variables ->
+const String AppVersion = 'app_version';
+const String WebClientId = 'web_client_id';
+const String GuestToken = 'guest_token';
 
 final String isGuest = "isGuest";
 final String isLoggedIn = "isLoggedIn";
 final String hasOnboarded = "hasOnboarded";
-late String id;
-late int nayiId;
-int x = 0;
+final String lastNotifId = "last_notif_id";
 late String djangoToken;
+String userEmail = '';
