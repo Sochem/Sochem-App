@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/utils/constants.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -35,55 +36,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size screensize = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.1, 0.4, 0.7, 0.9],
-          colors: [
-            Color(0xFF3594DD),
-            Color(0xFF4563DB),
-            Color(0xFF5036D5),
-            Color(0xFF5B16D0),
-          ],
+    Size screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.1, 0.4, 0.7, 0.9],
+            colors: [
+              Color(0xFF3594DD),
+              Color(0xFF4563DB),
+              Color(0xFF5036D5),
+              Color(0xFF5B16D0),
+            ],
+          ),
         ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(
-                height: screensize.height * 0.04,
-              ),
+              SizedBox(height: 10.0),
               Container(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.topRight,
                 child: TextButton(
                   onPressed: () => {
-                    _pageController.jumpToPage(
-                      2,
-                    ),
+                    _pageController.jumpToPage(_numPages - 1),
                     setState(() {
-                      _currentPage = 2;
+                      _currentPage = _numPages - 1;
                     })
                   },
-                  child: _currentPage != 2
-                      ? Text(
-                          'Skip',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),
-                        )
-                      : Text(''),
+                  child: Visibility(
+                    visible: _currentPage != _numPages - 1,
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Container(
-                height: screensize.height * 0.75,
+                height: screenSize.height * 0.75,
                 child: PageView(
                   physics: ClampingScrollPhysics(),
                   controller: _pageController,
@@ -107,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               width: 300,
                             ),
                           ),
-                          SizedBox(height: screensize.height * 0.01),
+                          SizedBox(height: screenSize.height * 0.01),
                           Text(
                             'Connect people\naround the world',
                             style: kTitleStyle,
@@ -128,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Center(
                             child: Image(
                               image: AssetImage(
-                                'assets/chemical_iit_bhu.png',
+                                'assets/chemical_iit_bhu.jpg',
                               ),
                               height: 300.0,
                               width: 300.0,
@@ -155,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Center(
                             child: Image(
                               image: AssetImage(
-                                'assets/sochem.jpeg',
+                                'assets/sochem.png',
                               ),
                               height: 300.0,
                               width: 300.0,
@@ -181,69 +178,73 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: _buildPageIndicator(),
               ),
-              _currentPage != _numPages - 1
-                  ? Expanded(
-                      child: Align(
-                        alignment: FractionalOffset.bottomRight,
-                        child: TextButton(
-                          onPressed: () {
-                            _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease,
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                'Next',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22.0,
-                                ),
-                              ),
-                              SizedBox(width: 10.0),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 30.0,
-                              ),
-                            ],
+              Visibility(
+                visible: _currentPage != _numPages - 1,
+                child: Expanded(
+                  child: Align(
+                    alignment: FractionalOffset.bottomRight,
+                    child: TextButton(
+                      onPressed: () {
+                        _pageController.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            'Next',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
+                            ),
                           ),
-                        ),
-                      ),
-                    )
-                  : Text(''),
-            ],
-          ),
-        ),
-        bottomSheet: _currentPage == _numPages - 1
-            ? Container(
-                height: 60.0,
-                width: double.infinity,
-                color: Colors.white,
-                child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    '/login',
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        'Get started',
-                        style: TextStyle(
-                          color: Color(0xFF5B16D0),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          SizedBox(width: 10.0),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              )
-            : Text(''),
+              ),
+              SizedBox(height: 10.0)
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: Visibility(
+        visible: _currentPage == _numPages - 1,
+        child: Container(
+          height: 60.0,
+          width: double.infinity,
+          color: Colors.white,
+          child: GestureDetector(
+            onTap: () async {
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setBool(isOnboarded, true);
+              Navigator.pushReplacementNamed(context, LoginRoute);
+            },
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Get started',
+                  style: TextStyle(
+                    color: Color(0xFF5B16D0),
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
