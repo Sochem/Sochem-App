@@ -93,8 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(25.0, screensize.height * 0.03,
-                      10.0, screensize.height * 0.005),
+                  padding: EdgeInsets.fromLTRB(screensize.width * 0.035,
+                      screensize.height * 0.03, 0.0, screensize.height * 0.005),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -128,12 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? CircleAvatar(
                                   backgroundColor: Colors.primaries[Random()
                                       .nextInt(Colors.primaries.length)],
-                                  radius: 30,
+                                  radius: 25,
                                   child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Icon(
                                         Icons.account_circle_outlined,
-                                        size: 40,
+                                        size: 30,
                                       )),
                                 )
                               : CircleAvatar(
@@ -155,64 +155,91 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.4,
+                        width: screensize.width * 0.42,
                         child: guest
-                            ? Text(
-                                "Guest",
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.white,
-                                    // letterSpacing: 1.2,
+                            ? Flexible(
+                                child: Text(
+                                  "Guest",
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.white,
+                                      // letterSpacing: 1.2,
+                                    ),
                                   ),
                                 ),
                               )
-                            : Text(
-                                userName,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.white,
-                                    // letterSpacing: 1.2,
+                            : Flexible(
+                                child: Text(
+                                  userName,
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.white,
+                                      // letterSpacing: 1.2,
+                                    ),
                                   ),
                                 ),
                               ),
                       ),
                       SizedBox(
-                        width: screensize.width * 0.15,
+                        width: screensize.width * 0.1,
                       ),
-                      Stack(children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: IconButton(
-                            alignment: Alignment.centerRight,
-                            onPressed: () => guest
-                                ? ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      duration: Duration(seconds: 2),
-                                      content: Text(
-                                        "You need to be signed in with your institute ID",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      backgroundColor:
-                                          Color(0xFFE8F1F8).withOpacity(0.8),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      elevation: 5,
+                      Row(children: [
+                        IconButton(
+                          onPressed: () => guest
+                              ? ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "You need to be signed in with your institute ID",
+                                      style: TextStyle(color: Colors.black),
                                     ),
-                                  )
-                                : Navigator.pushNamed(context, NotifRoute),
-                            icon: Icon(
-                              CupertinoIcons.bell,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
+                                    backgroundColor:
+                                        Color(0xFFE8F1F8).withOpacity(0.8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    elevation: 5,
+                                  ),
+                                )
+                              : Navigator.pushNamed(context, NotifRoute),
+                          icon: Icon(
+                            CupertinoIcons.info_circle,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => guest
+                              ? ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "You need to be signed in with your institute ID",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    backgroundColor:
+                                        Color(0xFFE8F1F8).withOpacity(0.8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    elevation: 5,
+                                  ),
+                                )
+                              : Navigator.pushNamed(context, NotifRoute),
+                          icon: Icon(
+                            CupertinoIcons.bell,
+                            color: Colors.white,
+                            size: 30.0,
                           ),
                         ),
                         if (newNotifExist)
@@ -239,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.left,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                          fontSize: screensize.width * 0.087,
+                          fontSize: screensize.width * 0.085,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           // letterSpacing: 1.2,

@@ -78,27 +78,27 @@ class _AppState extends State<App> {
       body: FutureBuilder(
         future: fetchConfig(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return SomethingWentWrong();
-          }
+          // if (snapshot.hasError) {
+          //   return SomethingWentWrong();
+          // }
 
-          if (snapshot.connectionState == ConnectionState.done) {
-            var config = snapshot.data as Config;
-            var myAppVersion = pref.getString(AppVersion)!;
+          // if (snapshot.connectionState == ConnectionState.done) {
+          //   var config = snapshot.data as Config;
+          //   var myAppVersion = pref.getString(AppVersion)!;
 
-            if (config.maintenance) {
-              return AppUnderMaintenance();
-            }
+          //   if (config.maintenance) {
+          //     return AppUnderMaintenance();
+          //   }
 
-            if (config.update &&
-                myAppVersion.compareTo(config.appVersion) < 0) {
-              return UpdateYourApp();
-            }
+          //   if (config.update &&
+          //       myAppVersion.compareTo(config.appVersion) < 0) {
+          //     return UpdateYourApp();
+          //   }
 
-            return SplashScreen();
-          }
-
-          return Loading();
+          //   return SplashScreen();
+          // }
+          return SplashScreen();
+          // return Loading();
         },
       ),
     );
