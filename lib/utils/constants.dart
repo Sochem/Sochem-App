@@ -44,6 +44,7 @@ const String ProfileRoute = '/profile';
 const String HomeRoute = '/home';
 const String OnboardingRoute = '/onboarding';
 const String ForumRoute = '/forum';
+const String InfoRoute = '/info';
 
 // Shared Prefs & Environment variables ->
 const String AppVersion = 'app_version';

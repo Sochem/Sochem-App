@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
@@ -77,10 +78,13 @@ class _NotifState extends State<Notif> {
         backgroundColor: kPrimaryColor,
         title: Text(
           'Notifications',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: kBackgroundColor,
+          style: GoogleFonts.raleway(
+            textStyle: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              // letterSpacing: 1.2,
+            ),
           ),
         ),
       ),
