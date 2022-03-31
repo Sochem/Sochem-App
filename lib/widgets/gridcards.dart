@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/utils/constants.dart';
+import 'package:sochem/widgets/error_messages.dart';
 
 class HomeScreenGrid extends StatefulWidget {
   @override
@@ -27,9 +28,10 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SingleCard(
               image: FeedIcon,
@@ -46,7 +48,7 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SingleCard(
               image: ForumIcon,
@@ -63,7 +65,7 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SingleCard(
               image: ProfileIcon,
@@ -101,23 +103,7 @@ class SingleCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => allowed
           ? Navigator.pushNamed(context, route)
-          : ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: Duration(seconds: 2),
-                content: Text(
-                  "You need to be signed in with your institute ID",
-                  style: TextStyle(color: Colors.black),
-                ),
-                backgroundColor: Color(0xFFE8F1F8).withOpacity(0.8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                behavior: SnackBarBehavior.floating,
-                elevation: 5,
-              ),
-            ),
+          : showRequireLogin(context),
       child: Container(
         height: size.height * 0.15,
         width: size.width * 0.40,
@@ -133,7 +119,7 @@ class SingleCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Center(
               child: Image.asset(
