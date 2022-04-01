@@ -64,65 +64,79 @@ class _NotifState extends State<Notif> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 4,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: kBackgroundColor,
-          iconSize: 30,
-          onPressed: () async {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          'Notifications',
-          style: GoogleFonts.raleway(
-            textStyle: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              // letterSpacing: 1.2,
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 5,
-              shadowColor: int.parse(_allNotif[index].id) > oldId
-                  ? Colors.red
-                  : Colors.white,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 8,
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.13,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+                color: kPrimaryColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black54,
+                    offset: const Offset(1.0, 1.0), //Offset
+                    blurRadius: 10.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
               ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30,
-                  child: FittedBox(
-                    child: Image.asset(
-                      notifEnums[_allNotif[index].type]!,
+              child: Padding(
+                padding: EdgeInsets.only(top: 40.0),
+                child: Center(
+                  child: Text(
+                    'Notifications',
+                    style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        // letterSpacing: 1.2,
+                      ),
                     ),
                   ),
                 ),
-                title: Text(
-                  _allNotif[index].title,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                subtitle: Text(
-                  _allNotif[index].description,
-                ),
               ),
-            );
-          },
-          itemCount: _allNotif.length,
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 5,
+                  shadowColor: int.parse(_allNotif[index].id) > oldId
+                      ? Colors.red
+                      : Colors.white,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 8,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                      child: FittedBox(
+                        child: Image.asset(
+                          notifEnums[_allNotif[index].type]!,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      _allNotif[index].title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      _allNotif[index].description,
+                    ),
+                  ),
+                );
+              },
+              itemCount: _allNotif.length,
+            ),
+          ],
         ),
       ),
     );
