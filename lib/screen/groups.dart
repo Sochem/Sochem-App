@@ -107,18 +107,6 @@ class _GroupPageState extends State<GroupPage> {
             color: kBackgroundColor,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage(ProfileIcon),
-              backgroundColor: kBackgroundColor,
-            ),
-          ),
-          SizedBox(
-            width: 16,
-          )
-        ],
       ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),

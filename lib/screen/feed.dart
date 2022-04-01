@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:sochem/utils/constants.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:sochem/utils/endpoints.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -16,12 +18,18 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  //Posts ViewModel
   List<Post> _posts = [];
+  late String token;
   Future<List<Post>> fetchPosts() async {
+    var prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool(isLoggedIn)!) {
+      token = prefs.getString(DjangoToken)!;
+    } else {
+      token = dotenv.get(GuestToken);
+    }
     var response = await http.get(
-      Uri.parse("https://api.sochem.org/api/events/"),
-      headers: {HttpHeaders.authorizationHeader: dotenv.get(GuestToken)},
+      Uri.parse(Endpoints.feed),
+      headers: {HttpHeaders.authorizationHeader: token},
     );
     List<Post> posts = [];
     if (response.statusCode == 200) {
@@ -46,7 +54,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildPost(int index) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -54,111 +62,103 @@ class _FeedScreenState extends State<FeedScreen> {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: Container(
-                      width: 50.0,
+            ListTile(
+              leading: Container(
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black45,
+                      offset: Offset(0, 2),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  child: ClipOval(
+                    child: Image(
                       height: 50.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black45,
-                            offset: Offset(0, 2),
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        child: ClipOval(
-                          child: Image(
-                            height: 50.0,
-                            width: 50.0,
-                            image: AssetImage('assets/sochem.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      'SoChem',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(_posts[index].date),
-                    //TODO: Adding sharing option for posts
-
-                    // trailing: IconButton(
-                    //   icon: Icon(Icons.share),
-                    //   color: Colors.black,
-                    //   onPressed: () => print('Share'),
-                    // ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: double.infinity,
-                    height: 250.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0, 2),
-                          blurRadius: 8.0,
-                        ),
-                      ],
-                    ),
-                    child: GestureDetector(
-                      child: Center(
-                        child: Hero(
-                          tag: "$index",
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                  image: _posts[index].cover1 != null ||
-                                          _posts[index].cover2 != null
-                                      ? NetworkImage(
-                                          _posts[index].cover1 != null
-                                              ? _posts[index].cover1
-                                              : _posts[index].cover2)
-                                      : AssetImage('assets/sochem.png')
-                                          as ImageProvider,
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => viewPost(index)),
-                        );
-                      },
+                      width: 50.0,
+                      image: AssetImage(SochemIcon),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 35.0, vertical: 10.0),
-                    child: Center(
-                      child: Text(
-                        _posts[index].title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
-                  )
+                ),
+              ),
+              title: Text(
+                'SoChem',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(_posts[index].date),
+              //TODO: Adding sharing option for posts
+              // trailing: IconButton(
+              //   icon: Icon(Icons.share),
+              //   color: Colors.black,
+              //   onPressed: () => print('Share'),
+              // ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              width: double.infinity,
+              height: 250.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 2),
+                    blurRadius: 8.0,
+                  ),
                 ],
               ),
+              child: GestureDetector(
+                child: Center(
+                  child: Hero(
+                    tag: "$index",
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: DecorationImage(
+                          image: _posts[index].cover1 != null ||
+                                  _posts[index].cover2 != null
+                              ? NetworkImage(
+                                  _posts[index].cover1 != null
+                                      ? _posts[index].cover1
+                                      : _posts[index].cover2,
+                                )
+                              : AssetImage(SochemIcon) as ImageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => viewPost(index),
+                    ),
+                  );
+                },
+              ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              child: Center(
+                child: Text(
+                  _posts[index].title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -170,7 +170,6 @@ class _FeedScreenState extends State<FeedScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Column(
-        // physics: AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height * 0.13,
@@ -183,10 +182,7 @@ class _FeedScreenState extends State<FeedScreen> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black54,
-                  offset: const Offset(
-                    1.0,
-                    1.0,
-                  ), //Offset
+                  offset: const Offset(1.0, 1.0), //Offset
                   blurRadius: 10.0,
                   spreadRadius: 1.0,
                 ),
@@ -214,9 +210,6 @@ class _FeedScreenState extends State<FeedScreen> {
             child: ListView.builder(
               itemCount: _posts.length,
               itemBuilder: (BuildContext context, int index) {
-                if (_posts.length == 0) {
-                  return SizedBox(width: 10.0);
-                }
                 return _buildPost(index);
               },
             ),
@@ -227,7 +220,6 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget viewPost(int index) {
-    print(_posts[index].description);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -239,10 +231,8 @@ class _FeedScreenState extends State<FeedScreen> {
                   ? CachedNetworkImage(
                       imageUrl: _posts[index].cover2,
                     )
-                  : Image.asset('assets/sochem.png'),
-              SizedBox(
-                height: 10.0,
-              ),
+                  : Image.asset(SochemIcon),
+              SizedBox(height: 10.0),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
