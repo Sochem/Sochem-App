@@ -3,6 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
+List<Color> onboardingColor = [
+  Color(0xFF7bc05b),
+  Color(0xFFffb61d),
+  Color(0xFF767bff),
+];
+
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -28,7 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF7B51D3),
+        color: isActive ? onboardingColor[_currentPage] : Color(0xFF7B51D3),
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
@@ -38,21 +44,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.4, 0.7, 0.9],
-            colors: [
-              Color(0xFF3594DD),
-              Color(0xFF4563DB),
-              Color(0xFF5036D5),
-              Color(0xFF5B16D0),
-            ],
-          ),
-        ),
+        decoration: BoxDecoration(),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -72,7 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       'Skip',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: onboardingColor[_currentPage],
                         fontSize: 20.0,
                       ),
                     ),
@@ -90,86 +84,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     });
                   },
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Center(
-                            child: Image(
-                              image: AssetImage(
-                                'assets/varanasi.jpg',
-                              ),
-                              height: 300,
-                              width: 300,
-                            ),
-                          ),
-                          SizedBox(height: screenSize.height * 0.01),
-                          Text(
-                            'Connect people\naround the world',
-                            style: kTitleStyle,
-                          ),
-                          SizedBox(height: 1.0),
-                          Text(
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                            style: kSubtitleStyle,
-                          ),
-                        ],
-                      ),
+                    onboardingPage(
+                      screenSize: screenSize,
+                      image: 'assets/search.png',
+                      title: 'Discover!\nA new door of possibilities',
+                      desc:
+                          'Having trouble getting resources?\nYou will find it all here. From Books to Roadmaps, be it helping with your Core Subjects or Preparation for others. \nWe got you all covered!',
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(40.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Center(
-                            child: Image(
-                              image: AssetImage(
-                                'assets/chemical_iit_bhu.jpg',
-                              ),
-                              height: 300.0,
-                              width: 300.0,
-                            ),
-                          ),
-                          SizedBox(height: 30.0),
-                          Text(
-                            'Live your life smarter\nwith us!',
-                            style: kTitleStyle,
-                          ),
-                          SizedBox(height: 15.0),
-                          Text(
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                            style: kSubtitleStyle,
-                          ),
-                        ],
-                      ),
+                    onboardingPage(
+                      screenSize: screenSize,
+                      image: 'assets/Technology.png',
+                      title: 'Connect!\nWith our Society',
+                      desc:
+                          'Find your Group, Colleagues or \neven Connect with our Alumni?\n An eezy peezy way to do it all',
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(40.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Center(
-                            child: Image(
-                              image: AssetImage(
-                                'assets/sochem.png',
-                              ),
-                              height: 300.0,
-                              width: 300.0,
-                            ),
-                          ),
-                          SizedBox(height: 30.0),
-                          Text(
-                            'Get a new experience\nof imagination',
-                            style: kTitleStyle,
-                          ),
-                          SizedBox(height: 15.0),
-                          Text(
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                            style: kSubtitleStyle,
-                          ),
-                        ],
-                      ),
+                    onboardingPage(
+                      screenSize: screenSize,
+                      image: 'assets/Food.png',
+                      title:
+                          'Experience!\nUpdated and delivered at your Fingertips',
+                      desc:
+                          'Updates about Events and Activites now within your comfort and reach',
                     ),
                   ],
                 ),
@@ -197,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             'Next',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: onboardingColor[_currentPage],
                               fontSize: 22.0,
                             ),
                           ),
@@ -245,6 +180,56 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class onboardingPage extends StatelessWidget {
+  const onboardingPage({
+    Key? key,
+    required this.screenSize,
+    required this.image,
+    required this.title,
+    required this.desc,
+  }) : super(key: key);
+
+  final Size screenSize;
+  final String image;
+  final String title;
+  final String desc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: Image(
+              image: AssetImage(
+                image,
+              ),
+              height: 300,
+              width: 300,
+            ),
+          ),
+          SizedBox(height: screenSize.height * 0.01),
+          Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: kTitleStyle,
+            ),
+          ),
+          SizedBox(height: screenSize.height * 0.05),
+          Text(
+            desc,
+            textAlign: TextAlign.center,
+            style: kSubtitleStyle,
+          ),
+        ],
       ),
     );
   }
