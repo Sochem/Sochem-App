@@ -217,6 +217,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: _posts.length,
                       itemBuilder: (BuildContext context, int index) {
                         return _buildPost(index);

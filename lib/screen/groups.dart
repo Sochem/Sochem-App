@@ -158,16 +158,13 @@ class _GroupPageState extends State<GroupPage> {
                         fontSize: 35,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
-                        // letterSpacing: 1.2,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 10.0,
-            ),
+            SizedBox(height: 10.0),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: DropdownButtonFormField<String>(
@@ -273,6 +270,7 @@ class _GroupPageState extends State<GroupPage> {
               )
             else
               ListView.builder(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -295,7 +293,7 @@ class _GroupPageState extends State<GroupPage> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 _grps[index],
                                 style: TextStyle(

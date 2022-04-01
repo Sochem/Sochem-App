@@ -219,6 +219,7 @@ class _PeoplePageState extends State<PeoplePage> {
                     ],
                   )
                 : ListView.builder(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     // scrollDirection: Axis.vertical,

@@ -64,51 +64,50 @@ class _NotifState extends State<Notif> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.13,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                ),
-                color: kPrimaryColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black54,
-                    offset: const Offset(1.0, 1.0), //Offset
-                    blurRadius: 10.0,
-                    spreadRadius: 1.0,
-                  ),
-                ],
+      body: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.13,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
               ),
-              child: Padding(
-                padding: EdgeInsets.only(top: 40.0),
-                child: Center(
-                  child: Text(
-                    'Notifications',
-                    style: GoogleFonts.raleway(
-                      textStyle: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        // letterSpacing: 1.2,
-                      ),
+              color: kPrimaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  offset: const Offset(1.0, 1.0), //Offset
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 40.0),
+              child: Center(
+                child: Text(
+                  'Notifications',
+                  style: GoogleFonts.raleway(
+                    textStyle: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
-            ListView.builder(
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 5,
                   shadowColor: int.parse(_allNotif[index].id) > oldId
-                      ? Colors.red
+                      ? blue3
                       : Colors.white,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 5,
@@ -136,8 +135,8 @@ class _NotifState extends State<Notif> {
               },
               itemCount: _allNotif.length,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
