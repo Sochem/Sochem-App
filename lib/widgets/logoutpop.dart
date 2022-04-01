@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/utils/constants.dart';
 
 Future<bool> showLogOutPopup(context) async {
@@ -17,8 +18,11 @@ Future<bool> showLogOutPopup(context) async {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           print('yes selected');
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool(isLoggedIn, false);
                           Navigator.of(context).pop();
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
