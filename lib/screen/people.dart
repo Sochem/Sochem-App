@@ -69,30 +69,6 @@ class _PeoplePageState extends State<PeoplePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 4,
-      //   automaticallyImplyLeading: false,
-      //   leading: IconButton(
-      //     icon: Icon(Icons.arrow_back_ios_new_rounded),
-      //     color: kBackgroundColor,
-      //     iconSize: 30,
-      //     onPressed: () async {
-      //       Navigator.of(context).pop();
-      //     },
-      //   ),
-      //   backgroundColor: kPrimaryColor,
-      //   title: Text(
-      //     'People',
-      //     style: GoogleFonts.raleway(
-      //       textStyle: TextStyle(
-      //         fontSize: 30,
-      //         fontWeight: FontWeight.w600,
-      //         color: Colors.white,
-      //         // letterSpacing: 1.2,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
