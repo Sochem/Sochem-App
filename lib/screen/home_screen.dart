@@ -11,7 +11,6 @@ import 'package:sochem/utils/constants.dart';
 import 'package:sochem/utils/dialog.dart';
 import 'package:sochem/utils/endpoints.dart';
 import 'package:sochem/widgets/carousel.dart';
-import 'package:sochem/widgets/error_messages.dart';
 import 'package:sochem/widgets/gridcards.dart';
 import 'package:http/http.dart' as http;
 

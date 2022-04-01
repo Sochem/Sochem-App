@@ -1,15 +1,12 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sochem/main.dart';
 import 'package:sochem/models/books.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/cloud_carousel.dart';
 import 'package:http/http.dart' as http;
-import 'package:sochem/widgets/error_messages.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 List<Book> books = [];
@@ -145,10 +142,9 @@ class BooksHorizontal extends StatefulWidget {
 }
 
 class _BooksHorizontalState extends State<BooksHorizontal> {
-  //Books viewmodel
   List<Book> _books = [];
   Future<List<Book>> fetchBooks() async {
-    if (books.isNotEmpty) return books;
+    if (books.length != 0) return books;
     var response = await http.get(Uri.parse(widget.genreURL));
     if (response.statusCode == 200) {
       var booksJson = json.decode(response.body);
@@ -159,15 +155,14 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
     return books;
   }
 
-  //Books View
   @override
   void initState() {
+    super.initState();
     fetchBooks().then((value) {
       setState(() {
         _books.addAll(value);
       });
     });
-    super.initState();
   }
 
   @override
@@ -177,56 +172,47 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         height: 200.0,
-        child: FutureBuilder(
-          future: fetchBooks(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) return SomethingWentWrong();
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  return _books[index].category == widget.category
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: GestureDetector(
-                            onTap: () => launch(_books[index].link),
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                left: 10,
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                image: new DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                    _books[index].imageAddress,
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.red,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 5.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(0.5, 0.5),
-                                  ),
-                                ],
-                              ),
-                              width: screensize.width * 0.36,
-                            ),
-                          ),
-                        )
-                      : Text('');
-                },
-                itemCount: _books.length,
-                scrollDirection: Axis.horizontal,
-              );
-            }
-            return Loading();
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Visibility(
+              visible: _books[index].category == widget.category,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: GestureDetector(
+                  onTap: () => launch(_books[index].link),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      left: 10,
+                      top: 5,
+                      bottom: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      image: new DecorationImage(
+                        image: CachedNetworkImageProvider(
+                          _books[index].imageAddress,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: Colors.red,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 5.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(0.5, 0.5),
+                        ),
+                      ],
+                    ),
+                    width: screensize.width * 0.36,
+                  ),
+                ),
+              ),
+            );
           },
+          itemCount: _books.length,
+          scrollDirection: Axis.horizontal,
         ),
-        // This next line does the trick.
       ),
     );
   }
