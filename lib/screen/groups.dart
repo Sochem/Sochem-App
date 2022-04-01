@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/people_model.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:sochem/utils/endpoints.dart';
 
 class GroupPage extends StatefulWidget {
   const GroupPage({Key? key}) : super(key: key);
@@ -16,13 +18,19 @@ class GroupPage extends StatefulWidget {
 
 class _GroupPageState extends State<GroupPage> {
   String? _year;
+  late String token;
   List<People> _people = [];
   Future<List<People>> fetchPeople() async {
-    var response = await http
-        .get(Uri.parse("https://api.sochem.org/api/family-list/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
-    });
+    var prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool(isLoggedIn)!) {
+      token = prefs.getString(DjangoToken)!;
+    } else {
+      token = dotenv.get(GuestToken);
+    }
+    var response = await http.get(
+      Uri.parse(Endpoints.family),
+      headers: {HttpHeaders.authorizationHeader: token},
+    );
     List<People> people = [];
     if (response.statusCode == 200) {
       var peopleJson = json.decode(response.body);
@@ -51,27 +59,18 @@ class _GroupPageState extends State<GroupPage> {
       y--;
     }
     var z = _yearList.reversed;
-
     return z.toList();
   }
 
   List<String> _grps = [];
   void grpList(String val) {
-    _grps.clear();
+    _grps = [];
     for (var x in _people) {
-      // print(x.email!.substring(x.email!.length - 17, x.email!.length - 12) +
-      // "asdk");
-      // print(val);
-      // print(x.email!.contains(val.substring(4)));
       if (x.email!.contains(val.substring(4)) &&
           !_grps.contains(x.house?.toUpperCase())) {
-        print(x.house);
         _grps.add(x.house!.toUpperCase());
       }
     }
-    // _grps!.forEach((key, value) { })
-
-    print(_grps);
   }
 
   @override
@@ -82,6 +81,45 @@ class _GroupPageState extends State<GroupPage> {
         _people.addAll(value);
       });
     });
+  }
+
+  List<Widget> _buildContent(int index) {
+    List<Widget> contents = [];
+    for (var content in _people) {
+      if (content.house == _grps[index]) {
+        contents.add(
+          ListTile(
+            leading: CircleAvatar(
+              backgroundColor:
+                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
+              radius: 30,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  content.email!.substring(0, 1).toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+            ),
+            title: Text(
+              content.name!,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            subtitle: Flexible(
+              child: Text(
+                content.email!,
+              ),
+            ),
+          ),
+        );
+      }
+    }
+
+    return contents;
   }
 
   @override
@@ -118,7 +156,6 @@ class _GroupPageState extends State<GroupPage> {
               child: DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  counterText: '',
                   label: Text.rich(
                     TextSpan(
                       children: <InlineSpan>[
@@ -142,31 +179,32 @@ class _GroupPageState extends State<GroupPage> {
                   fillColor: Colors.white,
                   filled: true,
                   contentPadding: EdgeInsets.only(left: 15, right: 10),
-                  floatingLabelStyle:
-                      TextStyle(fontSize: 20, color: kPrimaryColor),
+                  floatingLabelStyle: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        BorderSide(width: 2, color: Colors.purple[900]!),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        BorderSide(width: 2, color: Colors.purple[900]!),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Colors.purple[900]!,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        BorderSide(width: 2, color: Colors.purple[900]!),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Colors.purple[900]!,
+                    ),
                   ),
                 ),
-                menuMaxHeight: 220,
                 alignment: Alignment.bottomCenter,
                 dropdownColor: kBackgroundColor,
                 style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                  color: kPrimaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
                 itemHeight: 50,
                 items: _yearGen().map<DropdownMenuItem<String>>((String value) {
                   return _getDropdown(value, value);
@@ -197,116 +235,67 @@ class _GroupPageState extends State<GroupPage> {
             SizedBox(
               height: 10,
             ),
-            _year == null
-                ? Column(
-                    children: [
-                      Text(
-                        "No year selected!",
-                        style: TextStyle(
-                          color: highlighted,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        child: Image.asset(
-                          'assets/waiting.png',
-                          fit: BoxFit.cover,
-                          color: highlighted,
-                        ),
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index1) {
-                      return Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              _grps[index1],
+            if (_year == null)
+              Column(
+                children: [
+                  Text(
+                    "No year selected!",
+                    style: TextStyle(
+                      color: highlighted,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: Image.asset(
+                      WaitingIcon,
+                      fit: BoxFit.cover,
+                      color: highlighted,
+                    ),
+                  ),
+                ],
+              )
+            else
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60),
+                      side: BorderSide(color: Colors.purple[900]!),
+                    ),
+                    child: ExpansionTile(
+                      iconColor: Colors.black,
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              _grps[index],
                               style: TextStyle(
                                 fontSize: 30,
-                                color: kPrimaryColor,
                                 fontWeight: FontWeight.bold,
-                                // backgroundColor: kBackgroundColor,
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              // scrollDirection: Axis.vertical,
-
-                              itemBuilder: (context, index) {
-                                return _people[index].house == _grps[index1]
-                                    ? Card(
-                                        // elevation: 5,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 5,
-                                          vertical: 8,
-                                        ),
-                                        child: ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Colors.primaries[
-                                                Random().nextInt(
-                                                    Colors.primaries.length)],
-                                            radius: 30,
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  _people[index]
-                                                      .email!
-                                                      .substring(0, 1)
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 25,
-                                                  ),
-                                                )),
-                                          ),
-                                          title: Text(
-                                            _people[index].name!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          ),
-                                          subtitle: Row(
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Flexible(
-                                                child: Text(
-                                                  _people[index].email!,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    : Container();
-                              },
-                              itemCount: _people.length,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
-                    itemCount: _grps.length,
-                  ),
+                      ),
+                      children: _buildContent(index),
+                    ),
+                  );
+                },
+                itemCount: _grps.length,
+              ),
           ],
         ),
       ),
