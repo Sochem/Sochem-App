@@ -113,6 +113,7 @@ class _CloudPageState extends State<CloudPage> {
             margin: const EdgeInsets.only(top: 10.0),
             height: screensize.height * 0.585,
             child: ListView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: bookTypesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
@@ -184,40 +185,41 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  return _books[index].category == widget.category
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: GestureDetector(
-                            onTap: () => launch(_books[index].link),
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                left: 10,
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                image: new DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                    _books[index].imageAddress,
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.red,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 5.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(0.5, 0.5),
-                                  ),
-                                ],
-                              ),
-                              width: screensize.width * 0.36,
-                            ),
+                  return Visibility(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () => launch(_books[index].link),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: 10,
+                            top: 5,
+                            bottom: 5,
                           ),
-                        )
-                      : Text('');
+                          decoration: BoxDecoration(
+                            image: new DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                _books[index].imageAddress,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.red,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 5.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(0.5, 0.5),
+                              ),
+                            ],
+                          ),
+                          width: screensize.width * 0.36,
+                        ),
+                      ),
+                    ),
+                    visible: _books[index].category == widget.category,
+                  );
                 },
                 itemCount: _books.length,
                 scrollDirection: Axis.horizontal,
