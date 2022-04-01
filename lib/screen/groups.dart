@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/people_model.dart';
 import 'package:sochem/utils/constants.dart';
@@ -125,32 +126,48 @@ class _GroupPageState extends State<GroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 4,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: kBackgroundColor,
-          iconSize: 30,
-          onPressed: () async {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          'Groups',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: kBackgroundColor,
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.13,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+                color: kPrimaryColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black54,
+                    offset: const Offset(1.0, 1.0), //Offset
+                    blurRadius: 10.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(top: 40.0),
+                child: Center(
+                  child: Text(
+                    'Groups',
+                    style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        // letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: DropdownButtonFormField<String>(
@@ -199,7 +216,7 @@ class _GroupPageState extends State<GroupPage> {
                   ),
                 ),
                 alignment: Alignment.bottomCenter,
-                dropdownColor: kBackgroundColor,
+                dropdownColor: Color.fromARGB(255, 225, 227, 228),
                 style: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 18,
@@ -232,9 +249,6 @@ class _GroupPageState extends State<GroupPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
             if (_year == null)
               Column(
                 children: [
@@ -262,35 +276,38 @@ class _GroupPageState extends State<GroupPage> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60),
-                      side: BorderSide(color: Colors.purple[900]!),
-                    ),
-                    child: ExpansionTile(
-                      iconColor: Colors.black,
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(color: Colors.purple[900]!),
+                      ),
+                      child: ExpansionTile(
+                        iconColor: Colors.black,
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
                             ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              _grps[index],
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                _grps[index],
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ),
+                        children: _buildContent(index),
                       ),
-                      children: _buildContent(index),
                     ),
                   );
                 },
