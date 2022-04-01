@@ -100,41 +100,43 @@ class _NotifState extends State<Notif> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5,
-                  shadowColor: int.parse(_allNotif[index].id) > oldId
-                      ? blue3
-                      : Colors.white,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                    vertical: 8,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 30,
-                      child: FittedBox(
-                        child: Image.asset(
-                          notifEnums[_allNotif[index].type]!,
+            child: _allNotif.length == 0
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 5,
+                        shadowColor: int.parse(_allNotif[index].id) > oldId
+                            ? blue3
+                            : Colors.white,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 8,
                         ),
-                      ),
-                    ),
-                    title: Text(
-                      _allNotif[index].title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    subtitle: Text(
-                      _allNotif[index].description,
-                    ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30,
+                            child: FittedBox(
+                              child: Image.asset(
+                                notifEnums[_allNotif[index].type]!,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            _allNotif[index].title,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          subtitle: Text(
+                            _allNotif[index].description,
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: _allNotif.length,
                   ),
-                );
-              },
-              itemCount: _allNotif.length,
-            ),
           ),
         ],
       ),

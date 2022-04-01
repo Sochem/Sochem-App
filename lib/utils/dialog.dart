@@ -25,7 +25,7 @@ Future signinDialog(BuildContext context) {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.raleway(
                           textStyle: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
                           ),
