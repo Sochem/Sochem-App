@@ -203,33 +203,35 @@ class onboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Image(
-              image: AssetImage(
-                image,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Image(
+                image: AssetImage(
+                  image,
+                ),
+                height: 300,
+                width: 300,
               ),
-              height: 300,
-              width: 300,
             ),
-          ),
-          SizedBox(height: screenSize.height * 0.01),
-          Center(
-            child: Text(
-              title,
+            SizedBox(height: screenSize.height * 0.01),
+            Center(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: kTitleStyle,
+              ),
+            ),
+            SizedBox(height: screenSize.height * 0.05),
+            Text(
+              desc,
               textAlign: TextAlign.center,
-              style: kTitleStyle,
+              style: kSubtitleStyle,
             ),
-          ),
-          SizedBox(height: screenSize.height * 0.05),
-          Text(
-            desc,
-            textAlign: TextAlign.center,
-            style: kSubtitleStyle,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

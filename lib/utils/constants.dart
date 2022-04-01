@@ -18,6 +18,7 @@ const String Slideimg2 = "assets/slider/img2.png";
 const String Slideimg3 = "assets/slider/img3.png";
 const String GoogleIcon = "assets/google_logo.png";
 const String WaitingIcon = "assets/waiting.png";
+const String ProfileBackground = "assets/profile_background.jpeg";
 
 // Colors Used ->
 const kPrimaryColor = Color(0xFF3449c0);

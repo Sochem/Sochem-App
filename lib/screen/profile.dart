@@ -18,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   List<People> _people = [];
   late String token;
-  
   String userEmail = '';
   String userName = '';
   String year = '';
@@ -26,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String house = '';
   String rollNo = '';
   String userNameDis = '';
-  
+
   Future<List<People>> fetchPeople() async {
     var response = await http.get(
       Uri.parse(Endpoints.profile),
@@ -44,34 +43,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
+    _initialising();
     super.initState();
-    fetchPeople().then((value) {
-      setState(() {
-        _people.addAll(value);
-        _initialising();
-      });
-    });
   }
 
-  void _initialising() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> _initialising() async {
+    var prefs = await SharedPreferences.getInstance();
     token = prefs.getString(DjangoToken)!;
-    userEmail = prefs.getString('email')!;
-    userName = prefs.getString('name')!;
-
+    userEmail = prefs.getString(UserEmail)!;
+    userName = prefs.getString(UserName)!;
+    initials = userName[0].toUpperCase();
+    year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
+    _people = await fetchPeople();
     setState(() {
-      print(userName + "dev");
-      initials = userName.substring(0, 1).toUpperCase();
-      year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
       for (var i = 0; i < _people.length; i++) {
         if (_people[i].email == userEmail) {
-          prefs.setString('house', _people[i].house!);
-          prefs.setString('roll', _people[i].rollNo!);
+          house = _people[i].house!;
+          rollNo = _people[i].rollNo!;
           break;
         }
       }
-      house = prefs.getString('house')!;
-      rollNo = prefs.getString('roll')!;
     });
   }
 
@@ -85,9 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Container(
           child: Stack(
             children: [
-              Container(
-                height: height,
-              ),
+              Container(height: height),
               ShapeOfView(
                 shape: ArcShape(
                   direction: ArcDirection.Outside,
@@ -98,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: height * 0.32,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/profile_background.jpeg'),
+                      image: AssetImage(ProfileBackground),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -142,15 +131,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w600),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                   Column(
                     children: [
-                      Divider(
-                        height: 15,
-                      ),
+                      Divider(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
@@ -193,9 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
@@ -240,9 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
@@ -285,9 +270,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
@@ -330,9 +313,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
@@ -361,7 +342,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
                                   child: GestureDetector(
-                                    onTap: null,
+                                    onTap: () async {
+                                      var prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.clear();
+                                    },
                                     child: Text(
                                       "Log Out",
                                       style: GoogleFonts.raleway(

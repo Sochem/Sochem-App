@@ -33,14 +33,14 @@ class _LoginPageState extends State<LoginPage> {
       }
       var token =
           'Token ${response.body.substring(10, response.body.length - 2)}';
-      prefs.setBool(isLoggedIn, true);
-      prefs.setString(DjangoToken, token);
-      prefs.setString(UserEmail, user.username.toString());
-      prefs.setString(UserName, user.displayName.toString());
+      await prefs.setBool(isLoggedIn, true);
+      await prefs.setString(DjangoToken, token);
+      await prefs.setString(UserEmail, user.username.toString());
+      await prefs.setString(UserName, user.displayName.toString());
       Navigator.pushReplacementNamed(context, HomeRoute);
     } else {
       showLoginFailed(context);
-      prefs.setBool(isLoggedIn, false);
+      await prefs.setBool(isLoggedIn, false);
     }
   }
 

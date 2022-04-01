@@ -22,9 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool newNotifExist = false;
   String userName = '';
-  String displayName = '';
   String initials = '';
-  String userNameDis = '';
   bool loggedIn = false;
   String token = "";
   late SharedPreferences prefs;
@@ -53,10 +51,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void refreshAfterNotificationScreen() {
+    setState(() {
+      newNotifExist = false;
+    });
+  }
+
   @override
   void initState() {
-    super.initState();
     _initialising();
+    super.initState();
   }
 
   void _initialising() async {
@@ -65,14 +69,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (loggedIn) {
       token = prefs.getString(DjangoToken)!;
       userName = prefs.getString(UserName)!;
-      displayName = userName.substring(0, userName.length - 35);
-      var trimName = userName.split(' ');
-      for (var y in trimName) {
-        if (y.substring(0, 1) == '4')
+      var temp = "";
+      for (var y in userName.split(' ')) {
+        if (y[0] == '4')
           break;
         else
-          userNameDis += y + ' ';
+          temp += y + ' ';
       }
+      userName = temp;
       await fetchNotifs();
     } else {
       token = dotenv.get(GuestToken);
@@ -151,35 +155,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                            loggedIn
-                                ? Container(
-                                    width: screensize.width * 0.4,
-                                    child: Text(
-                                      userNameDis,
-                                      style: GoogleFonts.montserrat(
-                                        textStyle: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    width: screensize.width * 0.4,
-                                    child: Flexible(
-                                      child: Text(
-                                        "Guest",
-                                        style: GoogleFonts.montserrat(
-                                          textStyle: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                            Container(
+                              width: screensize.width * 0.4,
+                              child: Text(
+                                userName,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white,
                                   ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         Row(children: [
@@ -189,6 +177,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 alignment: Alignment.centerRight,
                                 onPressed: () => loggedIn
                                     ? Navigator.pushNamed(context, NotifRoute)
+                                        .then((value) =>
+                                            refreshAfterNotificationScreen())
                                     : showRequireLogin(context),
                                 icon: Icon(
                                   CupertinoIcons.bell,
