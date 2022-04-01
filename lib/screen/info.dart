@@ -61,7 +61,39 @@ class _InformationState extends State<Information> {
                     height: 16,
                   ),
                   Text(
-                    "The Society of Chemical Engineers, a.k.a SoChem, is a professional organization of chemical engineers. SoChem is a society run by the department students for the department's students. SoChem works hard to ensure that every student in the department gets the most out of their experience at IIT(BHU) Varanasi. SoChem is there to help with everything from lavish festival dinners to essential job searches. We are a very active society regarding social skill development and industrial exposure.",
+                    "Who we are",
+                    style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+
+                        // letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Text(
+                    "The Society of Chemical Engineers, a.k.a SoChem, is a professional organization of chemical engineers. SoChem is a society run by the department students for the department's students.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Text(
+                    "What we do",
+                    style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+
+                        // letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Text(
+                    "SoChem works hard to ensure that every student in the department gets the most out of their experience at IIT(BHU) Varanasi. SoChem is there to help with everything from lavish festival dinners to essential job searches. We are a very active society regarding social skill development and industrial exposure.",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
@@ -82,214 +114,148 @@ class _InformationState extends State<Information> {
                   SizedBox(
                     height: 22,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 150,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(300.0),
-                                    child: Image.asset('assets/sochem.png')),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text("Arjun Gupta"),
-                                Divider(),
-                                Text("Technical Team Lead"),
-                                Divider(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.instagram,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.linkedin,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.facebook,
-                                          color: Colors.white, size: 16.0),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFFFFECDF), kBackgroundColor],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: const Offset(1.0, 1.0), //Offset
-                            blurRadius: 5.0,
-                            spreadRadius: 1.0,
-                          ),
-                        ],
-                      ),
-                    ),
+                  AppDevTile(
+                    pic: 'assets/arjun.jpg',
+                    name: 'Arjun Gupta',
+                    designation: 'Technical Team Lead',
+                    fb: '',
+                    insta: '',
+                    linkedin: '',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 150,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(300.0),
-                                    child: Image.asset('assets/sochem.png')),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text("Arjun Gupta"),
-                                Divider(),
-                                Text("Technical Team Lead"),
-                                Divider(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.instagram,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.linkedin,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.facebook,
-                                          color: Colors.white, size: 16.0),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFFFFECDF), kBackgroundColor],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: const Offset(1.0, 1.0), //Offset
-                            blurRadius: 5.0,
-                            spreadRadius: 1.0,
-                          ),
-                        ],
-                      ),
-                    ),
+                  AppDevTile(
+                    pic: 'assets/aditya.jpeg',
+                    name: 'Aditya Kumar Singh',
+                    designation: 'Technical Executive',
+                    fb: '',
+                    insta: '',
+                    linkedin: '',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 150,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(300.0),
-                                    child: Image.asset('assets/sochem.png')),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text("Arjun Gupta"),
-                                Divider(),
-                                Text("Technical Team Lead"),
-                                Divider(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.instagram,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.linkedin,
-                                          color: Colors.white, size: 16.0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(FontAwesomeIcons.facebook,
-                                          color: Colors.white, size: 16.0),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFFFFECDF), kBackgroundColor],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: const Offset(1.0, 1.0), //Offset
-                            blurRadius: 5.0,
-                            spreadRadius: 1.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                  AppDevTile(
+                    pic: 'assets/devansh.jpeg',
+                    name: 'Devansh Mishra',
+                    designation: 'Technical Executive',
+                    fb: '',
+                    insta: '',
+                    linkedin: '',
+                  ),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppDevTile extends StatelessWidget {
+  const AppDevTile(
+      {required this.pic,
+      required this.name,
+      required this.designation,
+      required this.fb,
+      required this.insta,
+      required this.linkedin});
+  final String designation;
+  final String name;
+  final String fb;
+  final String insta;
+  final String linkedin;
+  final String pic;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 150,
+                  child: CircleAvatar(
+                      radius: 30,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(300),
+                          child: Image.asset(pic))),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    name,
+                    style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Text(
+                    designation,
+                    style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          onPressed: null,
+                          icon: Icon(FontAwesomeIcons.instagram,
+                              color: Colors.white, size: 25.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          onPressed: null,
+                          icon: Icon(FontAwesomeIcons.linkedin,
+                              color: Colors.white, size: 25.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          onPressed: null,
+                          icon: Icon(FontAwesomeIcons.facebook,
+                              color: Colors.white, size: 25.0),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFFFECDF), kBackgroundColor],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              offset: const Offset(1.0, 1.0), //Offset
+              blurRadius: 5.0,
+              spreadRadius: 1.0,
+            ),
+          ],
         ),
       ),
     );
