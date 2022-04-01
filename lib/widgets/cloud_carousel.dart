@@ -19,7 +19,6 @@ final List<String> imgTitle = [
   'GATE',
   'GRE',
   'HULM',
-  'Online Courses',
   'Open Electives'
 ];
 
@@ -30,7 +29,6 @@ final List<String> bookTypesList = [
   'GATE',
   'GRE',
   'HULM',
-  'Online Courses',
   'Open Electives'
 ];
 
@@ -41,7 +39,7 @@ final List<String> categoryLinks = [
   "https://drive.google.com/drive/folders/1R34YagE19rLI31yMRQo4G-UnvHRRBmgn?usp=sharing", //GATE
   "https://drive.google.com/drive/folders/1mZSAyhN7BNX51g9V4if-6P1NWyFqtCmm?usp=sharing", //GRE
   "https://drive.google.com/drive/folders/18u9EqfPqZ7t9z9RL49WL1ebeW51t_eF-?usp=sharing", //HULM
-  "https://drive.google.com/drive/folders/1ZGKENtgtA8UTCHcWIlSveJxg9_uX44vt?usp=sharing", //Online Courses
+  //Online Courses
   "https://drive.google.com/drive/folders/1-FPXGNsfx7jcpLksfqqyo_7KA0KeOBi9?usp=sharing", //Open Electives
 ];
 

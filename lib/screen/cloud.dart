@@ -103,22 +103,22 @@ class _CloudPageState extends State<CloudPage> {
             margin: const EdgeInsets.only(top: 10.0),
             height: screensize.height * 0.585,
             child: ListView.builder(
-              itemCount: bookTypesList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    GenreTitle(
-                      title: bookTypesList[index],
-                      link: categoryLinks[index],
-                    ),
-                    BooksHorizontal(
-                      genreURL: 'https://api.npoint.io/46e15ce2ed98a569637a',
-                      category: bookTypesList[index],
-                    ),
-                  ],
-                );
-              },
-            ),
+                padding: EdgeInsets.zero,
+                itemCount: bookTypesList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      GenreTitle(
+                        title: bookTypesList[index],
+                        link: categoryLinks[index],
+                      ),
+                      BooksHorizontal(
+                        genreURL: 'https://api.npoint.io/46e15ce2ed98a569637a',
+                        category: bookTypesList[index],
+                      ),
+                    ],
+                  );
+                }),
           ),
         ],
       ),
