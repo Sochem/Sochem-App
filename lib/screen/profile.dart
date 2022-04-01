@@ -346,6 +346,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       var prefs =
                                           await SharedPreferences.getInstance();
                                       prefs.clear();
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                        LoginRoute,
+                                        (route) => false,
+                                      );
                                     },
                                     child: Text(
                                       "Log Out",
