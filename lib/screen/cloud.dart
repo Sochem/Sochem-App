@@ -103,7 +103,6 @@ class _CloudPageState extends State<CloudPage> {
             margin: const EdgeInsets.only(top: 10.0),
             height: screensize.height * 0.585,
             child: ListView.builder(
-<<<<<<< HEAD
                 padding: EdgeInsets.zero,
                 itemCount: bookTypesList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -120,24 +119,6 @@ class _CloudPageState extends State<CloudPage> {
                     ],
                   );
                 }),
-=======
-              itemCount: bookTypesList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    GenreTitle(
-                      title: bookTypesList[index],
-                      link: categoryLinks[index],
-                    ),
-                    BooksHorizontal(
-                      genreURL: 'https://api.npoint.io/46e15ce2ed98a569637a',
-                      category: bookTypesList[index],
-                    ),
-                  ],
-                );
-              },
-            ),
->>>>>>> main
           ),
         ],
       ),
@@ -185,56 +166,6 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         height: 200.0,
-<<<<<<< HEAD
-        child: FutureBuilder(
-          future: fetchBooks(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) return SomethingWentWrong();
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  return Visibility(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: GestureDetector(
-                        onTap: () => launch(_books[index].link),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: 10,
-                            top: 5,
-                            bottom: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            image: new DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                _books[index].imageAddress,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.red,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                blurRadius: 5.0,
-                                spreadRadius: 0.0,
-                                offset: Offset(0.5, 0.5),
-                              ),
-                            ],
-                          ),
-                          width: screensize.width * 0.36,
-                        ),
-                      ),
-                    ),
-                    visible: _books[index].category == widget.category,
-                  );
-                },
-                itemCount: _books.length,
-                scrollDirection: Axis.horizontal,
-              );
-            }
-            return Loading();
-=======
         child: ListView.builder(
           itemBuilder: (context, index) {
             return Visibility(
@@ -272,7 +203,6 @@ class _BooksHorizontalState extends State<BooksHorizontal> {
                 ),
               ),
             );
->>>>>>> main
           },
           itemCount: _books.length,
           scrollDirection: Axis.horizontal,
