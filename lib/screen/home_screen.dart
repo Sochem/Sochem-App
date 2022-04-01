@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String userName = '';
   String displayName = '';
   String initials = '';
+  String userNameDis = '';
   bool loggedIn = false;
   String token = "";
   late SharedPreferences prefs;
@@ -65,6 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
       token = prefs.getString(DjangoToken)!;
       userName = prefs.getString(UserName)!;
       displayName = userName.substring(0, userName.length - 35);
+      var trimName = userName.split(' ');
+      for (var y in trimName) {
+        if (y.substring(0, 1) == '4')
+          break;
+        else
+          userNameDis += y + ' ';
+      }
       await fetchNotifs();
     } else {
       token = dotenv.get(GuestToken);
@@ -147,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? Container(
                                     width: screensize.width * 0.4,
                                     child: Text(
-                                      displayName,
+                                      userNameDis,
                                       style: GoogleFonts.montserrat(
                                         textStyle: TextStyle(
                                           fontSize: 15,

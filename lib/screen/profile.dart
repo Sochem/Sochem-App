@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String initials = '';
   String house = '';
   String rollNo = '';
+  String userNameDis = '';
 
   @override
   void initState() {
@@ -56,7 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       userEmail = prefs.getString('email')!;
       userName = prefs.getString('name')!;
-      print(userName + "dev");
+      var trimName = userName.split(' ');
+      for (var y in trimName) {
+        if (y.substring(0, 1) == '4')
+          break;
+        else
+          userNameDis += y + ' ';
+      }
       initials = userName.substring(0, 1).toUpperCase();
       year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
       for (var i = 0; i < _people.length; i++) {
@@ -134,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Center(
                     child: Text(
-                      userName,
+                      userNameDis,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
