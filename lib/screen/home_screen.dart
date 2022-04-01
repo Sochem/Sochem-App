@@ -22,7 +22,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool newNotifExist = false;
   String userName = '';
+  String displayName = '';
   String initials = '';
+  String userNameDis = '';
   bool loggedIn = false;
   String token = "";
   late SharedPreferences prefs;
@@ -63,6 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (loggedIn) {
       token = prefs.getString(DjangoToken)!;
       userName = prefs.getString(UserName)!;
+      displayName = userName.substring(0, userName.length - 35);
+      var trimName = userName.split(' ');
+      for (var y in trimName) {
+        if (y.substring(0, 1) == '4')
+          break;
+        else
+          userNameDis += y + ' ';
+      }
       await fetchNotifs();
     } else {
       token = dotenv.get(GuestToken);
@@ -96,132 +106,163 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            padding: EdgeInsets.only(top: 25.0),
-            height: screensize.height * 0.28,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    25.0,
-                    screensize.height * 0.03,
-                    10.0,
-                    screensize.height * 0.005,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 7.0),
-                        child: GestureDetector(
-                          onTap: () => loggedIn
-                              ? Navigator.pushNamed(context, ProfileRoute)
-                              : showRequireLogin(context),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.primaries[
-                                Random().nextInt(Colors.primaries.length)],
-                            radius: 30,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: loggedIn
-                                  ? Text(
-                                      initials,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 25,
+            height: screensize.height * 0.3,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      15.0,
+                      8,
+                      10.0,
+                      screensize.height * 0.005,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 7.0),
+                              child: GestureDetector(
+                                onTap: () => loggedIn
+                                    ? Navigator.pushNamed(context, ProfileRoute)
+                                    : showRequireLogin(context),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)],
+                                  radius: 25,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: loggedIn
+                                        ? Text(
+                                            initials,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                            ),
+                                          )
+                                        : Icon(
+                                            Icons.account_circle_outlined,
+                                            size: 35,
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            loggedIn
+                                ? Container(
+                                    width: screensize.width * 0.4,
+                                    child: Text(
+                                      userNameDis,
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    )
-                                  : Icon(
-                                      Icons.account_circle_outlined,
-                                      size: 40,
                                     ),
-                            ),
-                          ),
+                                  )
+                                : Container(
+                                    width: screensize.width * 0.4,
+                                    child: Flexible(
+                                      child: Text(
+                                        "Guest",
+                                        style: GoogleFonts.montserrat(
+                                          textStyle: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        width: screensize.width * 0.4,
-                        child: Text(
-                          userName,
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                            ),
+                        Row(children: [
+                          Stack(
+                            children: [
+                              IconButton(
+                                alignment: Alignment.centerRight,
+                                onPressed: () => loggedIn
+                                    ? Navigator.pushNamed(context, NotifRoute)
+                                    : showRequireLogin(context),
+                                icon: Icon(
+                                  CupertinoIcons.bell,
+                                  size: 30.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              if (newNotifExist)
+                                Positioned(
+                                  right: 10,
+                                  top: 7,
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    maxRadius: 6,
+                                    minRadius: 6,
+                                  ),
+                                ),
+                            ],
                           ),
-                        ),
-                      ),
-                      SizedBox(width: screensize.width * 0.15),
-                      Stack(children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: IconButton(
+                          IconButton(
                             alignment: Alignment.centerRight,
-                            onPressed: () => loggedIn
-                                ? Navigator.pushNamed(context, NotifRoute)
-                                : showRequireLogin(context),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, InfoRoute),
                             icon: Icon(
-                              CupertinoIcons.bell,
-                              size: 25.0,
+                              CupertinoIcons.info_circle,
+                              size: 30.0,
                               color: Colors.white,
                             ),
                           ),
-                        ),
-                        if (newNotifExist)
-                          Positioned(
-                            right: 9,
-                            top: 7,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              maxRadius: 6,
-                              minRadius: 6,
-                            ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 25.0,
+                        top: screensize.height * 0.01,
+                      ),
+                      child: Text(
+                        "Society Of",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.raleway(
+                          textStyle: TextStyle(
+                            fontSize: screensize.width * 0.087,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            // letterSpacing: 1.2,
                           ),
-                      ]),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 25.0,
-                      top: screensize.height * 0.01,
-                    ),
-                    child: Text(
-                      "Society Of",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.raleway(
-                        textStyle: TextStyle(
-                          fontSize: screensize.width * 0.087,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          // letterSpacing: 1.2,
                         ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 25.0),
-                    child: Text(
-                      "Chemical Engineers",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.raleway(
-                        textStyle: TextStyle(
-                          fontSize: screensize.width * 0.082,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          // letterSpacing: 1.2,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 25.0),
+                      child: Text(
+                        "Chemical Engineers",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.raleway(
+                          textStyle: TextStyle(
+                            fontSize: screensize.width * 0.082,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            // letterSpacing: 1.2,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Container(

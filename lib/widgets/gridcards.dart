@@ -60,7 +60,7 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
               image: GroupIcon,
               title: "Groups",
               route: GroupRoute,
-              allowed: true,
+              allowed: loggedIn,
             ),
           ],
         ),

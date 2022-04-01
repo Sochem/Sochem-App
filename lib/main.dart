@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/config.dart';
 import 'package:sochem/screen/forum_page.dart';
 import 'package:sochem/screen/home_screen.dart';
+import 'package:sochem/screen/info.dart';
 import 'package:sochem/screen/login_page.dart';
 import 'package:sochem/screen/groups.dart';
 import 'package:sochem/screen/feed.dart';
@@ -36,7 +37,8 @@ void main() async {
       NotifRoute: (context) => Notif(),
       LoginRoute: (context) => LoginPage(),
       ProfileRoute: (context) => ProfilePage(),
-      ForumRoute:(context) => ForumPage()
+      ForumRoute: (context) => ForumPage(),
+      InfoRoute: (context) => Information(),
     },
   ));
 }
