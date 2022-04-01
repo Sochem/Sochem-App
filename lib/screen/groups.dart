@@ -84,6 +84,51 @@ class _GroupPageState extends State<GroupPage> {
     });
   }
 
+  List<Widget> _buildContent(int index1) {
+    List<Widget> contents = [];
+
+    for (var content in _people) {
+      if (content.house == _grps[index1]) {
+        contents.add(
+          ListTile(
+            leading: CircleAvatar(
+              backgroundColor:
+                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
+              radius: 30,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    content.email!.substring(0, 1).toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 25,
+                    ),
+                  )),
+            ),
+            title: Text(
+              content.name!,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            subtitle: Row(
+              // mainAxisAlignment:
+              //     MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
+                  child: Text(
+                    content.email!,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    }
+
+    return contents;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +152,18 @@ class _GroupPageState extends State<GroupPage> {
             color: kBackgroundColor,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(ProfileIcon),
+              backgroundColor: kBackgroundColor,
+            ),
+          ),
+          SizedBox(
+            width: 16,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
@@ -225,82 +282,52 @@ class _GroupPageState extends State<GroupPage> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index1) {
-                      return Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              _grps[index1],
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold,
-                                // backgroundColor: kBackgroundColor,
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60),
+                            side: BorderSide(color: Colors.purple[900]!)),
+                        // color: ,
+                        child: ExpansionTile(
+                          // collapsedBackgroundColor: cardImageColor,
+                          iconColor: Colors.black,
+                          title: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                                // gradient: LinearGradient(
+                                //   begin: Alignment.topLeft,
+                                //   end: Alignment.bottomRight,
+                                //   colors: [Color(0xFFFFECDF), kBackgroundColor],
+                                // ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  _grps[index1],
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    // color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    // backgroundColor: kBackgroundColor,
+                                  ),
+                                ),
                               ),
                             ),
+                          ),
+                          children: <Widget>[
                             SizedBox(
                               height: 10,
                             ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              // scrollDirection: Axis.vertical,
-
-                              itemBuilder: (context, index) {
-                                return _people[index].house == _grps[index1]
-                                    ? Card(
-                                        // elevation: 5,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 5,
-                                          vertical: 8,
-                                        ),
-                                        child: ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Colors.primaries[
-                                                Random().nextInt(
-                                                    Colors.primaries.length)],
-                                            radius: 30,
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  _people[index]
-                                                      .email!
-                                                      .substring(0, 1)
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 25,
-                                                  ),
-                                                )),
-                                          ),
-                                          title: Text(
-                                            _people[index].name!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          ),
-                                          subtitle: Row(
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Flexible(
-                                                child: Text(
-                                                  _people[index].email!,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    : Container();
-                              },
-                              itemCount: _people.length,
+                            Column(
+                              children: _buildContent(index1),
                             ),
                             SizedBox(
-                              height: 15,
-                            ),
+                              height: 10,
+                            )
                           ],
                         ),
                       );
