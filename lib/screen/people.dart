@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/models/people_model.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -68,32 +69,48 @@ class _PeoplePageState extends State<PeoplePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 4,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: kBackgroundColor,
-          iconSize: 30,
-          onPressed: () async {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          'People',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: kBackgroundColor,
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.13,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+                color: kPrimaryColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black54,
+                    offset: const Offset(1.0, 1.0), //Offset
+                    blurRadius: 10.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(top: 40.0),
+                child: Center(
+                  child: Text(
+                    'People',
+                    style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        // letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: DropdownButtonFormField<String>(
@@ -143,7 +160,7 @@ class _PeoplePageState extends State<PeoplePage> {
                 ),
                 menuMaxHeight: 220,
                 alignment: Alignment.bottomCenter,
-                dropdownColor: kBackgroundColor,
+                dropdownColor: Color.fromARGB(255, 231, 239, 243),
                 style: TextStyle(
                     color: kPrimaryColor,
                     fontSize: 18,
