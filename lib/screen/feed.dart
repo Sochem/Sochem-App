@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sochem/main.dart';
 import 'package:sochem/models/post_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:sochem/utils/constants.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:sochem/utils/endpoints.dart';
+import 'package:sochem/widgets/error_messages.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -207,10 +209,20 @@ class _FeedScreenState extends State<FeedScreen> {
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.86,
-            child: ListView.builder(
-              itemCount: _posts.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildPost(index);
+            child: FutureBuilder(
+              future: fetchPosts(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return SomethingWentWrong();
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return ListView.builder(
+                      itemCount: _posts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildPost(index);
+                      });
+                }
+                return Loading();
               },
             ),
           ),
