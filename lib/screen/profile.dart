@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/people_model.dart';
-import '../utils/constants.dart';
+import 'package:sochem/utils/endpoints.dart';
+import 'package:sochem/models/people_model.dart';
+import 'package:sochem/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
@@ -17,12 +17,21 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   List<People> _people = [];
+  late String token;
+  
+  String userEmail = '';
+  String userName = '';
+  String year = '';
+  String initials = '';
+  String house = '';
+  String rollNo = '';
+  String userNameDis = '';
+  
   Future<List<People>> fetchPeople() async {
-    var response = await http
-        .get(Uri.parse("https://api.sochem.org/api/family-list/"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Token 262132f6ee56aba6dcdc9e7bd28ed1409fb45c98'
-    });
+    var response = await http.get(
+      Uri.parse(Endpoints.profile),
+      headers: {HttpHeaders.authorizationHeader: token},
+    );
     List<People> people = [];
     if (response.statusCode == 200) {
       var peopleJson = json.decode(response.body);
@@ -32,14 +41,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     return people;
   }
-
-  String userEmail = '';
-  String userName = '';
-  String year = '';
-  String initials = '';
-  String house = '';
-  String rollNo = '';
-  String userNameDis = '';
 
   @override
   void initState() {
@@ -54,16 +55,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _initialising() async {
     final prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(DjangoToken)!;
+    userEmail = prefs.getString('email')!;
+    userName = prefs.getString('name')!;
+
     setState(() {
-      userEmail = prefs.getString('email')!;
-      userName = prefs.getString('name')!;
-      var trimName = userName.split(' ');
-      for (var y in trimName) {
-        if (y.substring(0, 1) == '4')
-          break;
-        else
-          userNameDis += y + ' ';
-      }
+      print(userName + "dev");
       initials = userName.substring(0, 1).toUpperCase();
       year = userEmail.substring(userEmail.length - 14, userEmail.length - 12);
       for (var i = 0; i < _people.length; i++) {

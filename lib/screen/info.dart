@@ -12,7 +12,6 @@ class Information extends StatefulWidget {
 class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
-    Size screensize = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -22,7 +21,7 @@ class _InformationState extends State<Information> {
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: <Widget>[
-                  Image.asset("assets/sochem.png", height: 220),
+                  Image.asset(SochemIcon, height: 220),
                   SizedBox(
                     width: 20,
                   ),
@@ -39,8 +38,6 @@ class _InformationState extends State<Information> {
                               color: Color(0xFF174374),
                               fontSize: 50,
                               fontWeight: FontWeight.w800,
-
-                              // letterSpacing: 1.2,
                             ),
                           ),
                         ),
@@ -48,11 +45,10 @@ class _InformationState extends State<Information> {
                           text: 'Chem',
                           style: GoogleFonts.raleway(
                             textStyle: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xFF1894d0)
-                                // letterSpacing: 1.2,
-                                ),
+                              fontSize: 50,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF1894d0),
+                            ),
                           ),
                         ),
                       ],
@@ -67,8 +63,6 @@ class _InformationState extends State<Information> {
                       textStyle: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-
-                        // letterSpacing: 1.2,
                       ),
                     ),
                   ),
@@ -87,8 +81,6 @@ class _InformationState extends State<Information> {
                       textStyle: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-
-                        // letterSpacing: 1.2,
                       ),
                     ),
                   ),
@@ -107,8 +99,6 @@ class _InformationState extends State<Information> {
                       textStyle: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-
-                        // letterSpacing: 1.2,
                       ),
                     ),
                   ),
@@ -151,13 +141,14 @@ class _InformationState extends State<Information> {
 }
 
 class AppDevTile extends StatelessWidget {
-  const AppDevTile(
-      {required this.pic,
-      required this.name,
-      required this.designation,
-      required this.fb,
-      required this.insta,
-      required this.linkedin});
+  const AppDevTile({
+    required this.pic,
+    required this.name,
+    required this.designation,
+    required this.fb,
+    required this.insta,
+    required this.linkedin,
+  });
   final String designation;
   final String name;
   final String fb;
@@ -170,85 +161,79 @@ class AppDevTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Container(
-        child: Row(
+        height: 300,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(pic),
-                    ),
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(pic),
                   ),
-                )),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 10, 8),
-              child: Column(
-                children: [
-                  Text(
-                    name,
-                    style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Divider(),
-                  Text(
-                    designation,
-                    style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 1,
-                      color: Colors.black12,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                        child: IconButton(
-                          onPressed: () => launch(insta),
-                          icon: Icon(FontAwesomeIcons.instagram,
-                              color: Colors.black, size: 25.0),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                        child: IconButton(
-                          onPressed: () => launch(linkedin),
-                          icon: Icon(FontAwesomeIcons.linkedin,
-                              color: Colors.black, size: 25.0),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                        child: IconButton(
-                          onPressed: () => launch(fb),
-                          icon: Icon(FontAwesomeIcons.facebook,
-                              color: Colors.black, size: 25.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                ),
               ),
+            ),
+            Column(
+              children: [
+                Text(
+                  name,
+                  style: GoogleFonts.montserrat(
+                    textStyle: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Divider()),
+                Text(
+                  designation,
+                  style: GoogleFonts.montserrat(
+                    textStyle: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () => launch(insta),
+                        icon: Icon(FontAwesomeIcons.instagram,
+                            color: Colors.black, size: 25.0),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () => launch(linkedin),
+                        icon: Icon(FontAwesomeIcons.linkedin,
+                            color: Colors.black, size: 25.0),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () => launch(fb),
+                        icon: Icon(FontAwesomeIcons.facebook,
+                            color: Colors.black, size: 25.0),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             )
           ],
         ),
