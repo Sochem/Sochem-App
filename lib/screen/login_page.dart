@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
       final user =
           await GoogleOneTapSignIn.startSignIn(webClientId: _webClientId);
       // print(GoogleOneTapSignIn.startSignIn(webClientId: _webClientId));
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       print(user);
       if (user != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
