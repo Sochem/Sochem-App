@@ -346,6 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       var prefs =
                                           await SharedPreferences.getInstance();
                                       prefs.clear();
+                                      prefs.setBool(isOnboarded, true);
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                         LoginRoute,
