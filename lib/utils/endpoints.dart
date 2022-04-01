@@ -4,4 +4,5 @@ class Endpoints {
   static String login = 'https://api.sochem.org/api/logup';
   static String notif = 'https://api.sochem.org/api/notifi/';
   static String feed = 'https://api.sochem.org/api/events/';
+  static String family = 'https://api.sochem.org/api/family-list/';
 }
