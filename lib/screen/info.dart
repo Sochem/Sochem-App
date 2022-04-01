@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sochem/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Information extends StatefulWidget {
   @override
@@ -118,25 +119,26 @@ class _InformationState extends State<Information> {
                     pic: 'assets/arjun.jpg',
                     name: 'Arjun Gupta',
                     designation: 'Technical Team Lead',
-                    fb: '',
-                    insta: '',
-                    linkedin: '',
+                    fb: 'https://www.facebook.com/arjun.manas.1',
+                    insta: 'https://www.instagram.com/arjupta/',
+                    linkedin: 'https://www.linkedin.com/in/arjupta/',
                   ),
                   AppDevTile(
                     pic: 'assets/aditya.jpeg',
                     name: 'Aditya Kumar Singh',
                     designation: 'Technical Executive',
-                    fb: '',
-                    insta: '',
-                    linkedin: '',
+                    fb: 'https://www.facebook.com/profile.php?id=100004271555775',
+                    insta: 'https://www.instagram.com/itsadityaksingh/',
+                    linkedin: 'https://www.linkedin.com/in/itsadityaksingh/',
                   ),
                   AppDevTile(
                     pic: 'assets/devansh.jpeg',
                     name: 'Devansh Mishra',
                     designation: 'Technical Executive',
-                    fb: '',
-                    insta: '',
-                    linkedin: '',
+                    fb: 'https://www.facebook.com/profile.php?id=100008164635361',
+                    insta: 'https://www.instagram.com/keshavmishra_2612/',
+                    linkedin:
+                        'https://www.linkedin.com/in/devansh-mishra-3a6138203/',
                   ),
                 ],
               ),
@@ -169,20 +171,24 @@ class AppDevTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Container(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 150,
-                  child: CircleAvatar(
-                      radius: 30,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(300),
-                          child: Image.asset(pic))),
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(pic),
+                    ),
+                  ),
                 )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(10, 20, 10, 8),
               child: Column(
                 children: [
                   Text(
@@ -204,32 +210,39 @@ class AppDevTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: 1,
+                      color: Colors.black12,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                         child: IconButton(
-                          onPressed: null,
+                          onPressed: () => launch(insta),
                           icon: Icon(FontAwesomeIcons.instagram,
-                              color: Colors.white, size: 25.0),
+                              color: Colors.black, size: 25.0),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                         child: IconButton(
-                          onPressed: null,
+                          onPressed: () => launch(linkedin),
                           icon: Icon(FontAwesomeIcons.linkedin,
-                              color: Colors.white, size: 25.0),
+                              color: Colors.black, size: 25.0),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                         child: IconButton(
-                          onPressed: null,
+                          onPressed: () => launch(fb),
                           icon: Icon(FontAwesomeIcons.facebook,
-                              color: Colors.white, size: 25.0),
+                              color: Colors.black, size: 25.0),
                         ),
                       )
                     ],
