@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/notification_model.dart';
 import 'package:sochem/utils/constants.dart';
+import 'package:sochem/utils/dialog.dart';
 import 'package:sochem/utils/endpoints.dart';
 import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/error_messages.dart';
@@ -131,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => loggedIn
                                     ? Navigator.pushNamed(context, ProfileRoute)
-                                    : showRequireLogin(context),
+                                    : signinDialog(context),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.primaries[Random()
                                       .nextInt(Colors.primaries.length)],
@@ -179,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? Navigator.pushNamed(context, NotifRoute)
                                         .then((value) =>
                                             refreshAfterNotificationScreen())
-                                    : showRequireLogin(context),
+                                    : signinDialog(context),
                                 icon: Icon(
                                   CupertinoIcons.bell,
                                   size: 30.0,

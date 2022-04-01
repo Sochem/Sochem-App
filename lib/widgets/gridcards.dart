@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/utils/constants.dart';
 import 'package:sochem/widgets/error_messages.dart';
 
+import '../utils/dialog.dart';
+
 class HomeScreenGrid extends StatefulWidget {
   @override
   State<HomeScreenGrid> createState() => _HomeScreenGridState();
@@ -101,9 +103,8 @@ class SingleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => allowed
-          ? Navigator.pushNamed(context, route)
-          : showRequireLogin(context),
+      onTap: () =>
+          allowed ? Navigator.pushNamed(context, route) : signinDialog(context),
       child: Container(
         height: size.height * 0.15,
         width: size.width * 0.40,

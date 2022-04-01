@@ -308,45 +308,46 @@ class _FeedScreenState extends State<FeedScreen> {
                               ),
                             ),
                           )
-                        : _posts[index].file2 != null
-                            ? TextButton(
-                                onPressed: () {
-                                  launch(_posts[index].file2);
-                                },
-                                child: Container(
-                                  width: 200,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        cardImageColor,
-                                        Color.fromARGB(255, 128, 203, 196),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        offset: Offset(5, 5),
-                                        blurRadius: 10,
-                                      )
+                        : Visibility(
+                            child: TextButton(
+                              onPressed: () {
+                                launch(_posts[index].file2);
+                              },
+                              child: Container(
+                                width: 200,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      cardImageColor,
+                                      Color.fromARGB(255, 128, 203, 196),
                                     ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      'View Second File',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(5, 5),
+                                      blurRadius: 10,
+                                    )
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'View Second File',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
-                              )
-                            : Text(''),
+                              ),
+                            ),
+                            visible: _posts[index].file2 != null,
+                          ),
                   ],
                 ),
               )
