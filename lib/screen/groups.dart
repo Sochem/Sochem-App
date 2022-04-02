@@ -110,10 +110,8 @@ class _GroupPageState extends State<GroupPage> {
               content.name!,
               style: Theme.of(context).textTheme.headline6,
             ),
-            subtitle: Flexible(
-              child: Text(
-                content.email!,
-              ),
+            subtitle: Text(
+              content.email!,
             ),
           ),
         );

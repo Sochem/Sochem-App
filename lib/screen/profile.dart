@@ -24,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
   String initials = '';
   String house = '';
   String rollNo = '';
-  String userNameDis = '';
 
   Future<List<People>> fetchPeople() async {
     var response = await http.get(
@@ -76,7 +75,6 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Container(
           child: Stack(
             children: [
-              Container(height: height),
               ShapeOfView(
                 shape: ArcShape(
                   direction: ArcDirection.Outside,
@@ -93,20 +91,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              Positioned(
-                top: 140,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    height: height * 0.2,
-                    width: width * 0.3,
-                    child: CircleAvatar(
-                      backgroundColor: Colors
-                          .primaries[Random().nextInt(Colors.primaries.length)],
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+              Column(
+                children: [
+                  SizedBox(height: height * 0.2),
+                  Center(
+                    child: Container(
+                      height: width * 0.3,
+                      width: width * 0.3,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.primaries[Random().nextInt(
+                          Colors.primaries.length,
+                        )],
+                        radius: 30,
                         child: Text(
                           initials,
                           style: TextStyle(
@@ -118,16 +114,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                ),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: height * 0.35,
-                  ),
-                  Center(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      userNameDis,
+                      userName,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
@@ -137,14 +127,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      Divider(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        Divider(),
+                        Container(
                           height: 70,
-                          width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30.0),
@@ -155,39 +144,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               colors: [Color(0xFFFFECDF), kBackgroundColor],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Icon(
-                                  Icons.alternate_email_outlined,
-                                  size: 35,
-                                ),
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.alternate_email_outlined,
+                                size: 35,
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
-                                  child: Text(
-                                    userEmail,
-                                    style: GoogleFonts.raleway(
-                                      textStyle: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                              title: Text(
+                                userEmail,
+                                style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
+                        SizedBox(height: 15),
+                        Container(
                           height: 70,
-                          width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30.0),
@@ -198,41 +175,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               colors: [Color(0xFFFFECDF), kBackgroundColor],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Icon(
-                                  Icons.class__outlined,
-                                  size: 35,
-                                ),
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.class__outlined,
+                                size: 35,
                               ),
-                              Center(
-                                child: Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
-                                    child: Text(
-                                      "Batch 20" + year,
-                                      style: GoogleFonts.raleway(
-                                        textStyle: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
+                              title: Text(
+                                "Batch 20" + year,
+                                style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
+                        SizedBox(height: 15),
+                        Container(
                           height: 70,
-                          width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30.0),
@@ -243,39 +206,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               colors: [Color(0xFFFFECDF), kBackgroundColor],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Icon(
-                                  Icons.contacts_outlined,
-                                  size: 35,
-                                ),
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.contacts_outlined,
+                                size: 35,
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
-                                  child: Text(
-                                    "Roll Number: " + rollNo,
-                                    style: GoogleFonts.raleway(
-                                      textStyle: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                              title: Text(
+                                "Roll Number: " + rollNo,
+                                style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
+                        SizedBox(height: 15),
+                        Container(
                           height: 70,
-                          width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30.0),
@@ -286,39 +237,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               colors: [Color(0xFFFFECDF), kBackgroundColor],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Icon(
-                                  Icons.group_outlined,
-                                  size: 35,
-                                ),
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.group_outlined,
+                                size: 35,
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
-                                  child: Text(
-                                    "You belong to \"" + house + "\"",
-                                    style: GoogleFonts.raleway(
-                                      textStyle: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                              title: Text(
+                                "You belong to \"" + house + "\"",
+                                style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
+                        SizedBox(height: 15),
+                        Container(
                           height: 70,
-                          width: MediaQuery.of(context).size.height * 0.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30.0),
@@ -329,47 +268,39 @@ class _ProfilePageState extends State<ProfilePage> {
                               colors: [Color(0xFFFFECDF), kBackgroundColor],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Icon(
-                                  Icons.logout_outlined,
-                                  size: 35,
-                                ),
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.logout_outlined,
+                                size: 35,
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(30, 5, 10, 5),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      var prefs =
-                                          await SharedPreferences.getInstance();
-                                      prefs.clear();
-                                      prefs.setBool(isOnboarded, true);
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                        LoginRoute,
-                                        (route) => false,
-                                      );
-                                    },
-                                    child: Text(
-                                      "Log Out",
-                                      style: GoogleFonts.raleway(
-                                        textStyle: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
+                              title: GestureDetector(
+                                onTap: () async {
+                                  var prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.clear();
+                                  prefs.setBool(isOnboarded, true);
+                                  Navigator.of(context)
+                                      .pushNamedAndRemoveUntil(
+                                    LoginRoute,
+                                    (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  "Log Out",
+                                  style: GoogleFonts.raleway(
+                                    textStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
