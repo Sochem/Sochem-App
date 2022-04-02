@@ -26,6 +26,7 @@ void main() async {
   runApp(MaterialApp(
     title: "Sochem App",
     initialRoute: AppRoute,
+    debugShowCheckedModeBanner: false,
     routes: <String, WidgetBuilder>{
       AppRoute: (context) => App(),
       HomeRoute: (context) => HomeScreen(),

@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sochem.mobile">
+    <uses-permission android:name="android.permission.INTERNET" /> 
    <application
         android:label="SoChem"
         android:icon="@mipmap/ic_launcher">
