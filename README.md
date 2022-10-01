@@ -8,7 +8,7 @@ This application provides a platform for the students of the Society of Chemical
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#contributors)
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
