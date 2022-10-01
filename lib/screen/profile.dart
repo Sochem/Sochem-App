@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Center(
                             child: ListTile(
                               leading: Icon(
-                                Icons.class__outlined,
+                                Icons.class_outlined,
                                 size: 35,
                               ),
                               title: Text(
