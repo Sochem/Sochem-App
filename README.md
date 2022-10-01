@@ -15,6 +15,7 @@ This application provides a platform for the students of the Society of Chemical
     <tr>
       <td align="center"><a href="https://github.com/devansh12b2"><img src="https://avatars.githubusercontent.com/u/79010144?v=4" width="100px;" alt=""/><br /><sub><b>Devansh Mishra</b></sub></a></td>
       <td align="center"><a href="https://github.com/ARJUPTA"><img src="https://avatars.githubusercontent.com/u/64064110?v=4" width="100px;" alt=""/><br /><sub><b>Arjun Gupta</b></sub></a></td>
+      <td align="center"><a href="https://github.com/ItsAdityaKSingh"><img src="https://avatars.githubusercontent.com/u/69353350?v=4" width="100px;" alt=""/><br /><sub><b>Aditya Kumar Singh</b></sub></a></td>
     </tr>
   </tbody>
   <tfoot>
