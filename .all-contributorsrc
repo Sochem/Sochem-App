@@ -38,6 +38,18 @@
         "maintenance",
         "bug"
       ]
+    },
+    {
+      "login": "ItsAdityaKSingh",
+      "name": "Aditya Kumar Singh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69353350?v=4",
+      "profile": "https://github.com/ItsAdityaKSingh",
+      "contributions": [
+        "code",
+        "review",
+        "bug",
+        "maintenance"
+      ]
     }
   ]
 }
