@@ -41,9 +41,10 @@ dependencies:
   wakelock_web: ^0.4.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.2
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.2
+  flutter_lints: ^2.0.1
 
 flutter_icons:
   image_path: "assets/sochem.png"
