@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Center(
                             child: ListTile(
                               leading: Icon(
-                                Icons.class__outlined,
+                                Icons.class_outlined,
                                 size: 35,
                               ),
                               title: Text(
@@ -280,8 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       await SharedPreferences.getInstance();
                                   prefs.clear();
                                   prefs.setBool(isOnboarded, true);
-                                  Navigator.of(context)
-                                      .pushNamedAndRemoveUntil(
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
                                     LoginRoute,
                                     (route) => false,
                                   );
