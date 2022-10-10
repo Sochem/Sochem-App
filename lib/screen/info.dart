@@ -117,26 +117,31 @@ class _InformationState extends State<Information> {
                     pic: 'assets/arjun.jpg',
                     name: 'Arjun Gupta',
                     designation: 'Technical Team Lead',
-                    fb: 'https://www.facebook.com/arjun.manas.1',
-                    insta: 'https://www.instagram.com/arjupta/',
-                    linkedin: 'https://www.linkedin.com/in/arjupta/',
+                    fb: Uri.parse('https://www.facebook.com/arjun.manas.1'),
+                    insta: Uri.parse('https://www.instagram.com/arjupta/'),
+                    linkedin: Uri.parse('https://www.linkedin.com/in/arjupta/'),
                   ),
                   AppDevTile(
                     pic: 'assets/aditya.jpeg',
                     name: 'Aditya Kumar Singh',
                     designation: 'Technical Executive',
-                    fb: 'https://www.facebook.com/profile.php?id=100004271555775',
-                    insta: 'https://www.instagram.com/itsadityaksingh/',
-                    linkedin: 'https://www.linkedin.com/in/itsadityaksingh/',
+                    fb: Uri.parse(
+                        'https://www.facebook.com/profile.php?id=100004271555775'),
+                    insta:
+                        Uri.parse('https://www.instagram.com/itsadityaksingh/'),
+                    linkedin: Uri.parse(
+                        'https://www.linkedin.com/in/itsadityaksingh/'),
                   ),
                   AppDevTile(
                     pic: 'assets/devansh.jpeg',
                     name: 'Devansh Mishra',
                     designation: 'Technical Executive',
-                    fb: 'https://www.facebook.com/profile.php?id=100008164635361',
-                    insta: 'https://www.instagram.com/keshavmishra_2612/',
-                    linkedin:
-                        'https://www.linkedin.com/in/devansh-mishra-3a6138203/',
+                    fb: Uri.parse(
+                        'https://www.facebook.com/profile.php?id=100008164635361'),
+                    insta: Uri.parse(
+                        'https://www.instagram.com/keshavmishra_2612/'),
+                    linkedin: Uri.parse(
+                        'https://www.linkedin.com/in/devansh-mishra-3a6138203/'),
                   ),
                 ],
               ),
@@ -158,9 +163,9 @@ class AppDevTile extends StatelessWidget {
       required this.linkedin});
   final String designation;
   final String name;
-  final String fb;
-  final String insta;
-  final String linkedin;
+  final Uri fb;
+  final Uri insta;
+  final Uri linkedin;
   final String pic;
 
   @override
@@ -213,7 +218,7 @@ class AppDevTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
-                      onPressed: () => launch(insta),
+                      onPressed: () => launchUrl(insta),
                       icon: Icon(
                         FontAwesomeIcons.instagram,
                         color: Colors.black,
@@ -221,7 +226,7 @@ class AppDevTile extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => launch(linkedin),
+                      onPressed: () => launchUrl(linkedin),
                       icon: Icon(
                         FontAwesomeIcons.linkedin,
                         color: Colors.black,
@@ -229,7 +234,7 @@ class AppDevTile extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => launch(fb),
+                      onPressed: () => launchUrl(fb),
                       icon: Icon(
                         FontAwesomeIcons.facebook,
                         color: Colors.black,
