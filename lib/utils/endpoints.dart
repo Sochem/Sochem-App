@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class Endpoints {
   static String config = 'https://api.sochem.org/api/conf';
   static String profile = 'https://api.sochem.org/api/family-list/';

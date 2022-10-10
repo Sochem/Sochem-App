@@ -110,7 +110,7 @@ class _CloudPageState extends State<CloudPage> {
                     children: [
                       GenreTitle(
                         title: bookTypesList[index],
-                        link: categoryLinks[index],
+                        link: categoryLinks[index].toString(),
                       ),
                       BooksHorizontal(
                         genreURL: 'https://api.npoint.io/46e15ce2ed98a569637a',
