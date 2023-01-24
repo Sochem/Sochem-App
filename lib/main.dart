@@ -87,6 +87,7 @@ class _AppState extends State<App> {
         future: fetchConfig(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            print(snapshot.error.toString() + " error");
             return SomethingWentWrong();
           }
 
