@@ -48,15 +48,23 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: CustomPaint(
-        painter: Bluepainter(),
+      body: Container(
+        width: width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              Color.fromARGB(255, 13, 23, 70),
+              Color.fromARGB(255, 9, 18, 61)
+            ])),
         child: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: width * 0.5,
-                height: width * 0.5,
+                width: width*0.5,
+                height: width*0.5,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: kBackgroundColor,
@@ -66,54 +74,62 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              SizedBox(height: 80),
+              Text("SoChem",
+              style:TextStyle(color: Colors.white, fontSize: 28 ,fontWeight: FontWeight.w700),
+              ),
+              SizedBox(height: 50),
+              Text("            Welcome to the\nofficial app of the Society of\n          Chemical Engineers",
+                             style:TextStyle(color:  Color.fromARGB(255, 57, 122, 235), fontSize: 20 ),
+                             ),
+              SizedBox(height: 100),
               Container(
                 child: Column(
                   children: [
-                    ElevatedButton.icon(
-                      icon: Image.asset(GoogleIcon, height: 35),
+                    ElevatedButton(
                       onPressed: _signIn,
-                      label: Text(
+                      child: Text(
                         " LOGIN",
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.black,
                           fontSize: 24,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        fixedSize: Size(width * 0.75, 50),
+                        primary: Color.fromARGB(255, 57, 122, 235),
+                        fixedSize: Size(width * 0.65, 40),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(50),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 1.0,
-                          width: 50.0,
-                          color: Colors.white.withOpacity(0.8),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(
-                            "OR",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white.withOpacity(0.6),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 1.0,
-                          width: 50.0,
-                          color: Colors.white.withOpacity(0.8),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: 20),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Container(
+                    //       height: 1.0,
+                    //       width: 50.0,
+                    //       color: Colors.white.withOpacity(0.8),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    //       child: Text(
+                    //         "OR",
+                    //         style: TextStyle(
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.white.withOpacity(0.6),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Container(
+                    //       height: 1.0,
+                    //       width: 50.0,
+                    //       color: Colors.white.withOpacity(0.8),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(height: 10),
                     TextButton(
                       onPressed: () async {
@@ -123,15 +139,15 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text('Guest'),
                       style: TextButton.styleFrom(
-                        primary: Colors.white,
+                        primary:  Color.fromARGB(255, 57, 122, 235),
                         elevation: 0,
                         textStyle: TextStyle(
                           fontSize: 24,
                         ),
-                        fixedSize: Size(width * 0.75, 50),
-                        side: BorderSide(color: Colors.white, width: 1),
+                        fixedSize: Size(width * 0.65, 40),
+                        side: BorderSide(color:  Color.fromARGB(255, 57, 122, 235), width: 1),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(50),
                         ),
                       ),
                     ),
@@ -146,58 +162,58 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class Bluepainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final height = size.height;
-    final width = size.width;
-    final midx = width * 0.5;
-    final midy = height * 0.5;
-    Paint paint = Paint();
+// class Bluepainter extends CustomPainter {
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final height = size.height;
+//     final width = size.width;
+//     final midx = width * 0.5;
+//     final midy = height * 0.5;
+//     Paint paint = Paint();
 
-    // Left triangle
-    Path triangle1 = Path();
-    triangle1.moveTo(0, 0);
-    triangle1.lineTo(midx, midy);
-    triangle1.lineTo(0, height);
-    triangle1.close();
-    paint.color = tri1;
-    paint.style = PaintingStyle.fill;
-    canvas.drawPath(triangle1, paint);
+//     // Left triangle
+//     Path triangle1 = Path();
+//     triangle1.moveTo(0, 0);
+//     triangle1.lineTo(midx, midy);
+//     triangle1.lineTo(0, height);
+//     triangle1.close();
+//     paint.color = tri1;
+//     paint.style = PaintingStyle.fill;
+//     canvas.drawPath(triangle1, paint);
 
-    // Upper triangle
-    Path triangle2 = Path();
-    triangle2.moveTo(0, 0);
-    triangle2.lineTo(midx, midy);
-    triangle2.lineTo(width, 0);
-    triangle2.close();
-    paint.color = tri2;
-    paint.style = PaintingStyle.fill;
-    canvas.drawPath(triangle2, paint);
+//     // Upper triangle
+//     Path triangle2 = Path();
+//     triangle2.moveTo(0, 0);
+//     triangle2.lineTo(midx, midy);
+//     triangle2.lineTo(width, 0);
+//     triangle2.close();
+//     paint.color = tri2;
+//     paint.style = PaintingStyle.fill;
+//     canvas.drawPath(triangle2, paint);
 
-    // Right traingle
-    Path triangle3 = Path();
-    triangle3.moveTo(width, 0);
-    triangle3.lineTo(midx, midy);
-    triangle3.lineTo(width, height);
-    triangle3.close();
-    paint.color = tri3;
-    paint.style = PaintingStyle.fill;
-    canvas.drawPath(triangle3, paint);
+//     // Right traingle
+//     Path triangle3 = Path();
+//     triangle3.moveTo(width, 0);
+//     triangle3.lineTo(midx, midy);
+//     triangle3.lineTo(width, height);
+//     triangle3.close();
+//     paint.color = tri3;
+//     paint.style = PaintingStyle.fill;
+//     canvas.drawPath(triangle3, paint);
 
-    //Lower traingle
-    Path triangle4 = Path();
-    triangle4.moveTo(0, height);
-    triangle4.lineTo(midx, midy);
-    triangle4.lineTo(width, height);
-    triangle4.close();
-    paint.color = tri4;
-    paint.style = PaintingStyle.fill;
-    canvas.drawPath(triangle4, paint);
-  }
+//     //Lower traingle
+//     Path triangle4 = Path();
+//     triangle4.moveTo(0, height);
+//     triangle4.lineTo(midx, midy);
+//     triangle4.lineTo(width, height);
+//     triangle4.close();
+//     paint.color = tri4;
+//     paint.style = PaintingStyle.fill;
+//     canvas.drawPath(triangle4, paint);
+//   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+//     return false;
+//   }
+// }
