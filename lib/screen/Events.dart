@@ -15,12 +15,12 @@ import 'package:sochem/widgets/carousel.dart';
 import 'package:sochem/widgets/gridcards.dart';
 import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatefulWidget {
+class EventsScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _EventsScreenState createState() => _EventsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _EventsScreenState extends State<EventsScreen> {
   bool newNotifExist = false;
   String userName = '';
   String initials = '';
@@ -95,20 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color.fromARGB(1, 0, 2, 20),
       body: Column(
         children: <Widget>[
-          Container(
-            height: screensize.height * 0.3,
-            child: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      15.0,
-                      8,
-                      10.0,
-                      screensize.height * 0.005,
-                    ),
-                    child: Row(
+          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
@@ -158,91 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                             ],
-                          ),
-                          // IconButton(
-                          //   alignment: Alignment.centerRight,
-                          //   onPressed: () =>
-                          //       Navigator.pushNamed(context, InfoRoute),
-                          //   icon: Icon(
-                          //     CupertinoIcons.info_circle,
-                          //     size: 30.0,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                        ]),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    color: Color.fromRGBO(42, 107, 255, 1),
-                    thickness: 0.4,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                    child: Text("Upcoming",
-                        style: TextStyle(
-                            color: Color.fromRGBO(83, 141, 255, 1),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,)),
-                  ),
-                  Container(
-                    height: 70,
-                    child: ListView(
-
-                    ),
-                  )
-                  // Container(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.only(
-                  //       left: 25.0,
-                  //       top: screensize.height * 0.01,
-                  //     ),
-                  //     child: Text(
-                  //       "Society Of",
-                  //       textAlign: TextAlign.left,
-                  //       style: GoogleFonts.raleway(
-                  //         textStyle: TextStyle(
-                  //           fontSize: screensize.width * 0.087,
-                  //           fontWeight: FontWeight.w600,
-                  //           color: Colors.white,
-                  //           // letterSpacing: 1.2,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.only(left: 25.0),
-                  //     child: Text(
-                  //       "Chemical Engineers",
-                  //       textAlign: TextAlign.left,
-                  //       style: GoogleFonts.raleway(
-                  //         textStyle: TextStyle(
-                  //           fontSize: screensize.width * 0.082,
-                  //           fontWeight: FontWeight.w600,
-                  //           color: Colors.white,
-                  //           // letterSpacing: 1.2,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
+                          ),]
+      ),
+        ]),
+        Container(
+          height: 180,
+          child: Text("hi")
           ),
-          Divider(
-            color: Color.fromRGBO(211, 226, 255, 1),
-            thickness: 0.065,
-          ),
-          Container(
-            height: screensize.height * 0.5,
-            child: HomeScreenGrid(),
-          ),
-          Container(
+       Container(
             child: Column(
               children: [
                 Divider(
@@ -253,9 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           )
-          //HomeScreenCarousel(),
-        ],
-      ),
-    );
+        ]));
   }
 }

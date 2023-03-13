@@ -31,53 +31,60 @@ class _HomeScreenGridState extends State<HomeScreenGrid> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: [
+        //     SingleCard(
+        //       image: FeedIcon,
+        //       title: "Feed",
+        //       route: FeedRoute,
+        //       allowed: true,
+        //     ),
+        //     SingleCard(
+        //       image: CloudIcon,
+        //       title: "Cloud",
+        //       route: CloudRoute,
+        //       allowed: loggedIn,
+        //     ),
+        //  SingleCard(
+        //       image: ProfileIcon,
+        //       title: "Profile",
+        //       route: ProfileRoute,
+        //       allowed: loggedIn,
+        //     ),
+        //   ],
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SingleCard(
-              image: FeedIcon,
-              title: "Feed",
-              route: FeedRoute,
-              allowed: true,
+              image: OsmozeIcon,
+              title: "Osmoze",
+              route: ForumRoute,
+              allowed: loggedIn,
             ),
             SingleCard(
-              image: CloudIcon,
-              title: "Cloud",
+              image: EventsIcon,
+              title: "Events",
               route: CloudRoute,
               allowed: loggedIn,
             ),
           ],
         ),
+        Text(" "),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SingleCard(
-              image: ForumIcon,
-              title: "Forum",
-              route: ForumRoute,
-              allowed: loggedIn,
-            ),
-            SingleCard(
-              image: GroupIcon,
-              title: "Groups",
-              route: GroupRoute,
+              image: FamilyIcon,
+              title: "Family",
+              route: PeopleRoute,
               allowed: true,
             ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
             SingleCard(
-              image: ProfileIcon,
-              title: "Profile",
-              route: ProfileRoute,
-              allowed: loggedIn,
-            ),
-            SingleCard(
-              image: PeopleIcon,
-              title: "People",
-              route: PeopleRoute,
+              image: HouseCupIcon,
+              title: "House Cup",
+              route: GroupRoute,
               allowed: true,
             ),
           ],
@@ -105,18 +112,17 @@ class SingleCard extends StatelessWidget {
       onTap: () =>
           allowed ? Navigator.pushNamed(context, route) : signinDialog(context),
       child: Container(
-        height: size.height * 0.15,
+        height: size.height * 0.23,
         width: size.width * 0.40,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: cardImageColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black45,
-              offset: const Offset(1.0, 1.0), //Offset
-              blurRadius: 5.0,
-            ),
-          ],
+          color: Color.fromRGBO(31, 36, 54, 1),
+          borderRadius: BorderRadius.circular(15),
+          // boxShadow: [
+          //   BoxShadow(
+          //     offset: const Offset(1.0, 1.0), //Offset
+          //     blurRadius: 5.0,
+          //   ),
+          // ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -124,18 +130,17 @@ class SingleCard extends StatelessWidget {
             Center(
               child: Image.asset(
                 image,
-                width: 45.0,
-                height: 45.0,
-                color: Colors.white70,
+                width: 170.0,
+                height: 120.0,
               ),
             ),
             Text(
               title,
               style: GoogleFonts.montserrat(
                 textStyle: TextStyle(
-                  fontSize: 25,
+                  fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Color.fromRGBO(149, 204, 255, 1),
                 ),
               ),
             ),
