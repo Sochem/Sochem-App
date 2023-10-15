@@ -1,23 +1,24 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sochem/models/config.dart';
+import 'package:sochem/screen/cloud.dart';
+import 'package:sochem/screen/feed.dart';
 import 'package:sochem/screen/forum_page.dart';
+import 'package:sochem/screen/groups.dart';
 import 'package:sochem/screen/home_screen.dart';
 import 'package:sochem/screen/info.dart';
 import 'package:sochem/screen/login_page.dart';
-import 'package:sochem/screen/groups.dart';
-import 'package:sochem/screen/feed.dart';
-import 'package:sochem/screen/cloud.dart';
 import 'package:sochem/screen/notif.dart';
 import 'package:sochem/screen/onboarding_screen.dart';
 import 'package:sochem/screen/people.dart';
 import 'package:sochem/screen/profile.dart';
 import 'package:sochem/screen/splash_screen.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sochem/utils/constants.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:sochem/utils/endpoints.dart';
 import 'package:sochem/widgets/error_messages.dart';
 
@@ -32,13 +33,13 @@ void main() async {
       HomeRoute: (context) => HomeScreen(),
       OnboardingRoute: (context) => OnboardingScreen(),
       FeedRoute: (context) => FeedScreen(),
-      CloudRoute: (context) => CloudPage(),
-      PeopleRoute: (context) => PeoplePage(),
-      GroupRoute: (context) => GroupPage(),
+      CloudRoute: (context) => const CloudPage(),
+      PeopleRoute: (context) => const PeoplePage(),
+      GroupRoute: (context) => const GroupPage(),
       NotifRoute: (context) => Notif(),
-      LoginRoute: (context) => LoginPage(),
+      LoginRoute: (context) => const LoginPage(),
       ProfileRoute: (context) => ProfilePage(),
-      ForumRoute: (context) => ForumPage(),
+      ForumRoute: (context) => const ForumPage(),
       InfoRoute: (context) => Information(),
     },
   ));
@@ -65,7 +66,8 @@ class _AppState extends State<App> {
     Config config = Config(appVersion, false, false);
     var response = await http.get(Uri.parse(Endpoints.config));
     if (response.statusCode == 200) {
-      config = Config.fromJson(json.decode(response.body));
+      config =
+          Config.fromJson(json.decode(response.body) as Map<String, dynamic>);
     }
     return config;
   }
@@ -96,12 +98,12 @@ class _AppState extends State<App> {
             var myAppVersion = pref.getString(AppVersion)!;
 
             if (config.maintenance) {
-              return AppUnderMaintenance();
+              return const AppUnderMaintenance();
             }
 
             if (config.update &&
                 myAppVersion.compareTo(config.appVersion) < 0) {
-              return UpdateYourApp();
+              return const UpdateYourApp();
             }
 
             return SplashScreen();
@@ -127,16 +129,16 @@ class UpdateYourApp extends StatelessWidget {
           Container(
             width: 180,
             height: 180,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
-              image: DecorationImage(
+              image: const DecorationImage(
                 fit: BoxFit.fill,
                 image: AssetImage(SochemIcon),
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "We have lauched a new version of our app. Please update!",
@@ -167,7 +169,7 @@ class AppUnderMaintenance extends StatelessWidget {
           Container(
             width: 180,
             height: 180,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
               image: DecorationImage(
@@ -176,11 +178,11 @@ class AppUnderMaintenance extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "Sorry for the inconvinience! The app is under maintenance",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
                 color: tri1,
@@ -198,7 +200,7 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: CircularProgressIndicator()),
+      child: const Center(child: const CircularProgressIndicator()),
     );
   }
 }
