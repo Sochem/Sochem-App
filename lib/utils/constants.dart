@@ -19,6 +19,13 @@ const String Slideimg3 = "assets/slider/img3.png";
 const String GoogleIcon = "assets/google_logo.png";
 const String WaitingIcon = "assets/waiting.png";
 const String ProfileBackground = "assets/profile_background.jpeg";
+const String OsmozeIcon = "assets/osmoze.png";
+const String FamilyIcon = "assets/Family.png";
+const String HouseCupIcon = "assets/HouseCup.png";
+const String EventsIcon = "assets/Events.png";
+const String eventIcon = "assets/event.png";
+const String HomeIcon = "assets/Home.png";
+const String VaultIcon = "assets/Vault.png";
 
 // Colors Used ->
 const kPrimaryColor = Color(0xFF3449c0);
@@ -47,6 +54,7 @@ const String HomeRoute = '/home';
 const String OnboardingRoute = '/onboarding';
 const String ForumRoute = '/forum';
 const String InfoRoute = '/info';
+const String EventsRoute = '/Events';
 
 // Shared Prefs & Environment variables ->
 const String AppVersion = 'app_version';

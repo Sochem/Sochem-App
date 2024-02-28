@@ -4,9 +4,10 @@ import 'package:sochem/utils/constants.dart';
 import 'package:sochem/utils/onboarding_styles.dart';
 
 List<Color> onboardingColor = [
-  Color(0xFF7bc05b),
-  Color(0xFFffb61d),
-  Color(0xFF767bff),
+   Color.fromARGB(255, 57, 122, 235),
+   Color.fromARGB(255, 57, 122, 235),
+   Color.fromARGB(255, 57, 122, 235)
+   
 ];
 
 class OnboardingScreen extends StatefulWidget {
@@ -32,10 +33,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       duration: Duration(milliseconds: 150),
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       height: 8.0,
-      width: isActive ? 24.0 : 16.0,
+      width: isActive ? 40.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? onboardingColor[_currentPage] : Color(0xFF7B51D3),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        color: isActive ? Color.fromARGB(255, 57, 122, 235) : Colors.white,
+        borderRadius: isActive?BorderRadius.all(Radius.circular(400)):BorderRadius.all(Radius.circular(3)),
       ),
     );
   }
@@ -44,9 +45,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Color.fromARGB(255, 49, 74, 201),
       body: Container(
-        decoration: BoxDecoration(),
+        decoration: BoxDecoration(gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color.fromARGB(255, 22, 38, 114),Color.fromARGB(255, 10, 16, 49)])),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       'Skip',
                       style: TextStyle(
-                        color: onboardingColor[_currentPage],
+                        color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
@@ -86,25 +90,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: <Widget>[
                     onboardingPage(
                       screenSize: screenSize,
-                      image: 'assets/search.png',
-                      title: 'Discover!\nA new door of possibilities',
+                      image: 'assets/discover.png',
+                      title: 'Discover',
                       desc:
-                          'Having trouble getting resources?\nYou will find it all here. From Books to Roadmaps, be it helping with your Core Subjects or Preparation for others. \nWe got you all covered!',
+                          'A one-stop-shop for\neverything atomic! From books to\nroadmaps and professors...',
                     ),
                     onboardingPage(
                       screenSize: screenSize,
-                      image: 'assets/Technology.png',
-                      title: 'Connect!\nWith our Society',
+                      image: 'assets/connect.png',
+                      title: 'Connect',
                       desc:
-                          'Find your Group, Colleagues or \neven Connect with our Alumni?\n An eezy peezy way to do it all',
+                          'An eezy-peezy way to find\nyour colleagues or even connect\nand network with our Alumni...',
                     ),
                     onboardingPage(
                       screenSize: screenSize,
-                      image: 'assets/Food.png',
+                      image: 'assets/experience.png',
                       title:
-                          'Experience!\nUpdated and delivered at your Fingertips',
+                          'Experience',
                       desc:
-                          'Updates about Events and Activites now within your comfort and reach',
+                      'Get updated about all the\n events and activities now within\nyour comfort & reach!',
                     ),
                   ],
                 ),
@@ -113,41 +117,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: _buildPageIndicator(),
               ),
-              Visibility(
-                visible: _currentPage != _numPages - 1,
-                child: Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: TextButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Next',
-                            style: TextStyle(
-                              color: onboardingColor[_currentPage],
-                              fontSize: 22.0,
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Visibility(
+              //   visible: _currentPage != _numPages - 1,
+              //   child: Expanded(
+              //     child: Align(
+              //       alignment: FractionalOffset.bottomRight,
+              //       child: TextButton(
+              //         onPressed: () {
+              //           _pageController.nextPage(
+              //             duration: Duration(milliseconds: 500),
+              //             curve: Curves.ease,
+              //           );
+              //         },
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: <Widget>[
+              //             Text(
+              //               'Next',
+              //               style: TextStyle(
+              //                 color: onboardingColor[_currentPage],
+              //                 fontSize: 22.0,
+              //               ),
+              //             ),
+              //             SizedBox(width: 10.0),
+              //             Icon(
+              //               Icons.arrow_forward,
+              //               color: Colors.white,
+              //               size: 30.0,
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 10.0)
             ],
           ),
@@ -156,9 +160,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       bottomSheet: Visibility(
         visible: _currentPage == _numPages - 1,
         child: Container(
-          height: 60.0,
-          width: double.infinity,
-          color: Colors.white,
+               decoration: BoxDecoration(gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color.fromARGB(255, 13, 23, 70),Color.fromARGB(255, 9, 18, 61)])),
+              height: 60.0,
+              width: double.infinity,
+          
+          
           child: GestureDetector(
             onTap: () async {
               var prefs = await SharedPreferences.getInstance();
@@ -166,16 +175,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Navigator.pushReplacementNamed(context, LoginRoute);
             },
             child: Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  'Get started',
-                  style: TextStyle(
-                    color: Color(0xFF5B16D0),
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              child: Container(
+                height: 40,
+                width: 300,
+                  decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 57, 122, 235),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),),
+                   child:Center(
+                     child: Text(
+                                     'Explore',
+                                     style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                                   ),
+                                   ),
+                   ),
               ),
             ),
           ),
@@ -202,11 +217,18 @@ class onboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.fromLTRB(10.0,0.0,10.0,0.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: <Widget>[ SizedBox(height: screenSize.height * 0.05),
+            Center(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style:TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 28, fontStyle: FontStyle.normal),
+              ),
+            ),
             Center(
               child: Image(
                 image: AssetImage(
@@ -216,19 +238,10 @@ class onboardingPage extends StatelessWidget {
                 width: 300,
               ),
             ),
-            SizedBox(height: screenSize.height * 0.01),
-            Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: kTitleStyle,
-              ),
-            ),
-            SizedBox(height: screenSize.height * 0.05),
             Text(
-              desc,
+              '\n'+desc,
               textAlign: TextAlign.center,
-              style: kSubtitleStyle,
+                style:TextStyle(fontSize: 18,color:Color.fromARGB(255, 57, 122, 235)),
             ),
           ],
         ),
